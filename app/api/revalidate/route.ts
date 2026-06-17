@@ -15,6 +15,8 @@ const TAG_FOR_TYPE: Record<string, string> = {
   aboutContent: "settings",
   impressumContent: "settings",
   privacyContent: "settings",
+  publicationsContent: "settings",
+  resourcesContent: "settings",
 };
 
 export async function POST(req: NextRequest) {

@@ -15,16 +15,24 @@ const components: PortableTextComponents = {
     blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   },
   marks: {
-    link: ({ children, value }) => (
-      <a
-        href={value?.href}
-        {...(value?.href?.startsWith("http")
-          ? { target: "_blank", rel: "noopener noreferrer" }
-          : {})}
-      >
-        {children}
-      </a>
-    ),
+    link: ({ children, value }) => {
+      const href = value?.href ?? "";
+      const isExternal = href.startsWith("http");
+      const safehref = href.startsWith("javascript:") ? "#" : href;
+      return (
+        <a
+          href={safehref}
+          {...(isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
+          {children}
+          {isExternal && (
+            <span className="dsa-sr-only"> (opens in new tab)</span>
+          )}
+        </a>
+      );
+    },
   },
   types: {
     // Tables: a horizontally-scrollable wrapper is the mobile fallback (locked §9.5).

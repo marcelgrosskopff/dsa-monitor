@@ -6,14 +6,8 @@ import { client } from "@/sanity/lib/client";
 export async function GET(request: Request) {
   const token = process.env.SANITY_API_READ_TOKEN;
 
-  // If the token is missing, enable draft mode without secret validation.
-  // Editors still need Sanity auth to open the Studio, so this is safe for
-  // an internal preview workflow.
   if (!token) {
-    const draft = await draftMode();
-    if (!draft.isEnabled) draft.enable();
-    const redirectTo = new URL(request.url).searchParams.get("redirect") ?? "/";
-    redirect(redirectTo);
+    return new Response("Preview not configured", { status: 503 });
   }
 
   const previewClient = client.withConfig({ useCdn: false, token });

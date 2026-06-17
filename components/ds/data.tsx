@@ -42,8 +42,8 @@ export function KpiGrid({ items = [] }: { items?: Kpi[] }) {
               : undefined
           }
         >
-          <dd className="dsa-kpi__num">{it.number}</dd>
           <dt className="dsa-kpi__label dsa-label">{it.label}</dt>
+          <dd className="dsa-kpi__num">{it.number}</dd>
         </div>
       ))}
     </dl>
