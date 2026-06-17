@@ -87,6 +87,34 @@
 /* Real partner/funder logos — a little taller than the DS default so the
    multi-line marks (Ombudsstelle, digitale Senior:innen, Saferinternet) stay legible. */
 .dsa-partners__list img { height: 46px; }
+/* The supplied logos have wildly varying aspect ratios (6:1 → 2.5:1), so a plain
+   flex-wrap row reads as ragged. Lay the partner marks out in a uniform 3-col grid:
+   each logo sits centred in an equal cell, capped by height AND width, on a shared
+   baseline row — tidy and evenly spaced regardless of native proportions. */
+.dsa-partners__group:not(.dsa-partners__group--funders) .dsa-partners__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  column-gap: var(--space-stack-lg);
+  row-gap: var(--space-stack-md);
+}
+.dsa-partners__group:not(.dsa-partners__group--funders) .dsa-partners__list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+.dsa-partners__group:not(.dsa-partners__group--funders) .dsa-partners__list img {
+  max-width: 100%;
+  object-fit: contain;
+}
+@media (max-width: 768px) {
+  .dsa-partners__group:not(.dsa-partners__group--funders) .dsa-partners__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 /* Research-card footer: keep "Read report →" intact; let it drop to its own line if tight. */
 .dsa-card__more { white-space: nowrap; }
 .dsa-card__foot { flex-wrap: wrap; row-gap: var(--space-stack-sm); }
@@ -108,6 +136,22 @@
 .filterbar__count { margin-left: auto; color: var(--color-text-secondary); }
 /* Report count, placed under the filter row */
 .filtercount { color: var(--color-text-secondary); margin: 0 0 var(--space-stack-lg); }
+/* Listing bar — result count (left) + sort control (right), above the card grid */
+.listingbar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-stack-md); flex-wrap: wrap; margin-bottom: var(--space-stack-md); }
+.listingbar .filtercount { margin: 0; }
+/* Sort control — mono label + sharp, ink-framed native select with a drawn caret */
+.sortctl { display: inline-flex; align-items: center; gap: var(--space-stack-sm); }
+.sortctl__label { color: var(--color-text-secondary); white-space: nowrap; }
+.sortctl__field { position: relative; display: inline-flex; align-items: center; }
+.sortctl__select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-label);
+  color: var(--color-text-primary); background: var(--color-surface-canvas);
+  border: var(--bw-thick, 2px) solid var(--color-border-strong); border-radius: 0;
+  padding: 8px 30px 8px 12px; cursor: pointer; line-height: 1;
+}
+.sortctl__select:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.sortctl__caret { position: absolute; right: 10px; pointer-events: none; font-size: 11px; color: var(--color-text-secondary); }
 /* Long-tail neutral chip (degrades gracefully when topic list grows) */
 .chip-neutral { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-label); padding: 8px 12px; border: 1px solid var(--color-border-field); background: var(--color-surface-canvas); color: var(--color-text-secondary); cursor: pointer; min-height: 34px; }
 .chip-neutral::before { content: ""; width: 10px; height: 10px; background: var(--color-text-secondary); flex: none; }

@@ -12,8 +12,10 @@ import {
   relatedReportsQuery,
   reportBySlugQuery,
   reportCountQuery,
+  reportsPagedAZQuery,
+  reportsPagedNewestQuery,
+  reportsPagedOldestQuery,
   reportSlugsQuery,
-  reportsPagedQuery,
   reportsQuery,
   resourceGroupsQuery,
   resourcesContentQuery,
@@ -352,15 +354,31 @@ export async function getPageContent(type: string): Promise<unknown[] | null> {
   return data?.body ?? null;
 }
 
+function sortSeedReports(
+  reports: Report[],
+  sort: "newest" | "oldest" | "az"
+): Report[] {
+  const a = [...reports];
+  if (sort === "oldest")
+    a.sort((x, y) => x.date.localeCompare(y.date));
+  else if (sort === "az")
+    a.sort((x, y) => x.title.localeCompare(y.title));
+  else
+    a.sort((x, y) => y.date.localeCompare(x.date));
+  return a;
+}
+
 export async function getReportsPaged({
   topic,
   page,
+  sort = "newest",
 }: {
   topic: string | null;
   page: number;
+  sort?: "newest" | "oldest" | "az";
 }): Promise<{ reports: Report[]; totalCount: number; pageCount: number }> {
   if (!sanityConfigured) {
-    // Seed fallback: filter + paginate in memory
+    // Seed fallback: filter + sort + paginate in memory
     const filtered = topic
       ? SEED_REPORTS.filter(
           (r) =>
@@ -368,13 +386,21 @@ export async function getReportsPaged({
             r.topics.some((t) => t.label === topic)
         )
       : SEED_REPORTS;
+    const sorted = sortSeedReports(filtered, sort);
     const start = (page - 1) * PAGE_SIZE_CONST;
     return {
-      reports: filtered.slice(start, start + PAGE_SIZE_CONST),
+      reports: sorted.slice(start, start + PAGE_SIZE_CONST),
       totalCount: filtered.length,
       pageCount: Math.ceil(filtered.length / PAGE_SIZE_CONST) || 1,
     };
   }
+
+  const sortedQuery =
+    sort === "oldest"
+      ? reportsPagedOldestQuery
+      : sort === "az"
+        ? reportsPagedAZQuery
+        : reportsPagedNewestQuery;
 
   const [qc, opts] = await Promise.all([
     getQueryClient(),
@@ -383,7 +409,7 @@ export async function getReportsPaged({
   const start = (page - 1) * PAGE_SIZE_CONST;
   const end = start + PAGE_SIZE_CONST;
   const [rawReports, totalCount] = await Promise.all([
-    qc.fetch(reportsPagedQuery, { topic: topic ?? null, start, end }, opts),
+    qc.fetch(sortedQuery, { topic: topic ?? null, start, end }, opts),
     qc.fetch(reportCountQuery, { topic: topic ?? null }, opts),
   ]);
   const reports = (rawReports ?? []).map(mapReport);

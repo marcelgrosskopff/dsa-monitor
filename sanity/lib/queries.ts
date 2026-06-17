@@ -216,14 +216,20 @@ const reportCardProjection = `{
 
 export const PAGE_SIZE = 6;
 
-export const reportsPagedQuery = groq`
-  *[_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)]
-  | order(publishedAt desc) [$start...$end]
-  ${reportCardProjection}
+const reportFilter = `_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)`;
+
+export const reportsPagedNewestQuery = groq`
+  *[${reportFilter}] | order(publishedAt desc) [$start...$end] ${reportCardProjection}
+`;
+export const reportsPagedOldestQuery = groq`
+  *[${reportFilter}] | order(publishedAt asc) [$start...$end] ${reportCardProjection}
+`;
+export const reportsPagedAZQuery = groq`
+  *[${reportFilter}] | order(title asc) [$start...$end] ${reportCardProjection}
 `;
 
 export const reportCountQuery = groq`
-  count(*[_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)])
+  count(*[${reportFilter}])
 `;
 
 export const notFoundContentQuery = groq`

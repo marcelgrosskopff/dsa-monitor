@@ -131,3 +131,18 @@
 .m-page .dsa-partners__inner { grid-template-columns: 1fr; padding: var(--space-stack-lg) 20px; gap: var(--space-stack-lg); }
 .m-page .dsa-partners__group--funders { border-left: 0; padding-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-default); padding-top: var(--space-stack-lg); }
 .m-page .dsa-partners__list img { height: 38px; }
+
+/* ---- Report detail ------------------------------------------------------ */
+/* Article column: phone padding, no max-width clamp */
+.m-page .article { max-width: none; padding: 20px 20px 44px; }
+.m-page .article__body p { max-width: none; }
+/* Report header: shape stacks above the metadata (band on top, body below) */
+.m-page .dsa-articlehead--split { grid-template-columns: 1fr; }
+.m-page .dsa-articlehead--split .dsa-articlehead__shape { height: 120px; border-right: 0; border-bottom: var(--bw-hairline,1px) solid var(--color-border-strong); }
+.m-page .dsa-articlehead__title { font-size: var(--fs-3xl); line-height: 1.1; }
+/* Body + download stack into one column; download (first child) leads */
+.m-page .article__layout { grid-template-columns: 1fr; gap: var(--space-stack-lg); margin-top: var(--space-stack-lg); }
+.m-page .article__section { margin-bottom: var(--space-stack-lg); }
+.m-page .article__section h2 { font-size: var(--fs-xl); }
+/* Report KPI numbers fit a single phone column */
+.m-page .article__kpis .dsa-kpi__num { font-size: var(--fs-3xl); }
