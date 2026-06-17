@@ -1,0 +1,42 @@
+/* DSA-Monitor — typography tokens.
+   Families EXACT (Be Vietnam Pro headings, Carlito body [open], IBM Plex Mono labels).
+   Scale is a 1.250 Major Third anchored at 16px ([inferred] from the screenshot). */
+
+:root {
+  /* Families */
+  --font-heading: "Be Vietnam Pro", system-ui, sans-serif;
+  --font-body:    "Carlito", "Calibri", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Weights */
+  --fw-regular:  400; /* @kind font */
+  --fw-medium:   500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold:     700; /* @kind font */
+  --fw-extrabold:800; /* @kind font */
+
+  /* Type scale (Major Third, 16px anchor) */
+  --fs-xs:  12px;   /* mono labels / eyebrows */
+  --fs-sm:  14px;   /* dense body / captions */
+  --fs-md:  16px;   /* body (base) */
+  --fs-lg:  20px;   /* lead paragraphs */
+  --fs-xl:  25px;   /* card titles, H3 */
+  --fs-2xl: 31px;   /* large statements */
+  --fs-3xl: 39px;   /* H2 section titles */
+  --fs-4xl: 49px;   /* article H1 */
+  --fs-5xl: 61px;   /* page titles */
+  --fs-6xl: 76px;   /* hero display */
+
+  /* Line height */
+  --lh-tight:  1.05; /* @kind font */
+  --lh-snug:   1.2; /* @kind font */
+  --lh-normal: 1.5; /* @kind font */
+
+  /* Letter spacing */
+  --ls-tight:  -0.02em; /* @kind font */
+  --ls-normal: 0; /* @kind font */
+  --ls-label:  0.12em; /* @kind font */
+
+  /* Semantic label shorthand */
+  --font-label: var(--font-mono);
+}

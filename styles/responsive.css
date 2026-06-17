@@ -1,0 +1,78 @@
+/* DSA-Monitor — responsive layer.
+ * The kit (kit.css) defines desktop grid layouts but carries NO breakpoints — the
+ * approved design canvas reflowed to mobile via `.m-page`-scoped overrides in
+ * mobile.css that only fired inside the artboard. On the real site we need those same
+ * reflows behind a genuine media query. These rules are mobile.css lines 67–133,
+ * rescoped from `.m-page X` to a real `@media (max-width: 768px)`. Tokens unchanged. */
+
+@media (max-width: 768px) {
+  .wrap { max-width: none; padding-left: 20px; padding-right: 20px; }
+  .band { padding-top: 44px; padding-bottom: 44px; }
+  .band--tight { padding-top: 28px; padding-bottom: 28px; }
+
+  /* Hero */
+  .hero__inner { padding-top: 36px; padding-bottom: 48px; }
+  .hero__field { right: -120px; opacity: 0.9; }
+  .hero h1 { font-size: 34px; line-height: 1.08; max-width: none; }
+  .hero__lead { font-size: var(--fs-md); max-width: none; margin-top: var(--space-stack-md); }
+  .hero__actions { flex-direction: column; align-items: stretch; gap: var(--space-stack-sm); }
+  .hero__actions .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+  /* KPI strip */
+  .kpiband { padding: var(--space-stack-lg) 0; }
+  .kpiband .dsa-kpi-grid { grid-template-columns: 1fr; }
+  .kpiband .dsa-kpi-grid .dsa-kpi__num { font-size: var(--fs-4xl); }
+
+  /* Section heads */
+  .section-head { flex-direction: column; align-items: stretch; gap: var(--space-stack-md); margin-bottom: var(--space-stack-lg); }
+  .section-head h2 { font-size: var(--fs-2xl); max-width: none; }
+  .section-head .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+  /* Card grid → single column */
+  .cardgrid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+
+  /* How-we-work → stacked cells */
+  .howwork { grid-template-columns: 1fr; margin-top: var(--space-stack-lg); }
+  .howwork__cell { padding: var(--space-stack-lg); border-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-strong); }
+  .howwork__cell:first-child { border-top: 0; }
+  .howwork__cell h2 { font-size: var(--fs-xl); max-width: none; }
+
+  /* Evidence trio → stacked */
+  .trio { grid-template-columns: 1fr; }
+  .trio__cell { border-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-strong); }
+  .trio__cell:first-child { border-top: 0; }
+
+  /* Conviction closer */
+  .cta__grid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+  .cta h2 { font-size: 30px; max-width: none; }
+  .cta__actions .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+  /* Hatch divider — thinner on mobile */
+  .hatch { height: 44px; }
+
+  /* Publications head + filter */
+  .pagehead { padding-top: var(--space-stack-lg); padding-bottom: var(--space-stack-lg); }
+  .pagehead h1 { font-size: var(--fs-4xl); }
+  .pagehead p { font-size: var(--fs-md); max-width: none; }
+  .filterbar { flex-wrap: wrap; gap: var(--space-stack-sm); margin-bottom: var(--space-stack-md); }
+  .filterbar .dsa-chip { min-height: 40px; }
+
+  /* Pager */
+  .pager { gap: var(--space-stack-sm); flex-wrap: nowrap; }
+  .pager__step { padding: 0 12px; }
+  .pager__pages { gap: 6px; }
+  .pager__page { min-width: 40px; }
+
+  /* Report detail → single column (rail drops below the reading column) */
+  .article { padding: var(--space-stack-lg) 20px var(--space-section); }
+  .article__layout { grid-template-columns: 1fr; gap: var(--space-stack-xl); }
+  .dsa-articlehead--split { grid-template-columns: 1fr; }
+  .dsa-articlehead--split .dsa-articlehead__shape { aspect-ratio: 16 / 5; border-right: 0; border-bottom: var(--bw-hairline,1px) solid var(--color-border-strong); }
+  .rail { position: static; }
+
+  /* Resources → single column */
+  .reslist { grid-template-columns: 1fr; }
+
+  /* About → single column */
+  .about__cols { grid-template-columns: 1fr; }
+}

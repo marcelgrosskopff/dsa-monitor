@@ -1,0 +1,8 @@
+/* DSA-Monitor — webfonts.
+   All three faces are on Google Fonts (no binaries to ship).
+   - Be Vietnam Pro  — headings (600 / 700 / 800)
+   - Carlito         — body  [open: Calibri-compatible, licensing pending]
+   - IBM Plex Mono   — uppercase tracked labels (400 / 500)
+   The @import below pulls in the @font-face rules for all three. */
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Carlito:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');

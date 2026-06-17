@@ -1,0 +1,14 @@
+/* DSA-Monitor — global stylesheet entrypoint.
+ * Ported verbatim from the approved design system ("Direction A").
+ * Import order is load-bearing: fonts first (carries the Google Fonts @import),
+ * then tokens, then base, then component + kit layers, then mobile overrides last. */
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./extensions.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/geometry.css";
+@import "./tokens/base.css";
+@import "./components.css";
+@import "./kit.css";
+@import "./responsive.css";

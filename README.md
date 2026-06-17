@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DSA-Monitor
 
-## Getting Started
+Independent Digital Services Act compliance-research portal for **ÖIAT** (funded by netidee).
+Next.js (App Router) + Sanity (embedded Studio) + Netlify. English-only UI; reports offered
+as separate DE/EN downloads. Built by porting the approved design system ("Direction A") and
+the all-pages canvas — not redesigned.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router, TypeScript, Turbopack) — static-leaning with ISR + on-demand revalidation.
+- **Sanity** — headless CMS + embedded Studio at `/studio`.
+- **Netlify** — hosting/CDN/SSL via `@netlify/plugin-nextjs`; deploy previews per branch.
+- **Matomo** — cookieless + IP-anonymised analytics (no consent banner).
+- Fonts (Google Fonts, locked): Be Vietnam Pro / Carlito / IBM Plex Mono.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000  (Studio at /studio)
+npm run build      # production build
+npm run typecheck  # tsc --noEmit
+npm run lint       # eslint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**No Sanity project is required to run.** When `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset, the
+site serves typed seed content from `lib/seed-data.ts`, so every page renders immediately.
+Once the project id is set, the data layer (`lib/content.ts`) fetches from Sanity instead.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy the keys below into `.env.local` (not committed). See each var's role:
 
-## Learn More
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project; empty = serve seed content |
+| `NEXT_PUBLIC_SANITY_DATASET` | `production` |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | e.g. `2025-01-01` |
+| `SANITY_API_READ_TOKEN` | Viewer token — draft-mode preview |
+| `SANITY_API_WRITE_TOKEN` | Editor token — used **only** by `npm run seed` |
+| `SANITY_REVALIDATE_SECRET` | Shared secret on the Sanity webhook → `/api/revalidate` |
+| `NEXT_PUBLIC_SITE_URL` | `https://dsa-monitor.at` |
+| `NEXT_PUBLIC_MATOMO_URL` | ÖIAT Matomo base URL (enables analytics + opt-out) |
+| `NEXT_PUBLIC_MATOMO_SITE_ID` | Matomo site id |
 
-To learn more about Next.js, take a look at the following resources:
+## Provision Sanity
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. `npx sanity login` then create a project + `production` dataset (public read).
+2. Create two API tokens: **Viewer** (`SANITY_API_READ_TOKEN`) and **Editor** (`SANITY_API_WRITE_TOKEN`).
+3. Put project id + dataset + tokens in `.env.local` (and in Netlify env).
+4. Seed the dataset:
+   ```bash
+   npm run seed
+   ```
+   This creates 8 topics (6 primary + 2 long-tail), 9 reports, 3 resource groups (incl. the
+   ACE featured entry), site settings with the real partner/funder logos, and clearly-marked
+   placeholder page-copy singletons. Report download files are **placeholders** — replace with
+   real PDFs in the Studio. Re-running is safe (deterministic ids + `createOrReplace`).
+5. In Sanity manage, add a **webhook** → `https://<site>/api/revalidate` with secret
+   `SANITY_REVALIDATE_SECRET` (trigger on create/update/delete). Publishing then goes live
+   without a rebuild.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content model (Studio)
 
-## Deploy on Vercel
+`report` is the single template for all variants; `articleType` (Study/Dossier/Policy Paper)
+is **internal only and never shown**. Editors start from three initial-value presets
+(Dossier / Short Analysis / Policy Paper) — the offer's "3 templates" survive as Studio
+presets on one schema. Other types: `topic`, `resourceGroup`, `siteSettings` (singleton),
+and page-copy singletons (`homeContent`, `aboutContent`, `impressumContent`, `privacyContent`).
+**Do not author legal/privacy copy — render client-supplied text only.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy (Netlify)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Connect the repo; `netlify.toml` sets `next build` + `@netlify/plugin-nextjs` + Node 20.
+- Add the env vars above in Netlify.
+- Branch deploys give staging previews. Production domain: `dsa-monitor.at`.
+
+## Project map
+
+- `app/` — routes: Home, `/publications` (+ `[slug]`), `/resources`, `/about`, `/impressum`,
+  `/privacy`, `not-found`, `sitemap.ts`, `robots.ts`, `api/{draft,revalidate}`, `studio/`.
+- `components/ds/` — the 16 ported design-system primitives (typed).
+- `components/blocks/` — section blocks (Page shell, Hero, KpiStrip, EvidenceBoxes, closer, ResearchCardX).
+- `components/publications/PublicationsClient.tsx` — the only filter island (topic-only, URL-synced).
+- `lib/` — `content.ts` (Sanity-or-seed), `counts.ts`, `format.ts`, `seo.ts`, `seed-data.ts`, `types.ts`.
+- `sanity/` — env, client/queries/image, schemas, desk structure; `sanity.config.ts` (Studio).
+- `styles/` — design-system tokens + components.css + kit.css (ported verbatim) + `responsive.css`
+  (mobile reflow authored from the canvas's `.m-page` overrides) + `extensions.css`.
+
+## Still pending from ÖIAT (built with placeholders)
+
+Final topic list + topic→swatch map; "What we do / why we do it" copy; remaining report
+summaries; canonical Impressum + privacy text. All marked with a placeholder note; nothing is
+fabricated. See `ACCESSIBILITY.md` for the WCAG 2.1 AA report and manual test checklist.

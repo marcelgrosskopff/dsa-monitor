@@ -1,0 +1,474 @@
+/* DSA-Monitor — component styles.
+   Semantic classes consumed by the React components. No Tailwind, no CSS-in-JS:
+   components set className + (for category colour) two CSS vars (--sw-accent / --sw-tint)
+   inline, and these rules read the tokens. Sharp corners, hairline ink frames, no shadows. */
+
+/* ============================================================ BUTTON */
+.dsa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-stack-xs);
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  text-decoration: none;
+  padding: var(--space-inset-control) var(--space-inset-card);
+  border-radius: var(--radius-control);
+  border: var(--border-control) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--motion-ease),
+              border-color var(--motion-fast) var(--motion-ease),
+              color var(--motion-fast) var(--motion-ease);
+}
+.dsa-btn--primary {
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  border-color: var(--color-accent-primary);
+}
+.dsa-btn--primary:hover {
+  background: var(--color-accent-primary-hover);
+  border-color: var(--color-accent-primary-hover);
+}
+.dsa-btn--secondary {
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+.dsa-btn--secondary:hover { background: var(--color-surface-subtle); }
+.dsa-btn--ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.dsa-btn--ghost:hover { color: var(--color-text-link); }
+/* Inverse context (on dark surfaces) */
+.dsa-btn--on-inverse.dsa-btn--secondary {
+  background: transparent;
+  color: var(--color-text-on-inverse);
+  border-color: var(--color-border-inverse);
+}
+.dsa-btn--on-inverse.dsa-btn--secondary:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--color-text-on-inverse);
+}
+
+/* ============================================================ HIGHLIGHT MARKER */
+.dsa-mark {
+  background: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  border-radius: var(--radius-none);
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ============================================================ SECTION EYEBROW */
+.dsa-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-stack-sm);
+  color: var(--color-accent-primary);
+  margin: 0;
+}
+.dsa-eyebrow__rule {
+  display: inline-block;
+  width: 32px;
+  height: 2px;
+  background: var(--color-accent-primary);
+}
+
+/* ============================================================ TOPIC CHIP */
+.dsa-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-stack-xs);
+  padding: 6px var(--space-stack-sm);
+  min-height: 28px;
+  border: var(--border-card) solid var(--sw-accent, var(--color-border-strong));
+  background: var(--sw-tint, transparent);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-chip);
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  white-space: nowrap;
+}
+.dsa-chip__mark {
+  width: 10px; height: 10px;
+  flex: none;
+  background: var(--sw-accent, var(--color-border-strong));
+}
+button.dsa-chip {
+  cursor: pointer;
+  min-height: 34px;            /* compact filter; padding keeps the tap area comfortable */
+  transition: background-color var(--motion-fast) var(--motion-ease),
+              border-color var(--motion-fast) var(--motion-ease),
+              color var(--motion-fast) var(--motion-ease);
+}
+
+/* Filter toggle — reads as an interactive control: a topic-coloured outline on a
+   white chip, hover tints it so it feels pressable. Selected fills solid. */
+.dsa-chip--filter {
+  background: var(--color-surface-card);
+  border-width: var(--border-card);
+  border-color: var(--sw-accent, var(--color-border-strong));
+  color: var(--color-text-primary);
+}
+.dsa-chip--filter .dsa-chip__mark { display: none; }  /* filters carry no marker */
+.dsa-chip--filter:hover {
+  background: var(--sw-tint, var(--color-surface-subtle));
+}
+.dsa-chip--filter:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Selected filter — solid accent fill + white label = unambiguous ON. */
+.dsa-chip--selected {
+  background: var(--sw-accent, var(--color-accent-primary));
+  color: var(--color-text-on-accent);
+  border-color: var(--sw-accent, transparent);
+  font-weight: var(--fw-semibold);
+}
+.dsa-chip--filter.dsa-chip--selected:hover {
+  background: var(--sw-accent, var(--color-accent-primary));
+}
+
+/* ============================================================ CATEGORY SHAPE */
+.dsa-shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sw-tint, var(--color-surface-subtle));
+  border-radius: var(--radius-none);
+  overflow: hidden;
+}
+.dsa-shape svg { width: 100%; height: 100%; display: block; }
+
+/* ============================================================ RESEARCH CARD */
+.dsa-card {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-card) solid var(--color-border-strong);
+  background: var(--color-surface-card);
+  border-radius: var(--radius-card);
+}
+.dsa-card__shape {
+  aspect-ratio: 3 / 2;
+  border-bottom: var(--bw-hairline) solid var(--color-border-strong);
+}
+.dsa-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-stack-sm);
+  padding: var(--space-inset-card);
+}
+.dsa-card__metarow { display: flex; align-items: center; justify-content: space-between; gap: var(--space-stack-sm); }
+.dsa-card__meta { color: var(--color-text-secondary); margin: 0; }
+.dsa-card__langs { display: inline-flex; gap: 4px; flex: none; }
+.dsa-card__langtag {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  line-height: 1;
+  border: 1px solid var(--color-border-default);
+  padding: 2px 5px;
+  color: var(--color-text-secondary);
+}
+.dsa-card__title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+.dsa-card__title a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.dsa-card__title a:hover { color: var(--color-text-link); }
+.dsa-card__foot {
+  margin-top: auto;
+  padding-top: var(--space-stack-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-stack-sm);
+}
+.dsa-card__more { color: var(--color-text-primary); }
+
+/* ============================================================ KPI */
+.dsa-kpi {
+  border: var(--border-card) solid var(--color-border-strong);
+  background: var(--color-surface-card);
+  padding: var(--space-inset-card);
+}
+.dsa-kpi__num {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-6xl);
+  line-height: 1;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+.dsa-kpi__desc { color: var(--color-text-secondary); margin: var(--space-stack-sm) 0 0; }
+.dsa-kpi-grid {
+  display: grid;
+  gap: var(--space-gutter);
+  grid-template-columns: repeat(var(--kpi-cols, 3), minmax(0, 1fr));
+}
+.dsa-kpi-grid .dsa-kpi {
+  border-top: var(--bw-thick) solid var(--kpi-rule, var(--color-border-strong));
+}
+.dsa-kpi-grid .dsa-kpi__num { font-size: var(--fs-5xl); }
+.dsa-kpi__label { color: var(--color-text-secondary); margin: var(--space-stack-xs) 0 0; }
+@media (max-width: 640px) { .dsa-kpi-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================ DOWNLOAD BUTTON */
+.dsa-download {
+  display: flex;
+  align-items: center;
+  gap: var(--space-stack-sm);
+  border: var(--border-control) solid var(--color-border-strong);
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  padding: var(--space-inset-control) var(--space-inset-card);
+  border-radius: var(--radius-control);
+  transition: background-color var(--motion-fast) var(--motion-ease);
+}
+.dsa-download:hover { background: var(--color-surface-subtle); }
+/* Primary download — the single loudest CTA on a report (design review §6):
+   filled action red so it outranks secondary downloads and any outbound link. */
+.dsa-download--primary {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+}
+.dsa-download--primary:hover {
+  background: var(--color-accent-primary-hover);
+  border-color: var(--color-accent-primary-hover);
+}
+.dsa-download--primary .dsa-download__glyph { border-color: rgba(255,255,255,0.7); color: var(--color-text-on-accent); }
+.dsa-download--primary .dsa-download__label { color: var(--color-text-on-accent); }
+.dsa-download--primary .dsa-download__sub { color: rgba(255,255,255,0.85); }
+.dsa-download__glyph {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  border: 1px solid var(--color-border-strong);
+  padding: 2px 5px;
+  flex: none;
+}
+.dsa-download__text { display: flex; flex-direction: column; gap: 2px; }
+.dsa-download__label {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-md);
+}
+.dsa-download__sub { color: var(--color-text-secondary); }
+.dsa-download__arrow { margin-left: auto; font-size: var(--fs-lg); }
+
+/* ============================================================ OUTBOUND LINK */
+.dsa-outbound {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.dsa-outbound:hover { color: var(--color-accent-brand-hover); }
+
+/* ============================================================ ARTICLE HEADER */
+.dsa-articlehead {
+  border: var(--border-card) solid var(--color-border-strong);
+  background: var(--color-surface-card);
+}
+.dsa-articlehead__shape {
+  aspect-ratio: 16 / 5;
+  border-bottom: var(--bw-hairline) solid var(--color-border-strong);
+}
+.dsa-articlehead__body {
+  max-width: var(--layout-read);
+  padding: var(--space-stack-lg);
+}
+.dsa-articlehead__meta { color: var(--color-text-secondary); margin: 0; }
+.dsa-articlehead__title {
+  font-size: var(--fs-4xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-snug);
+  margin: var(--space-stack-sm) 0 0;
+}
+.dsa-articlehead__summary {
+  font-size: var(--fs-lg);
+  color: var(--color-text-secondary);
+  margin: var(--space-stack-md) 0 0;
+}
+.dsa-articlehead__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-stack-sm);
+  margin-top: var(--space-stack-md);
+}
+.dsa-articlehead__date { color: var(--color-text-secondary); }
+
+/* ============================================================ SITE NAV */
+.dsa-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-stack-md) var(--space-stack-lg);
+  background: var(--color-surface-canvas);
+  border-bottom: var(--bw-hairline) solid var(--color-border-strong);
+}
+.dsa-nav--inverse {
+  background: var(--color-surface-inverse);
+  border-bottom: 0;
+}
+.dsa-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-stack-xs);
+  font-family: var(--font-heading);
+  font-weight: var(--fw-extrabold);
+  font-size: var(--fs-lg);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.dsa-nav--inverse .dsa-wordmark { color: var(--color-text-on-inverse); }
+.dsa-wordmark__mark { width: 12px; height: 12px; background: var(--color-accent-primary); flex: none; }
+.dsa-nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-stack-lg);
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.dsa-nav__link {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.dsa-nav--inverse .dsa-nav__link { color: var(--color-text-on-inverse); }
+.dsa-nav__link:hover { color: var(--color-accent-primary); }
+.dsa-nav__link[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-accent-primary);
+  text-decoration-thickness: 2px;
+}
+
+/* ============================================================ PARTNER LOGO WALL */
+.dsa-partners {
+  border-top: var(--bw-hairline) solid var(--color-border-strong);
+  border-bottom: var(--bw-hairline) solid var(--color-border-strong);
+  background: var(--color-surface-canvas);
+}
+.dsa-partners__inner {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-stack-lg);
+  grid-template-columns: 3fr 1fr;
+  padding: var(--space-stack-lg) var(--space-stack-lg);
+}
+.dsa-partners__group--funders {
+  border-left: var(--bw-hairline) solid var(--color-border-strong);
+  padding-left: var(--space-stack-lg);
+}
+.dsa-partners__caption { color: var(--color-text-secondary); margin: 0; }
+.dsa-partners__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-stack-lg);
+  list-style: none;
+  margin: var(--space-stack-md) 0 0;
+  padding: 0;
+}
+.dsa-partners__list img { height: 32px; width: auto; }
+@media (max-width: 768px) {
+  .dsa-partners__inner { grid-template-columns: 1fr; }
+  .dsa-partners__group--funders { border-left: 0; padding-left: 0; }
+}
+
+/* ============================================================ SITE FOOTER */
+.dsa-footer {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-on-inverse);
+}
+.dsa-footer__inner {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-stack-lg);
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: var(--space-stack-xl) var(--space-stack-lg);
+}
+.dsa-footer__brand { display: inline-flex; align-items: center; gap: var(--space-stack-xs); font-family: var(--font-heading); font-weight: var(--fw-extrabold); font-size: var(--fs-lg); }
+.dsa-footer__desc { color: rgba(255,255,255,0.8); font-size: var(--fs-sm); margin: var(--space-stack-sm) 0 0; }
+.dsa-footer__addr { color: rgba(255,255,255,0.7); margin: var(--space-stack-sm) 0 0; }
+.dsa-footer__coltitle { color: var(--color-accent-primary); margin: 0; }
+.dsa-footer__links { list-style: none; margin: var(--space-stack-sm) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-stack-xs); }
+.dsa-footer__links a, .dsa-footer__mail { color: var(--color-text-on-inverse); font-size: var(--fs-sm); text-decoration: none; }
+.dsa-footer__links a:hover { color: var(--color-accent-primary); }
+.dsa-footer__mail { text-decoration: underline; text-underline-offset: 2px; }
+.dsa-footer__legal {
+  border-top: var(--bw-hairline) solid var(--color-border-inverse);
+  padding: var(--space-stack-md) var(--space-stack-lg);
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-stack-md);
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) { .dsa-footer__inner { grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================ FIELD */
+.dsa-field { display: flex; flex-direction: column; }
+.dsa-field__label {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--color-text-primary);
+}
+.dsa-field__req { color: var(--color-accent-primary); }
+.dsa-field__control {
+  margin-top: var(--space-stack-xs);
+  width: 100%;
+  border: var(--border-control) solid var(--color-border-field);
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  padding: var(--space-inset-control);
+  border-radius: var(--radius-control);
+}
+.dsa-field__control::placeholder { color: var(--color-text-secondary); }
+.dsa-field__control--error { border-color: var(--color-accent-primary); }
+.dsa-field__error { color: var(--color-accent-primary); font-size: var(--fs-sm); margin: var(--space-stack-xs) 0 0; }
+
+/* ============================================================ CONTACT FORM */
+.dsa-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack-md);
+  max-width: 36rem;
+}
+.dsa-form__status { color: var(--color-text-secondary); font-size: var(--fs-sm); margin: 0; }

@@ -1,0 +1,59 @@
+/* DSA-Monitor — minimal token extensions.
+ * The design system defines the six category swatches but not a `neutral` one, while
+ * the IA requires long-tail topics to "degrade to a neutral chip". Define the neutral
+ * swatch pair from existing ink/cloud primitives so TopicChip swatch="neutral" resolves. */
+:root {
+  --category-neutral-accent: var(--ink-500);
+  --category-neutral-tint: var(--cloud-50);
+}
+
+/* Skip link — visually hidden until focused, then pinned top-left on brand blue. */
+.skip-link {
+  position: absolute;
+  left: var(--space-stack-md);
+  top: var(--space-stack-md);
+  z-index: 100;
+  transform: translateY(-200%);
+  background: var(--color-accent-brand);
+  color: var(--color-text-on-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Tables in report bodies — hairline frames, sharp corners, mono header.
+ * .tablewrap scrolls horizontally on small screens (the locked §9.5 mobile fallback). */
+.tablewrap {
+  overflow-x: auto;
+  margin: var(--space-stack-md) 0;
+  border: var(--bw-hairline, 1px) solid var(--color-border-strong);
+}
+.tablewrap:focus-visible {
+  outline: var(--bw-thick, 2px) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+.dsa-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--fs-sm);
+}
+.dsa-table th,
+.dsa-table td {
+  border: var(--bw-hairline, 1px) solid var(--color-border-default);
+  padding: var(--space-stack-sm) var(--space-inset-control);
+  text-align: left;
+  vertical-align: top;
+}
+.dsa-table th {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  background: var(--color-surface-subtle);
+}

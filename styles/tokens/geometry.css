@@ -1,0 +1,38 @@
+/* DSA-Monitor — geometry tokens: radius, borders, elevation.
+   The brutalist signature: sharp corners everywhere (0 radius),
+   hairline ink frames, NO shadows, NO gradients. */
+
+:root {
+  /* Radius — sharp corners are a brand signature */
+  --radius-none: 0px;
+  --radius-xs:   2px;   /* the ONLY non-zero radius — softens the focus ring */
+
+  --radius-control: var(--radius-none);
+  --radius-card:    var(--radius-none);
+  --radius-chip:    var(--radius-none);
+  --radius-focus:   var(--radius-xs);
+
+  /* Border widths */
+  --bw-hairline: 1px;
+  --bw-thick:    2px;
+
+  --border-divider: var(--bw-hairline);  /* dividers / card frames */
+  --border-card:    var(--bw-hairline);
+  --border-control: var(--bw-thick);     /* buttons / inputs */
+
+  /* Elevation — there is none; structure is drawn with ink rules */
+  --shadow-card: none;
+  --shadow-focus: 0 0 0 3px rgba(37, 55, 141, 0.45);  /* brand-blue focus glow */
+
+  /* Motion — minimal, gentle */
+  --motion-fast: 150ms; /* @kind other */
+  --motion-base: 200ms; /* @kind other */
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,12 @@
+# DSA-Monitor — Netlify deploy config.
+[build]
+  command = "next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# The official Next.js runtime: serverless functions for ISR, on-demand revalidation,
+# draft mode, and the Sanity webhook route.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

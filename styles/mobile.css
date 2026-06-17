@@ -1,0 +1,133 @@
+/* DSA-Monitor — mobile layout. Reflows the desktop kit (kit.css) to a 390px phone column.
+   Design-canvas artboards keep the full viewport width, so the DS / kit media queries
+   (max-width:640/768) never fire here — every collapse is an EXPLICIT override scoped to
+   .m-page. All visual tokens still come from the bound DS; this only changes layout. */
+
+/* ---- Phone shell -------------------------------------------------------- */
+.m-phone {
+  width: 390px;
+  position: relative;
+  background: var(--color-surface-canvas);
+  border-radius: 46px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12);
+  font-family: var(--font-body);
+}
+.m-phone__island {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 112px; height: 33px; border-radius: 20px; background: #000; z-index: 50;
+}
+.m-statusbar { position: relative; z-index: 20; }
+.m-statusbar--dark { background: var(--color-surface-inverse); }
+.m-statusbar--light { background: var(--color-surface-canvas); }
+
+/* ---- Mobile top bar (wordmark + hamburger) ------------------------------ */
+.m-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: var(--bw-hairline, 1px) solid var(--color-border-strong);
+  background: var(--color-surface-canvas);
+}
+.m-nav--inverse { background: var(--color-surface-inverse); border-bottom: 0; }
+.m-nav__brand {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-heading); font-weight: var(--fw-extrabold);
+  font-size: var(--fs-lg); color: var(--color-text-primary); text-decoration: none;
+  letter-spacing: var(--ls-tight);
+}
+.m-nav--inverse .m-nav__brand { color: var(--color-text-on-inverse); }
+.m-nav__mark { width: 13px; height: 13px; background: var(--color-accent-primary); flex: none; }
+.m-burger {
+  width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center;
+  border: var(--bw-thick, 2px) solid var(--color-border-strong);
+  background: none; cursor: pointer; padding: 0; margin: -2px -4px -2px 0;
+}
+.m-nav--inverse .m-burger { border-color: rgba(255,255,255,0.4); }
+.m-burger__lines { display: flex; flex-direction: column; gap: 4px; }
+.m-burger__lines span { display: block; width: 20px; height: 2px; background: var(--color-text-primary); }
+.m-nav--inverse .m-burger__lines span { background: var(--color-text-on-inverse); }
+
+/* Open-menu panel (drops below the bar) */
+.m-menu {
+  background: var(--color-surface-inverse);
+  border-top: var(--bw-hairline, 1px) solid var(--color-border-inverse);
+}
+.m-menu__list { list-style: none; margin: 0; padding: 8px 0; }
+.m-menu__list li { border-bottom: var(--bw-hairline, 1px) solid var(--color-border-inverse); }
+.m-menu__list li:last-child { border-bottom: 0; }
+.m-menu__link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; text-decoration: none;
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--ls-label);
+  font-size: var(--fs-sm); color: var(--color-text-on-inverse);
+}
+.m-menu__link[aria-current="page"] { color: var(--color-accent-primary); }
+.m-menu__link .arrow { color: var(--color-accent-primary); }
+
+/* ---- Page-level reflow (all scoped to .m-page) -------------------------- */
+.m-page { width: 100%; }
+.m-page .page { width: 100%; background: var(--color-surface-canvas); }
+.m-page .wrap { max-width: none; padding-left: 20px; padding-right: 20px; }
+.m-page .band { padding-top: 44px; padding-bottom: 44px; }
+.m-page .band--tight { padding-top: 28px; padding-bottom: 28px; }
+
+/* Hero */
+.m-page .hero__inner { padding-top: 36px; padding-bottom: 48px; }
+.m-page .hero__field { right: -120px; opacity: 0.9; }
+.m-page .hero h1 { font-size: 34px; line-height: 1.08; max-width: none; }
+.m-page .hero__lead { font-size: var(--fs-md); max-width: none; margin-top: var(--space-stack-md); }
+.m-page .hero__actions { flex-direction: column; align-items: stretch; gap: var(--space-stack-sm); }
+.m-page .hero__actions .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+/* KPI strip */
+.m-page .kpiband { padding: var(--space-stack-lg) 0; }
+.m-page .dsa-kpi-grid { grid-template-columns: 1fr; }
+.m-page .dsa-kpi-grid .dsa-kpi__num { font-size: var(--fs-4xl); }
+
+/* Section heads */
+.m-page .section-head { flex-direction: column; align-items: stretch; gap: var(--space-stack-md); margin-bottom: var(--space-stack-lg); }
+.m-page .section-head h2 { font-size: var(--fs-2xl); max-width: none; }
+.m-page .section-head .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+/* Card grid → single column, with the same inter-card spacing as desktop */
+.m-page .cardgrid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+
+/* How-we-work → stacked cells */
+.m-page .howwork { grid-template-columns: 1fr; margin-top: var(--space-stack-lg); }
+.m-page .howwork__cell { padding: var(--space-stack-lg); border-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-strong); }
+.m-page .howwork__cell:first-child { border-top: 0; }
+.m-page .howwork__cell h2 { font-size: var(--fs-xl); max-width: none; }
+
+/* Evidence trio → stacked */
+.m-page .trio { grid-template-columns: 1fr; }
+.m-page .trio__cell { border-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-strong); }
+.m-page .trio__cell:first-child { border-top: 0; }
+
+/* Conviction closer */
+.m-page .cta__grid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+.m-page .cta h2 { font-size: 30px; max-width: none; }
+.m-page .cta__actions .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
+
+/* Hatch divider — thinner on mobile */
+.m-page .hatch { height: 44px; }
+
+/* Publications head + filter */
+.m-page .pagehead { padding-top: var(--space-stack-lg); padding-bottom: var(--space-stack-lg); }
+.m-page .pagehead h1 { font-size: var(--fs-4xl); }
+.m-page .pagehead p { font-size: var(--fs-md); max-width: none; }
+/* Filter chips wrap onto multiple lines so every topic is visible (no hidden scroll) */
+.m-page .m-filterbar { flex-wrap: wrap; gap: var(--space-stack-sm); margin-bottom: var(--space-stack-md); }
+.m-page .m-filterbar .dsa-chip { min-height: 40px; }
+
+/* Mobile pager: tighter step padding + smaller gaps so Prev / 1 2 3 / Next stay on one row */
+.m-page .pager { gap: var(--space-stack-sm); flex-wrap: nowrap; }
+.m-page .pager__step { padding: 0 12px; }
+.m-page .pager__pages { gap: 6px; }
+.m-page .pager__page { min-width: 40px; }
+
+/* Footer → single column, every block stacked under the previous */
+.m-page .dsa-footer__inner { grid-template-columns: 1fr; gap: var(--space-stack-lg); padding: var(--space-stack-lg) 20px; }
+.m-page .dsa-footer__legal { padding: var(--space-stack-md) 20px; }
+.m-page .dsa-partners__inner { grid-template-columns: 1fr; padding: var(--space-stack-lg) 20px; gap: var(--space-stack-lg); }
+.m-page .dsa-partners__group--funders { border-left: 0; padding-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-default); padding-top: var(--space-stack-lg); }
+.m-page .dsa-partners__list img { height: 38px; }

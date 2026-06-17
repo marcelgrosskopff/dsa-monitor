@@ -1,0 +1,32 @@
+/* DSA-Monitor — spacing & layout tokens.
+   8px base grid (kickoff decision). Semantic stack/inset/section aliases below. */
+
+:root {
+  /* Base scale (8px grid) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* Semantic — vertical stacks */
+  --space-stack-xs: var(--space-2);   /* 8  */
+  --space-stack-sm: var(--space-3);   /* 12 */
+  --space-stack-md: var(--space-4);   /* 16 */
+  --space-stack-lg: var(--space-8);   /* 32 */
+  --space-stack-xl: var(--space-16);  /* 64 */
+  --space-section:  var(--space-24);  /* 96 — between major blocks */
+
+  /* Semantic — insets & gutters */
+  --space-inset-control: var(--space-3);  /* 12 — button / input padding */
+  --space-inset-card:    var(--space-6);  /* 24 — card padding */
+  --space-gutter:        var(--space-8);  /* 32 — grid gutter */
+
+  /* Layout */
+  --layout-max: 1280px;   /* centred content column */
+  --layout-read: 68ch;    /* article reading column (~60–75ch) */
+}

@@ -1,0 +1,94 @@
+import { groq } from "next-sanity";
+
+// Shared projections ------------------------------------------------------------
+
+const topicRefProjection = `{
+  "label": label,
+  "swatch": coalesce(swatch, "neutral")
+}`;
+
+const reportProjection = `{
+  "slug": slug.current,
+  title,
+  subtitle,
+  articleType,
+  platforms,
+  publishedAt,
+  summary,
+  body,
+  methodology,
+  kpis[]{ number, label, accent },
+  "primaryTopic": primaryTopic->${topicRefProjection},
+  "topics": topics[]->${topicRefProjection},
+  "downloads": downloads[]{
+    label,
+    language,
+    formatOverride,
+    "url": file.asset->url,
+    "extension": file.asset->extension,
+    "sizeBytes": file.asset->size
+  },
+  attribution,
+  source,
+  metaTitle,
+  metaDescription
+}`;
+
+export const reportsQuery = groq`
+  *[_type == "report" && defined(slug.current)] | order(publishedAt desc) ${reportProjection}
+`;
+
+export const reportBySlugQuery = groq`
+  *[_type == "report" && slug.current == $slug][0] ${reportProjection}
+`;
+
+export const reportSlugsQuery = groq`
+  *[_type == "report" && defined(slug.current)]{ "slug": slug.current }
+`;
+
+export const relatedReportsQuery = groq`
+  *[_type == "report" && slug.current != $slug && primaryTopic->label == $topicLabel]
+    | order(publishedAt desc)[0...3] ${reportProjection}
+`;
+
+export const topicsQuery = groq`
+  *[_type == "topic"] | order(order asc, label asc){
+    "label": label,
+    "slug": slug.current,
+    "swatch": coalesce(swatch, "neutral"),
+    "isPrimary": coalesce(isPrimary, true),
+    order
+  }
+`;
+
+export const resourceGroupsQuery = groq`
+  *[_type == "resourceGroup"] | order(order asc){
+    name,
+    "description": description,
+    order,
+    featured,
+    "items": items[]{
+      type,
+      label,
+      href,
+      language,
+      "url": file.asset->url,
+      "extension": file.asset->extension,
+      "sizeBytes": file.asset->size
+    }
+  }
+`;
+
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0]{
+    contactEmail,
+    linkedinUrl,
+    platformsMonitoredCount,
+    "partners": partners[]{ name, "src": logo.asset->url },
+    "funders": funders[]{ name, "src": logo.asset->url }
+  }
+`;
+
+export const pageContentQuery = groq`
+  *[_type == $type][0]{ body }
+`;
