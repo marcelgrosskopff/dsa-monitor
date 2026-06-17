@@ -1,4 +1,5 @@
-import { client } from "@/sanity/lib/client";
+import { draftMode } from "next/headers";
+import { client, previewClient } from "@/sanity/lib/client";
 import { sanityConfigured } from "@/sanity/env";
 import {
   pageContentQuery,
@@ -30,6 +31,29 @@ import type {
 // Tag-based revalidation: every Sanity read is tagged so the webhook route can
 // invalidate precisely (see app/api/revalidate/route.ts).
 const TAGS = { report: "report", topic: "topic", resource: "resource", settings: "settings" };
+
+// Returns previewClient (stega + previewDrafts) when Next.js draft mode is on,
+// otherwise returns the regular CDN-backed published client.
+// Falls back to regular client during static generation (where draftMode() throws).
+async function getQueryClient() {
+  try {
+    const { isEnabled } = await draftMode();
+    return isEnabled ? previewClient : client;
+  } catch {
+    return client;
+  }
+}
+
+// Cache options: ISR tags for published fetches; no-store for draft previews.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchOptions(tags: string[]): Promise<Record<string, any>> {
+  try {
+    const { isEnabled } = await draftMode();
+    return isEnabled ? { cache: "no-store" } : { next: { tags } };
+  } catch {
+    return { next: { tags } };
+  }
+}
 
 const LANG_CODE: Record<string, string> = {
   english: "EN",
@@ -126,22 +150,16 @@ function mapResourceGroup(g: any): ResourceGroup {
 
 export async function getReports(): Promise<Report[]> {
   if (!sanityConfigured) return SEED_REPORTS;
-  const data = await client.fetch(
-    reportsQuery,
-    {},
-    { next: { tags: [TAGS.report] } }
-  );
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.report])]);
+  const data = await qc.fetch(reportsQuery, {}, opts);
   if (!data?.length) return SEED_REPORTS;
   return data.map(mapReport);
 }
 
 export async function getReport(slug: string): Promise<Report | null> {
   if (!sanityConfigured) return SEED_REPORTS.find((r) => r.slug === slug) ?? null;
-  const data = await client.fetch(
-    reportBySlugQuery,
-    { slug },
-    { next: { tags: [TAGS.report] } }
-  );
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.report])]);
+  const data = await qc.fetch(reportBySlugQuery, { slug }, opts);
   return data ? mapReport(data) : null;
 }
 
@@ -154,44 +172,37 @@ export async function getReportSlugs(): Promise<string[]> {
 
 export async function getRelatedReports(slug: string, topicLabel: string): Promise<Report[]> {
   if (!sanityConfigured) return seedRelated(slug);
-  const data = await client.fetch(
-    relatedReportsQuery,
-    { slug, topicLabel },
-    { next: { tags: [TAGS.report] } }
-  );
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.report])]);
+  const data = await qc.fetch(relatedReportsQuery, { slug, topicLabel }, opts);
   return (data ?? []).map(mapReport);
 }
 
 export async function getTopics(): Promise<Topic[]> {
   if (!sanityConfigured) return SEED_TOPICS;
-  const data = await client.fetch(topicsQuery, {}, { next: { tags: [TAGS.topic] } });
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.topic])]);
+  const data = await qc.fetch(topicsQuery, {}, opts);
   if (!data?.length) return SEED_TOPICS;
   return data;
 }
 
 export async function getResourceGroups(): Promise<ResourceGroup[]> {
   if (!sanityConfigured) return SEED_RESOURCE_GROUPS;
-  const data = await client.fetch(
-    resourceGroupsQuery,
-    {},
-    { next: { tags: [TAGS.resource] } }
-  );
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.resource])]);
+  const data = await qc.fetch(resourceGroupsQuery, {}, opts);
   if (!data?.length) return SEED_RESOURCE_GROUPS;
   return data.map(mapResourceGroup);
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   if (!sanityConfigured) return SEED_SETTINGS;
-  const data = await client.fetch(
-    siteSettingsQuery,
-    {},
-    { next: { tags: [TAGS.settings] } }
-  );
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(siteSettingsQuery, {}, opts);
   return data ?? SEED_SETTINGS;
 }
 
 export async function getPageContent(type: string): Promise<unknown[] | null> {
   if (!sanityConfigured) return null;
-  const data = await client.fetch(pageContentQuery, { type }, { next: { tags: [TAGS.settings] } });
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(pageContentQuery, { type }, opts);
   return data?.body ?? null;
 }

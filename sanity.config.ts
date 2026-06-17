@@ -3,7 +3,7 @@
 import { defineConfig, type Template } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
-import { presentationTool } from "sanity/presentation";
+import { defineLocations, presentationTool } from "sanity/presentation";
 import { apiVersion, dataset, projectId, studioUrl } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
@@ -68,6 +68,56 @@ export default defineConfig({
         draftMode: {
           enable: "/api/draft",
           disable: "/api/disable-draft",
+        },
+      },
+      resolve: {
+        locations: {
+          // Each document type maps to the URL that previews it.
+          report: defineLocations({
+            select: { title: "title", slug: "slug.current" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title ?? "Untitled report",
+                  href: `/publications/${doc?.slug ?? ""}`,
+                },
+                { title: "Publications hub", href: "/publications" },
+              ],
+            }),
+          }),
+          topic: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Publications hub", href: "/publications" }] }),
+          }),
+          resourceGroup: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Resources", href: "/resources" }] }),
+          }),
+          siteSettings: defineLocations({
+            select: {},
+            resolve: () => ({
+              locations: [
+                { title: "Home", href: "/" },
+                { title: "About", href: "/about" },
+              ],
+            }),
+          }),
+          homeContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Home", href: "/" }] }),
+          }),
+          aboutContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "About", href: "/about" }] }),
+          }),
+          impressumContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Impressum", href: "/impressum" }] }),
+          }),
+          privacyContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Privacy", href: "/privacy" }] }),
+          }),
         },
       },
     }),
