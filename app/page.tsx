@@ -61,19 +61,19 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="statebox">
-              <h3>Publications are on their way.</h3>
-              <p>
-                The first reports are being prepared for release. Check back
-                shortly, or read about how DSA-Monitor works.
-              </p>
+              <h3>{home.emptyStateHeading || "Publications are on their way."}</h3>
+              <p>{home.emptyStateBody || "The first reports are being prepared for release. Check back shortly, or read about how DSA-Monitor works."}</p>
             </div>
           )}
         </div>
       </section>
 
       <HowWeWork
+        eyebrow={home.howWeWorkEyebrow}
+        whatLabel={home.howWeWorkWhatLabel}
         whatHeading={home.howWeDoItHeading}
         whatBody={home.howWeDoItBody}
+        whyLabel={home.howWeWorkWhyLabel}
         whyHeading={home.whyWeDoItHeading}
         whyBody={home.whyWeDoItBody}
       />

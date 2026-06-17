@@ -12,6 +12,7 @@ import {
   TopicChip,
 } from "@/components/ds";
 import {
+  getPublicationsContent,
   getRelatedReports,
   getReport,
   getReportSlugs,
@@ -35,7 +36,7 @@ export async function generateMetadata({
   return reportMetadata(report);
 }
 
-function AttributionBlock({ a }: { a: Attribution }) {
+function AttributionBlock({ a, label }: { a: Attribution; label?: string }) {
   const lines = [
     a.projectName && a.fundedBy
       ? `${a.projectName} — funded by ${a.fundedBy}.`
@@ -47,7 +48,7 @@ function AttributionBlock({ a }: { a: Attribution }) {
   return (
     <div className="article__section">
       <div className="attribution">
-        <span className="dsa-label">Project &amp; funding</span>
+        <span className="dsa-label">{label || "Project & funding"}</span>
         {lines.map((l, i) => (
           <p key={i}>{l}</p>
         ))}
@@ -62,7 +63,10 @@ export default async function ReportPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const report = await getReport(slug);
+  const [report, pubContent] = await Promise.all([
+    getReport(slug),
+    getPublicationsContent(),
+  ]);
   if (!report) notFound();
 
   const related = await getRelatedReports(slug, report.primaryTopic.label);
@@ -77,7 +81,7 @@ export default async function ReportPage({
       <div className="band--canvas">
         <div className="article">
           <Link className="backlink" href="/publications">
-            ← All publications
+            {pubContent.reportBackLabel || "← All publications"}
           </Link>
 
           <header className="dsa-articlehead dsa-articlehead--split">
@@ -111,13 +115,13 @@ export default async function ReportPage({
               )}
 
               <div className="article__section">
-                <h2>Summary</h2>
+                <h2>{pubContent.reportSummaryLabel || "Summary"}</h2>
                 <RichBody value={report.body} lead />
               </div>
 
               {report.methodology && report.methodology.length > 0 && (
                 <div className="article__section">
-                  <h2>Methodology</h2>
+                  <h2>{pubContent.reportMethodologyLabel || "Methodology"}</h2>
                   <div className="methodology">
                     <RichBody value={report.methodology} />
                   </div>
@@ -125,13 +129,13 @@ export default async function ReportPage({
               )}
 
               {report.attribution && (
-                <AttributionBlock a={report.attribution} />
+                <AttributionBlock a={report.attribution} label={pubContent.reportFundingLabel} />
               )}
 
               {report.source?.href && (
                 <div className="article__section">
                   <p>
-                    Source &amp; replication:{" "}
+                    {pubContent.reportSourceLabel || "Source & replication"}:{" "}
                     <OutboundLink href={report.source.href}>
                       {report.source.label}
                     </OutboundLink>
@@ -141,7 +145,7 @@ export default async function ReportPage({
 
               {related.length > 0 && (
                 <div className="article__section">
-                  <h2>Related publications</h2>
+                  <h2>{pubContent.reportRelatedLabel || "Related publications"}</h2>
                   <div className="cardgrid">
                     {related.map((r) => (
                       <ResearchCardX
@@ -160,13 +164,13 @@ export default async function ReportPage({
               )}
 
               <Link className="backlink backlink--foot" href="/publications">
-                ← All publications
+                {pubContent.reportBackLabel || "← All publications"}
               </Link>
             </div>
 
             <aside className="rail">
               <section className="dlbox" aria-label="Download this report">
-                <p className="dlbox__label dsa-label">Download</p>
+                <p className="dlbox__label dsa-label">{pubContent.reportDownloadLabel || "Download"}</p>
                 <div className="dlbox__row">
                   {report.downloads.map((d, i) => {
                     const sub = [d.language, d.size].filter(Boolean).join(" · ");

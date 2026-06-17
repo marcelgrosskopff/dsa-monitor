@@ -220,8 +220,13 @@ export interface HomeContent {
   heroLead?: string;
   latestEyebrow?: string;
   latestHeading?: string;
+  emptyStateHeading?: string;
+  emptyStateBody?: string;
+  howWeWorkEyebrow?: string;
+  howWeWorkWhatLabel?: string;
   howWeDoItHeading?: string;
   howWeDoItBody?: unknown[];
+  howWeWorkWhyLabel?: string;
   whyWeDoItHeading?: string;
   whyWeDoItBody?: unknown[];
   evidenceHeading?: string;
@@ -231,27 +236,50 @@ export interface HomeContent {
 }
 
 export interface AboutContent {
+  eyebrowLabel?: string;
+  pageHeading?: string;
   lead?: string;
   body?: unknown[];
   pressNote?: string;
 }
 
 export interface ImpressumContent {
+  eyebrowLabel?: string;
+  pageHeading?: string;
   intro?: string;
   body?: unknown[];
 }
 
 export interface PrivacyContent {
+  eyebrowLabel?: string;
+  pageHeading?: string;
   intro?: string;
   body?: unknown[];
+  analyticsHeading?: string;
+  analyticsBody?: string;
+  optOutHeading?: string;
+  optOutNote?: string;
 }
 
 export interface PublicationsContent {
+  eyebrowLabel?: string;
   heading?: string;
   description?: string;
+  countSuffix?: string;
+  filterAllLabel?: string;
+  filterEmptyHeading?: string;
+  filterEmptyBody?: string;
+  reportBackLabel?: string;
+  reportSummaryLabel?: string;
+  reportMethodologyLabel?: string;
+  reportRelatedLabel?: string;
+  reportDownloadLabel?: string;
+  reportSourceLabel?: string;
+  reportFundingLabel?: string;
 }
 
 export interface ResourcesContent {
+  eyebrowLabel?: string;
   heading?: string;
   description?: string;
 }

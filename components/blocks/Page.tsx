@@ -28,6 +28,11 @@ export async function Page({
         linkedinUrl={settings.linkedinUrl}
         footerDescriptor={settings.footerDescriptor}
         footerAddress={settings.footerAddress}
+        footerColSite={settings.footerColSite}
+        footerColLegal={settings.footerColLegal}
+        footerColContact={settings.footerColContact}
+        copyrightSuffix={settings.copyrightSuffix}
+        linkedinLabel={settings.linkedinLabel}
       />
     </div>
   );

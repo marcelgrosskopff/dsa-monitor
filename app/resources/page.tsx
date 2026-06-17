@@ -50,7 +50,7 @@ function Group({ group, index }: { group: ResourceGroup; index: string }) {
 
       {group.featured && (
         <div className="resfeatured">
-          <p className="resfeatured__tag">Featured · out-of-court redress</p>
+          <p className="resfeatured__tag">{group.featured.tag || "Featured · out-of-court redress"}</p>
           <h3>{group.featured.title}</h3>
           <p>{group.featured.body}</p>
           <OutboundLink href={group.featured.linkHref || "#"}>
@@ -80,7 +80,7 @@ export default async function ResourcesPage() {
     <Page current="/resources">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label="Resources" />
+          <SectionEyebrow index="01" label={resContent.eyebrowLabel || "Resources"} />
           <h1>{resContent.heading || "Resources for trusted flaggers."}</h1>
           <p>
             {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform’s own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}

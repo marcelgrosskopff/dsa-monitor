@@ -24,12 +24,12 @@ export default async function PublicationsPage() {
     <Page current="/publications">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label="Publications" />
+          <SectionEyebrow index="01" label={pubContent.eyebrowLabel || "Publications"} />
           <h1>{pubContent.heading || "Publications."}</h1>
           <p>
             {pubContent.description || "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence."}
           </p>
-          <p className="count">{`${reports.length} reports · newest first`}</p>
+          <p className="count">{`${reports.length} reports · ${pubContent.countSuffix || "newest first"}`}</p>
         </div>
       </div>
 
@@ -40,6 +40,9 @@ export default async function PublicationsPage() {
               reports={reports}
               topics={topics}
               totalCount={reports.length}
+              filterAllLabel={pubContent.filterAllLabel}
+              filterEmptyHeading={pubContent.filterEmptyHeading}
+              filterEmptyBody={pubContent.filterEmptyBody}
             />
           </Suspense>
         </div>

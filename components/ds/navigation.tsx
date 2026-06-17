@@ -117,6 +117,11 @@ export function SiteFooter({
   linkedinUrl = "https://at.linkedin.com",
   footerDescriptor,
   footerAddress,
+  footerColSite,
+  footerColLegal,
+  footerColContact,
+  copyrightSuffix,
+  linkedinLabel,
   year,
 }: {
   partners?: Logo[];
@@ -126,11 +131,16 @@ export function SiteFooter({
   linkedinUrl?: string;
   footerDescriptor?: string;
   footerAddress?: string;
+  footerColSite?: string;
+  footerColLegal?: string;
+  footerColContact?: string;
+  copyrightSuffix?: string;
+  linkedinLabel?: string;
   year?: number;
 }) {
   const cols = [
     {
-      title: "Site",
+      title: footerColSite || "Site",
       links: [
         ["Home", "/"],
         ["Publications", "/publications"],
@@ -139,7 +149,7 @@ export function SiteFooter({
       ],
     },
     {
-      title: "Legal",
+      title: footerColLegal || "Legal",
       links: [
         ["Impressum", "/impressum"],
         ["Privacy", "/privacy"],
@@ -179,7 +189,7 @@ export function SiteFooter({
             </nav>
           ))}
           <div>
-            <p className="dsa-footer__coltitle dsa-label">Contact</p>
+            <p className="dsa-footer__coltitle dsa-label">{footerColContact || "Contact"}</p>
             <ul className="dsa-footer__links">
               <li>
                 <a className="dsa-footer__mail" href={`mailto:${contactEmail}`}>
@@ -190,13 +200,13 @@ export function SiteFooter({
           </div>
         </div>
         <div className="dsa-footer__legal dsa-label">
-          <span>© {displayYear} ÖIAT · CC BY-SA 4.0</span>
+          <span>© {displayYear} {copyrightSuffix || "ÖIAT · CC BY-SA 4.0"}</span>
           <a
             href={linkedinUrl}
             className="dsa-footer__mail"
             style={{ color: "inherit" } as CSSProperties}
           >
-            LinkedIn
+            {linkedinLabel || "LinkedIn"}
           </a>
         </div>
       </footer>

@@ -138,23 +138,29 @@ export function EvidenceBoxes({
 
 /** "How we work" — What we do + Why we do it, merged into one hairline panel. */
 export function HowWeWork({
+  eyebrow,
+  whatLabel,
   whatHeading,
   whatBody,
+  whyLabel,
   whyHeading,
   whyBody,
 }: {
+  eyebrow?: string;
+  whatLabel?: string;
   whatHeading?: string;
   whatBody?: unknown[];
+  whyLabel?: string;
   whyHeading?: string;
   whyBody?: unknown[];
 }) {
   return (
     <section className="band band--sky band--toppad">
       <div className="wrap">
-        <SectionEyebrow index="03" label="How we work" />
+        <SectionEyebrow index="03" label={eyebrow || "How we work"} />
         <div className="howwork">
           <div className="howwork__cell">
-            <span className="howwork__label dsa-label hl-sky">What we do</span>
+            <span className="howwork__label dsa-label hl-sky">{whatLabel || "What we do"}</span>
             <h2>
               {whatHeading ?? (
                 <>Empirical research on platform <span className="hl-sky">compliance</span>.</>
@@ -171,7 +177,7 @@ export function HowWeWork({
             )}
           </div>
           <div className="howwork__cell">
-            <span className="howwork__label dsa-label hl-sky">Why we do it</span>
+            <span className="howwork__label dsa-label hl-sky">{whyLabel || "Why we do it"}</span>
             <h2>
               {whyHeading ?? (
                 <>Enforcement needs independent <span className="hl-sky">evidence</span>.</>

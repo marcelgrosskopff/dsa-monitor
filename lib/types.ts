@@ -94,6 +94,7 @@ export interface ResourceItem {
 }
 
 export interface ResourceFeatured {
+  tag?: string;
   title: string;
   body: string;
   linkLabel: string;
@@ -119,11 +120,16 @@ export interface SiteSettings {
   partners: Logo[];
   funders: Logo[];
   platformsMonitoredCount?: number;
-  footerDescriptor?: string;
-  footerAddress?: string;
   publisherName?: string;
   activeSince?: string;
   orgStatus?: string;
   licence?: string;
   locationLabel?: string;
+  footerDescriptor?: string;
+  footerAddress?: string;
+  footerColSite?: string;
+  footerColLegal?: string;
+  footerColContact?: string;
+  copyrightSuffix?: string;
+  linkedinLabel?: string;
 }

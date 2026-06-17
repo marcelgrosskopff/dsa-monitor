@@ -154,6 +154,7 @@ export const resourceFeatured = defineType({
   type: "object",
   options: { collapsible: true, collapsed: true },
   fields: [
+    defineField({ name: "tag", type: "string", title: "Tag label (e.g. 'Featured · out-of-court redress')" }),
     defineField({ name: "title", type: "string" }),
     defineField({ name: "body", type: "text", rows: 4 }),
     defineField({ name: "linkLabel", type: "string" }),

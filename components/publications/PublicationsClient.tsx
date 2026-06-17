@@ -18,10 +18,16 @@ export function PublicationsClient({
   reports,
   topics,
   totalCount,
+  filterAllLabel = "All topics",
+  filterEmptyHeading = "No publications under",
+  filterEmptyBody = "Reports are added as studies are completed. In the meantime, browse everything we've published.",
 }: {
   reports: Report[];
   topics: Topic[];
   totalCount: number;
+  filterAllLabel?: string;
+  filterEmptyHeading?: string;
+  filterEmptyBody?: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -65,7 +71,7 @@ export function PublicationsClient({
       <div className="filterbar">
         <TopicChip
           swatch="blue"
-          label="All topics"
+          label={filterAllLabel}
           asFilter
           selected={active === null}
           onToggle={() => setQuery({ topic: null })}
@@ -123,7 +129,7 @@ export function PublicationsClient({
                 disabled={safePage === 1}
                 onClick={() => setQuery({ page: safePage - 1 })}
               >
-                ← Prev
+                {"←"} Prev
               </button>
               <ul className="pager__pages">
                 {Array.from({ length: pageCount }, (_, i) => i + 1).map((p) => (
@@ -145,18 +151,15 @@ export function PublicationsClient({
                 disabled={safePage === pageCount}
                 onClick={() => setQuery({ page: safePage + 1 })}
               >
-                Next →
+                Next {"→"}
               </button>
             </nav>
           )}
         </>
       ) : (
         <div className="statebox">
-          <h3>{`No publications under “${active}” yet.`}</h3>
-          <p>
-            Reports are added as studies are completed. In the meantime, browse
-            everything we&apos;ve published.
-          </p>
+          <h3>{filterEmptyHeading} &ldquo;{active}&rdquo; yet.</h3>
+          <p>{filterEmptyBody}</p>
           <button
             className="clearfilter"
             type="button"

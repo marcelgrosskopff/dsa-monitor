@@ -17,8 +17,8 @@ export default async function ImpressumPage() {
     <Page current="/about">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label="Legal notice" />
-          <h1>Impressum.</h1>
+          <SectionEyebrow index="01" label={content.eyebrowLabel || "Legal notice"} />
+          <h1>{content.pageHeading || "Impressum."}</h1>
           <p>
             {content.intro || "Disclosure under §§ 24, 25 Mediengesetz and § 5 E-Commerce-Gesetz."}
           </p>

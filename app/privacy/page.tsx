@@ -25,8 +25,8 @@ export default async function PrivacyPage() {
     <Page current="/about">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label="Privacy" />
-          <h1>Privacy.</h1>
+          <SectionEyebrow index="01" label={content.eyebrowLabel || "Privacy"} />
+          <h1>{content.pageHeading || "Privacy."}</h1>
           <p>
             {content.intro || "How DSA-Monitor handles data, and how to opt out of anonymised usage statistics."}
           </p>
@@ -36,21 +36,15 @@ export default async function PrivacyPage() {
         {content.body?.length && <RichBody value={content.body} />}
         <div className="legal__grid">
           <div className="legal__item">
-            <h2>Analytics (Matomo)</h2>
+            <h2>{content.analyticsHeading || "Analytics (Matomo)"}</h2>
             <p>
-              We use Matomo, a self-hosted analytics tool operated by ÖIAT, to
-              understand how the site is used. Matomo runs{" "}
-              <strong>without cookies</strong> and with{" "}
-              <strong>IP anonymisation</strong>, so no personal data is stored
-              and no consent banner is required. We do not share analytics data
-              with third parties.
+              {content.analyticsBody || "We use Matomo, a self-hosted analytics tool operated by ÖIAT, to understand how the site is used. Matomo runs without cookies and with IP anonymisation, so no personal data is stored and no consent banner is required. We do not share analytics data with third parties."}
             </p>
           </div>
           <div className="legal__item">
-            <h2>Opt out</h2>
+            <h2>{content.optOutHeading || "Opt out"}</h2>
             <p>
-              You can opt out of anonymous measurement at any time using the
-              control below.
+              {content.optOutNote || "You can opt out of anonymous measurement at any time using the control below."}
             </p>
             {optOutSrc ? (
               <iframe

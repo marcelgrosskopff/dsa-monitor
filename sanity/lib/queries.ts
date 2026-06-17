@@ -66,7 +66,13 @@ export const resourceGroupsQuery = groq`
     name,
     "description": description,
     order,
-    featured,
+    "featured": featured{
+      tag,
+      title,
+      body,
+      linkLabel,
+      "linkHref": linkHref
+    },
     "items": items[]{
       type,
       label,
@@ -86,13 +92,18 @@ export const siteSettingsQuery = groq`
     platformsMonitoredCount,
     "partners": partners[]{ name, "src": logo.asset->url },
     "funders": funders[]{ name, "src": logo.asset->url },
-    footerDescriptor,
-    footerAddress,
     publisherName,
     activeSince,
     orgStatus,
     licence,
-    locationLabel
+    locationLabel,
+    footerDescriptor,
+    footerAddress,
+    footerColSite,
+    footerColLegal,
+    footerColContact,
+    copyrightSuffix,
+    linkedinLabel
   }
 `;
 
@@ -109,8 +120,13 @@ export const homeContentQuery = groq`
     heroLead,
     latestEyebrow,
     latestHeading,
+    emptyStateHeading,
+    emptyStateBody,
+    howWeWorkEyebrow,
+    howWeWorkWhatLabel,
     howWeDoItHeading,
     howWeDoItBody,
+    howWeWorkWhyLabel,
     whyWeDoItHeading,
     whyWeDoItBody,
     evidenceHeading,
@@ -121,21 +137,60 @@ export const homeContentQuery = groq`
 `;
 
 export const aboutContentQuery = groq`
-  *[_type == "aboutContent"][0]{ lead, body, pressNote }
+  *[_type == "aboutContent"][0]{
+    eyebrowLabel,
+    pageHeading,
+    lead,
+    body,
+    pressNote
+  }
 `;
 
 export const impressumContentQuery = groq`
-  *[_type == "impressumContent"][0]{ intro, body }
+  *[_type == "impressumContent"][0]{
+    eyebrowLabel,
+    pageHeading,
+    intro,
+    body
+  }
 `;
 
 export const privacyContentQuery = groq`
-  *[_type == "privacyContent"][0]{ intro, body }
+  *[_type == "privacyContent"][0]{
+    eyebrowLabel,
+    pageHeading,
+    intro,
+    body,
+    analyticsHeading,
+    analyticsBody,
+    optOutHeading,
+    optOutNote
+  }
 `;
 
 export const publicationsContentQuery = groq`
-  *[_type == "publicationsContent"][0]{ heading, description }
+  *[_type == "publicationsContent"][0]{
+    eyebrowLabel,
+    heading,
+    description,
+    countSuffix,
+    filterAllLabel,
+    filterEmptyHeading,
+    filterEmptyBody,
+    reportBackLabel,
+    reportSummaryLabel,
+    reportMethodologyLabel,
+    reportRelatedLabel,
+    reportDownloadLabel,
+    reportSourceLabel,
+    reportFundingLabel
+  }
 `;
 
 export const resourcesContentQuery = groq`
-  *[_type == "resourcesContent"][0]{ heading, description }
+  *[_type == "resourcesContent"][0]{
+    eyebrowLabel,
+    heading,
+    description
+  }
 `;

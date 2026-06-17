@@ -31,8 +31,8 @@ export default async function AboutPage() {
     <Page current="/about">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label="About" />
-          <h1>About DSA-Monitor.</h1>
+          <SectionEyebrow index="01" label={aboutContent.eyebrowLabel || "About"} />
+          <h1>{aboutContent.pageHeading || "About DSA-Monitor."}</h1>
         </div>
       </div>
       <section className="wrap" style={{ paddingBottom: "var(--space-section)" }}>
