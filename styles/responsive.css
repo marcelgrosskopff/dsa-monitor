@@ -5,7 +5,44 @@
  * reflows behind a genuine media query. These rules are mobile.css lines 67–133,
  * rescoped from `.m-page X` to a real `@media (max-width: 768px)`. Tokens unchanged. */
 
+/* ---- Mobile nav: burger visible, desktop list hidden ---- */
+.dsa-nav__mobile { display: none; position: relative; }
+.dsa-nav__burger {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; margin: -2px 0;
+  background: none; border: 2px solid currentColor; border-radius: 0; cursor: pointer;
+  color: var(--color-text-primary);
+}
+.dsa-nav--inverse .dsa-nav__burger { color: var(--color-text-on-inverse); }
+.dsa-nav__burger:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+.dsa-nav__burger-lines { display: flex; flex-direction: column; gap: 4px; }
+.dsa-nav__burger-lines span { display: block; width: 18px; height: 2px; background: currentColor; }
+
+.dsa-nav__drawer {
+  position: absolute; top: calc(100% + 2px); right: -16px;
+  min-width: 200px; background: var(--color-surface-inverse);
+  border: 1px solid var(--color-border-inverse);
+  z-index: 200;
+}
+.dsa-nav__drawer-list { list-style: none; margin: 0; padding: 8px 0; }
+.dsa-nav__drawer-list li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+.dsa-nav__drawer-list li:last-child { border-bottom: 0; }
+.dsa-nav__drawer-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; text-decoration: none;
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--ls-label);
+  font-size: var(--fs-xs); color: var(--color-text-on-inverse);
+}
+.dsa-nav__drawer-link[aria-current="page"] { color: var(--color-accent-primary); }
+.dsa-nav__drawer-link:hover { color: var(--color-accent-primary); }
+.dsa-nav__drawer-arrow { color: var(--color-accent-primary); }
+
 @media (max-width: 768px) {
+  /* Nav: show burger, hide desktop link list */
+  .dsa-nav { position: relative; }
+  .dsa-nav__list { display: none; }
+  .dsa-nav__mobile { display: block; }
+
   .wrap { max-width: none; padding-left: 20px; padding-right: 20px; }
   .band { padding-top: 44px; padding-bottom: 44px; }
   .band--tight { padding-top: 28px; padding-bottom: 28px; }
@@ -56,6 +93,7 @@
   .pagehead p { font-size: var(--fs-md); max-width: none; }
   .filterbar { flex-wrap: wrap; gap: var(--space-stack-sm); margin-bottom: var(--space-stack-md); }
   .filterbar .dsa-chip { min-height: 40px; }
+  .listingbar { flex-direction: column; align-items: flex-start; gap: var(--space-stack-sm); }
 
   /* Pager */
   .pager { gap: var(--space-stack-sm); flex-wrap: nowrap; }
@@ -75,4 +113,9 @@
 
   /* About → single column */
   .about__cols { grid-template-columns: 1fr; }
+
+  /* Footer → single column */
+  .dsa-footer__inner { grid-template-columns: 1fr; }
+  .dsa-partners__inner { grid-template-columns: 1fr; }
+  .dsa-partners__group--funders { border-left: 0; padding-left: 0; border-top: var(--bw-hairline,1px) solid var(--color-border-default); padding-top: var(--space-stack-lg); }
 }

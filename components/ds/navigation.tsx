@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Logo } from "@/lib/types";
+import { MobileNavMenu } from "./MobileNavMenu";
 
 const DEFAULT_NAV = [
   { href: "/", label: "Home" },
@@ -45,6 +46,7 @@ export function SiteNav({
           </li>
         ))}
       </ul>
+      <MobileNavMenu items={items} current={current} inverse={inverse} />
     </nav>
   );
 }
