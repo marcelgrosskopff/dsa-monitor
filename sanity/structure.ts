@@ -55,4 +55,8 @@ export const structure: StructureResolver = (S) =>
         .title("Resources copy")
         .id("resourcesContent")
         .child(S.document().schemaType("resourcesContent").documentId("resourcesContent")),
+      S.listItem()
+        .title("404 copy")
+        .id("notFoundContent")
+        .child(S.document().schemaType("notFoundContent").documentId("notFoundContent")),
     ]);

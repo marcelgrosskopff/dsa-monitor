@@ -11,12 +11,16 @@ export function Hero({
   headlineBefore,
   highlightWord,
   headlineAfter,
+  ctaLabel,
+  secondaryLabel,
 }: {
   eyebrow?: string;
   lead?: string;
   headlineBefore?: string;
   highlightWord?: string;
   headlineAfter?: string;
+  ctaLabel?: string;
+  secondaryLabel?: string;
 }) {
   const displayEyebrow = eyebrow || "— The DSA only works if someone is watching";
   const displayLead = lead || "DSA-Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.";
@@ -44,10 +48,10 @@ export function Hero({
         <p className="hero__lead">{displayLead}</p>
         <div className="hero__actions">
           <Button variant="primary" as="a" href="/publications">
-            Browse publications
+            {ctaLabel || "Browse publications"}
           </Button>
           <Button variant="secondary" onInverse as="a" href="/about">
-            About DSA-Monitor
+            {secondaryLabel || "About DSA-Monitor"}
           </Button>
         </div>
       </div>

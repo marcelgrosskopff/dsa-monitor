@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { SectionEyebrow } from "@/components/ds";
 import { PublicationsClient } from "@/components/publications/PublicationsClient";
-import { getPublicationsContent, getReports, getTopics } from "@/lib/content";
+import { getPublicationsContent, getReportsPaged, getTopics } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -13,12 +13,21 @@ export const metadata: Metadata = pageMetadata({
   path: "/publications",
 });
 
-export default async function PublicationsPage() {
-  const [reports, topics, pubContent] = await Promise.all([
-    getReports(),
-    getTopics(),
-    getPublicationsContent(),
-  ]);
+export default async function PublicationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ topic?: string; page?: string }>;
+}) {
+  const { topic, page: pageParam } = await searchParams;
+  const page = Math.max(1, Number(pageParam ?? 1));
+  const activeTopic = topic ?? null;
+
+  const [{ reports, totalCount, pageCount }, topics, pubContent] =
+    await Promise.all([
+      getReportsPaged({ topic: activeTopic, page }),
+      getTopics(),
+      getPublicationsContent(),
+    ]);
 
   return (
     <Page current="/publications">
@@ -27,9 +36,10 @@ export default async function PublicationsPage() {
           <SectionEyebrow index="01" label={pubContent.eyebrowLabel || "Publications"} />
           <h1>{pubContent.heading || "Publications."}</h1>
           <p>
-            {pubContent.description || "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence."}
+            {pubContent.description ||
+              "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence."}
           </p>
-          <p className="count">{`${reports.length} reports · ${pubContent.countSuffix || "newest first"}`}</p>
+          <p className="count">{`${totalCount} reports · ${pubContent.countSuffix || "newest first"}`}</p>
         </div>
       </div>
 
@@ -39,7 +49,10 @@ export default async function PublicationsPage() {
             <PublicationsClient
               reports={reports}
               topics={topics}
-              totalCount={reports.length}
+              totalCount={totalCount}
+              currentPage={page}
+              pageCount={pageCount}
+              activeTopic={activeTopic}
               filterAllLabel={pubContent.filterAllLabel}
               filterEmptyHeading={pubContent.filterEmptyHeading}
               filterEmptyBody={pubContent.filterEmptyBody}

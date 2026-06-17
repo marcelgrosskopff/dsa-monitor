@@ -1,23 +1,18 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Report, Topic } from "@/lib/types";
 import { TopicChip } from "@/components/ds";
 import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 
-const PAGE_SIZE = 6;
-
-function matchesTopic(r: Report, label: string): boolean {
-  return (
-    r.primaryTopic.label === label || r.topics.some((t) => t.label === label)
-  );
-}
-
 export function PublicationsClient({
   reports,
   topics,
   totalCount,
+  currentPage,
+  pageCount,
+  activeTopic,
   filterAllLabel = "All topics",
   filterEmptyHeading = "No publications under",
   filterEmptyBody = "Reports are added as studies are completed. In the meantime, browse everything we've published.",
@@ -25,6 +20,9 @@ export function PublicationsClient({
   reports: Report[];
   topics: Topic[];
   totalCount: number;
+  currentPage: number;
+  pageCount: number;
+  activeTopic: string | null;
   filterAllLabel?: string;
   filterEmptyHeading?: string;
   filterEmptyBody?: string;
@@ -32,18 +30,6 @@ export function PublicationsClient({
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
-
-  const active = params.get("topic");
-  const page = Math.max(1, Number(params.get("page") || 1));
-
-  const filtered = useMemo(
-    () => (active ? reports.filter((r) => matchesTopic(r, active)) : reports),
-    [active, reports]
-  );
-
-  const pageCount = Math.ceil(filtered.length / PAGE_SIZE) || 1;
-  const safePage = Math.min(page, pageCount);
-  const shown = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   const setQuery = useCallback(
     (next: { topic?: string | null; page?: number | null }) => {
@@ -64,7 +50,7 @@ export function PublicationsClient({
   );
 
   const toggle = (label: string | null) =>
-    setQuery({ topic: label === active ? null : label });
+    setQuery({ topic: label === activeTopic ? null : label });
 
   return (
     <>
@@ -73,7 +59,7 @@ export function PublicationsClient({
           swatch="blue"
           label={filterAllLabel}
           asFilter
-          selected={active === null}
+          selected={activeTopic === null}
           onToggle={() => setQuery({ topic: null })}
         />
         {topics.map((t) => (
@@ -82,32 +68,32 @@ export function PublicationsClient({
             swatch={t.swatch}
             label={t.label}
             asFilter
-            selected={active === t.label}
+            selected={activeTopic === t.label}
             onToggle={() => toggle(t.label)}
           />
         ))}
       </div>
 
       <p className="filtercount dsa-label" role="status" aria-live="polite">
-        {filtered.length} reports
+        {totalCount} reports
       </p>
 
-      {active && (
+      {activeTopic && (
         <p style={{ marginBottom: "var(--space-stack-md)" }}>
           <button
             className="clearfilter"
             type="button"
             onClick={() => setQuery({ topic: null })}
           >
-            {`← Clear filter — show all ${totalCount}`}
+            {`Clear filter — show all`}
           </button>
         </p>
       )}
 
-      {shown.length ? (
+      {reports.length ? (
         <>
           <div className="cardgrid">
-            {shown.map((r) => (
+            {reports.map((r) => (
               <ResearchCardX
                 key={r.slug}
                 swatch={r.swatch}
@@ -126,18 +112,18 @@ export function PublicationsClient({
               <button
                 type="button"
                 className="pager__step"
-                disabled={safePage === 1}
-                onClick={() => setQuery({ page: safePage - 1 })}
+                disabled={currentPage === 1}
+                onClick={() => setQuery({ page: currentPage - 1 })}
               >
-                {"←"} Prev
+                {"<-"} Prev
               </button>
               <ul className="pager__pages">
                 {Array.from({ length: pageCount }, (_, i) => i + 1).map((p) => (
                   <li key={p}>
                     <button
                       type="button"
-                      className={`pager__page${p === safePage ? " is-current" : ""}`}
-                      aria-current={p === safePage ? "page" : undefined}
+                      className={`pager__page${p === currentPage ? " is-current" : ""}`}
+                      aria-current={p === currentPage ? "page" : undefined}
                       onClick={() => setQuery({ page: p })}
                     >
                       {p}
@@ -148,24 +134,26 @@ export function PublicationsClient({
               <button
                 type="button"
                 className="pager__step"
-                disabled={safePage === pageCount}
-                onClick={() => setQuery({ page: safePage + 1 })}
+                disabled={currentPage === pageCount}
+                onClick={() => setQuery({ page: currentPage + 1 })}
               >
-                Next {"→"}
+                Next {"->"}
               </button>
             </nav>
           )}
         </>
       ) : (
         <div className="statebox">
-          <h3>{filterEmptyHeading} &ldquo;{active}&rdquo; yet.</h3>
+          <h3>
+            {filterEmptyHeading} &ldquo;{activeTopic}&rdquo; yet.
+          </h3>
           <p>{filterEmptyBody}</p>
           <button
             className="clearfilter"
             type="button"
             onClick={() => setQuery({ topic: null })}
           >
-            {`Clear filter — show all ${totalCount}`}
+            Clear filter
           </button>
         </div>
       )}

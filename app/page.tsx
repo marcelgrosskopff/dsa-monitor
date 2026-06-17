@@ -29,6 +29,8 @@ export default async function HomePage() {
         headlineBefore={home.heroHeadlineBefore}
         highlightWord={home.heroHighlightWord}
         headlineAfter={home.heroHeadlineAfter}
+        ctaLabel={home.heroCtaLabel}
+        secondaryLabel={home.heroSecondaryLabel}
       />
       <KpiStrip items={stats} />
 
@@ -40,7 +42,7 @@ export default async function HomePage() {
               <h2>{home.latestHeading || "Recent reports on platform compliance and risk."}</h2>
             </div>
             <Button variant="secondary" as="a" href="/publications">
-              {`View all ${reports.length}`}
+              {`${home.viewAllLabel || "View all"} ${reports.length}`}
             </Button>
           </div>
 

@@ -5,17 +5,21 @@ import {
   aboutContentQuery,
   homeContentQuery,
   impressumContentQuery,
+  notFoundContentQuery,
   pageContentQuery,
   privacyContentQuery,
   publicationsContentQuery,
   relatedReportsQuery,
   reportBySlugQuery,
+  reportCountQuery,
   reportSlugsQuery,
+  reportsPagedQuery,
   reportsQuery,
   resourceGroupsQuery,
   resourcesContentQuery,
   siteSettingsQuery,
   topicsQuery,
+  PAGE_SIZE,
 } from "@/sanity/lib/queries";
 import {
   SEED_REPORTS,
@@ -37,6 +41,8 @@ import type {
 // Tag-based revalidation: every Sanity read is tagged so the webhook route can
 // invalidate precisely (see app/api/revalidate/route.ts).
 const TAGS = { report: "report", topic: "topic", resource: "resource", settings: "settings" };
+
+const PAGE_SIZE_CONST = PAGE_SIZE;
 
 // Returns previewClient (stega + previewDrafts) when Next.js draft mode is on,
 // otherwise returns the regular CDN-backed published client.
@@ -233,6 +239,9 @@ export interface HomeContent {
   evidenceBoxes?: EvidenceBox[];
   closerHeadline?: string;
   closerBody?: unknown[];
+  heroCtaLabel?: string;
+  heroSecondaryLabel?: string;
+  viewAllLabel?: string;
 }
 
 export interface AboutContent {
@@ -282,6 +291,16 @@ export interface ResourcesContent {
   eyebrowLabel?: string;
   heading?: string;
   description?: string;
+  dlTypeLabel?: string;
+  linkTypeLabel?: string;
+}
+
+export interface NotFoundContent {
+  errorCode?: string;
+  heading?: string;
+  body?: string;
+  homeLabel?: string;
+  publicationsLabel?: string;
 }
 
 export async function getHomeContent(): Promise<HomeContent> {
@@ -331,4 +350,53 @@ export async function getPageContent(type: string): Promise<unknown[] | null> {
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(pageContentQuery, { type }, opts);
   return data?.body ?? null;
+}
+
+export async function getReportsPaged({
+  topic,
+  page,
+}: {
+  topic: string | null;
+  page: number;
+}): Promise<{ reports: Report[]; totalCount: number; pageCount: number }> {
+  if (!sanityConfigured) {
+    // Seed fallback: filter + paginate in memory
+    const filtered = topic
+      ? SEED_REPORTS.filter(
+          (r) =>
+            r.primaryTopic.label === topic ||
+            r.topics.some((t) => t.label === topic)
+        )
+      : SEED_REPORTS;
+    const start = (page - 1) * PAGE_SIZE_CONST;
+    return {
+      reports: filtered.slice(start, start + PAGE_SIZE_CONST),
+      totalCount: filtered.length,
+      pageCount: Math.ceil(filtered.length / PAGE_SIZE_CONST) || 1,
+    };
+  }
+
+  const [qc, opts] = await Promise.all([
+    getQueryClient(),
+    fetchOptions([TAGS.report]),
+  ]);
+  const start = (page - 1) * PAGE_SIZE_CONST;
+  const end = start + PAGE_SIZE_CONST;
+  const [rawReports, totalCount] = await Promise.all([
+    qc.fetch(reportsPagedQuery, { topic: topic ?? null, start, end }, opts),
+    qc.fetch(reportCountQuery, { topic: topic ?? null }, opts),
+  ]);
+  const reports = (rawReports ?? []).map(mapReport);
+  return {
+    reports,
+    totalCount: totalCount ?? 0,
+    pageCount: Math.ceil((totalCount ?? 0) / PAGE_SIZE_CONST) || 1,
+  };
+}
+
+export async function getNotFoundContent(): Promise<NotFoundContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(notFoundContentQuery, {}, opts);
+  return data ?? {};
 }

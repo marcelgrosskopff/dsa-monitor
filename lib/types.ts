@@ -132,4 +132,8 @@ export interface SiteSettings {
   footerColContact?: string;
   copyrightSuffix?: string;
   linkedinLabel?: string;
+  navHomeLabel?: string;
+  navPublicationsLabel?: string;
+  navResourcesLabel?: string;
+  navAboutLabel?: string;
 }

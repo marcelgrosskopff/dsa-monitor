@@ -12,12 +12,20 @@ export const metadata: Metadata = pageMetadata({
   path: "/resources",
 });
 
-function ResEntry({ item }: { item: ResourceItem }) {
+function ResEntry({
+  item,
+  dlTypeLabel,
+  linkTypeLabel,
+}: {
+  item: ResourceItem;
+  dlTypeLabel?: string;
+  linkTypeLabel?: string;
+}) {
   if (item.type === "dl") {
     return (
       <div className="resitem">
         <p className="resitem__type resitem__type--dl">
-          ↓ Download · {item.format}
+          ↓ {dlTypeLabel || "Download"} · {item.format}
         </p>
         <p className="resitem__title">{item.label}</p>
         <DownloadButton
@@ -32,14 +40,24 @@ function ResEntry({ item }: { item: ResourceItem }) {
   }
   return (
     <div className="resitem">
-      <p className="resitem__type resitem__type--link">↗ External site</p>
+      <p className="resitem__type resitem__type--link">↗ {linkTypeLabel || "External site"}</p>
       <p className="resitem__title">{item.label}</p>
       <OutboundLink href={item.href || "#"}>{item.label}</OutboundLink>
     </div>
   );
 }
 
-function Group({ group, index }: { group: ResourceGroup; index: string }) {
+function Group({
+  group,
+  index,
+  dlTypeLabel,
+  linkTypeLabel,
+}: {
+  group: ResourceGroup;
+  index: string;
+  dlTypeLabel?: string;
+  linkTypeLabel?: string;
+}) {
   return (
     <div className="resgroup">
       <div className="resgroup__head">
@@ -62,7 +80,7 @@ function Group({ group, index }: { group: ResourceGroup; index: string }) {
       {group.items.length > 0 && (
         <div className={"reslist" + (group.featured ? " reslist--stack" : "")}>
           {group.items.map((it, i) => (
-            <ResEntry key={i} item={it} />
+            <ResEntry key={i} item={it} dlTypeLabel={dlTypeLabel} linkTypeLabel={linkTypeLabel} />
           ))}
         </div>
       )}
@@ -83,7 +101,7 @@ export default async function ResourcesPage() {
           <SectionEyebrow index="01" label={resContent.eyebrowLabel || "Resources"} />
           <h1>{resContent.heading || "Resources for trusted flaggers."}</h1>
           <p>
-            {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform’s own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}
+            {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform's own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}
           </p>
         </div>
       </div>
@@ -99,6 +117,8 @@ export default async function ResourcesPage() {
             key={g.name}
             group={g}
             index={String(i + 1).padStart(2, "0")}
+            dlTypeLabel={resContent.dlTypeLabel}
+            linkTypeLabel={resContent.linkTypeLabel}
           />
         ))}
       </section>

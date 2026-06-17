@@ -122,6 +122,10 @@ export function SiteFooter({
   footerColContact,
   copyrightSuffix,
   linkedinLabel,
+  navHomeLabel,
+  navPublicationsLabel,
+  navResourcesLabel,
+  navAboutLabel,
   year,
 }: {
   partners?: Logo[];
@@ -136,16 +140,20 @@ export function SiteFooter({
   footerColContact?: string;
   copyrightSuffix?: string;
   linkedinLabel?: string;
+  navHomeLabel?: string;
+  navPublicationsLabel?: string;
+  navResourcesLabel?: string;
+  navAboutLabel?: string;
   year?: number;
 }) {
   const cols = [
     {
       title: footerColSite || "Site",
       links: [
-        ["Home", "/"],
-        ["Publications", "/publications"],
-        ["Resources", "/resources"],
-        ["About", "/about"],
+        [navHomeLabel || "Home", "/"],
+        [navPublicationsLabel || "Publications", "/publications"],
+        [navResourcesLabel || "Resources", "/resources"],
+        [navAboutLabel || "About", "/about"],
       ],
     },
     {

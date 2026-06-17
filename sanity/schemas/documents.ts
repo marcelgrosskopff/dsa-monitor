@@ -156,6 +156,10 @@ export const siteSettings = defineType({
     defineField({ name: "footerColContact", type: "string", title: "Footer column — Contact", initialValue: "Contact" }),
     defineField({ name: "copyrightSuffix", type: "string", title: "Footer copyright suffix", initialValue: "ÖIAT · CC BY-SA 4.0" }),
     defineField({ name: "linkedinLabel", type: "string", title: "LinkedIn link label", initialValue: "LinkedIn" }),
+    defineField({ name: "navHomeLabel", type: "string", title: "Nav — Home label", initialValue: "Home" }),
+    defineField({ name: "navPublicationsLabel", type: "string", title: "Nav — Publications label", initialValue: "Publications" }),
+    defineField({ name: "navResourcesLabel", type: "string", title: "Nav — Resources label", initialValue: "Resources" }),
+    defineField({ name: "navAboutLabel", type: "string", title: "Nav — About label", initialValue: "About" }),
   ],
   preview: { prepare: () => ({ title: "Site settings" }) },
 });
@@ -196,6 +200,10 @@ export const homeContent = defineType({
     // Closer
     defineField({ name: "closerHeadline", type: "string", title: "Closing section headline" }),
     defineField({ name: "closerBody", type: "richBody", title: "Closing section body" }),
+    // Hero CTA buttons
+    defineField({ name: "heroCtaLabel", type: "string", title: "Hero CTA label (primary button)", initialValue: "Browse publications" }),
+    defineField({ name: "heroSecondaryLabel", type: "string", title: "Hero secondary button label", initialValue: "About DSA-Monitor" }),
+    defineField({ name: "viewAllLabel", type: "string", title: "Latest publications — 'View all' button prefix", initialValue: "View all" }),
   ],
   preview: { prepare: () => ({ title: "Home copy" }) },
 });
@@ -272,8 +280,23 @@ export const resourcesContent = defineType({
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "heading", type: "string", title: "Page heading" }),
     defineField({ name: "description", type: "text", rows: 2, title: "Intro description" }),
+    defineField({ name: "dlTypeLabel", type: "string", title: "Download item type label", initialValue: "Download" }),
+    defineField({ name: "linkTypeLabel", type: "string", title: "External link type label", initialValue: "External site" }),
   ],
   preview: { prepare: () => ({ title: "Resources copy" }) },
+});
+
+export const notFoundContent = defineType({
+  name: "notFoundContent",
+  type: "document",
+  fields: [
+    defineField({ name: "errorCode", type: "string", title: "Error code line", initialValue: "Error 404 · Page not found" }),
+    defineField({ name: "heading", type: "string", title: "Heading (h1)", initialValue: "We couldn't find that page." }),
+    defineField({ name: "body", type: "text", rows: 3, title: "Body text" }),
+    defineField({ name: "homeLabel", type: "string", title: "Home button label", initialValue: "Back to home" }),
+    defineField({ name: "publicationsLabel", type: "string", title: "Publications button label", initialValue: "Browse publications" }),
+  ],
+  preview: { prepare: () => ({ title: "404 copy" }) },
 });
 
 export const documentSchemas = [
@@ -287,6 +310,7 @@ export const documentSchemas = [
   privacyContent,
   publicationsContent,
   resourcesContent,
+  notFoundContent,
 ];
 
 export const SINGLETONS = [
@@ -297,4 +321,5 @@ export const SINGLETONS = [
   "privacyContent",
   "publicationsContent",
   "resourcesContent",
+  "notFoundContent",
 ];

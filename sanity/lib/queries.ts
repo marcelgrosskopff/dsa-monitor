@@ -103,7 +103,11 @@ export const siteSettingsQuery = groq`
     footerColLegal,
     footerColContact,
     copyrightSuffix,
-    linkedinLabel
+    linkedinLabel,
+    navHomeLabel,
+    navPublicationsLabel,
+    navResourcesLabel,
+    navAboutLabel
   }
 `;
 
@@ -132,7 +136,10 @@ export const homeContentQuery = groq`
     evidenceHeading,
     evidenceBoxes[]{ number, heading, description },
     closerHeadline,
-    closerBody
+    closerBody,
+    heroCtaLabel,
+    heroSecondaryLabel,
+    viewAllLabel
   }
 `;
 
@@ -191,6 +198,40 @@ export const resourcesContentQuery = groq`
   *[_type == "resourcesContent"][0]{
     eyebrowLabel,
     heading,
-    description
+    description,
+    dlTypeLabel,
+    linkTypeLabel
+  }
+`;
+
+// Light projection for list pages — no body/methodology/kpis/attribution/source
+const reportCardProjection = `{
+  "slug": slug.current,
+  title,
+  publishedAt,
+  "primaryTopic": primaryTopic->${topicRefProjection},
+  "topics": topics[]->${topicRefProjection},
+  "downloads": downloads[]{ language }
+}`;
+
+export const PAGE_SIZE = 6;
+
+export const reportsPagedQuery = groq`
+  *[_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)]
+  | order(publishedAt desc) [$start...$end]
+  ${reportCardProjection}
+`;
+
+export const reportCountQuery = groq`
+  count(*[_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)])
+`;
+
+export const notFoundContentQuery = groq`
+  *[_type == "notFoundContent"][0]{
+    errorCode,
+    heading,
+    body,
+    homeLabel,
+    publicationsLabel
   }
 `;
