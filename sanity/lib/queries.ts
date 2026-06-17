@@ -92,3 +92,15 @@ export const siteSettingsQuery = groq`
 export const pageContentQuery = groq`
   *[_type == $type][0]{ body }
 `;
+
+export const homeContentQuery = groq`
+  *[_type == "homeContent"][0]{
+    heroLead,
+    howWeDoItHeading,
+    howWeDoItBody,
+    whyWeDoItHeading,
+    whyWeDoItBody,
+    closerHeadline,
+    closerBody
+  }
+`;

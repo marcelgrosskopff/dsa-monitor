@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
+import { RichBody } from "@/components/PortableBody";
 import { SectionEyebrow } from "@/components/ds";
+import { getPageContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -9,9 +11,8 @@ export const metadata: Metadata = pageMetadata({
   path: "/impressum",
 });
 
-// Canonical legal text is client-supplied (brief §9). Placeholders are clearly marked;
-// do not fabricate legal copy.
-export default function ImpressumPage() {
+export default async function ImpressumPage() {
+  const impressumBody = await getPageContent("impressumContent");
   return (
     <Page current="/about">
       <div className="band--canvas">
@@ -25,9 +26,11 @@ export default function ImpressumPage() {
         </div>
       </div>
       <section className="wrap legal">
-        <span className="placeholder-note">
-          Placeholder · canonical legal text pending from client
-        </span>
+        {impressumBody?.length ? (
+          <RichBody value={impressumBody} />
+        ) : (
+          <span className="placeholder-note">Placeholder · canonical legal text pending from client — edit in Studio → Impressum copy</span>
+        )}
         <div className="legal__grid">
           <div className="legal__item">
             <h2>Media owner &amp; publisher</h2>

@@ -157,7 +157,20 @@ function pageCopy(name: string, title: string) {
   });
 }
 
-export const homeContent = pageCopy("homeContent", "Home copy");
+export const homeContent = defineType({
+  name: "homeContent",
+  type: "document",
+  fields: [
+    defineField({ name: "heroLead", type: "text", rows: 3, title: "Hero lead paragraph" }),
+    defineField({ name: "howWeDoItHeading", type: "string", title: "What we do — heading" }),
+    defineField({ name: "howWeDoItBody", type: "richBody", title: "What we do — body" }),
+    defineField({ name: "whyWeDoItHeading", type: "string", title: "Why we do it — heading" }),
+    defineField({ name: "whyWeDoItBody", type: "richBody", title: "Why we do it — body" }),
+    defineField({ name: "closerHeadline", type: "string", title: "Closing section headline" }),
+    defineField({ name: "closerBody", type: "richBody", title: "Closing section body" }),
+  ],
+  preview: { prepare: () => ({ title: "Home copy" }) },
+});
 export const aboutContent = pageCopy("aboutContent", "About copy");
 export const impressumContent = pageCopy("impressumContent", "Impressum copy");
 export const privacyContent = pageCopy("privacyContent", "Privacy copy");

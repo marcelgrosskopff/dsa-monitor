@@ -8,21 +8,22 @@ import {
 } from "@/components/blocks/sections";
 import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 import { Button, SectionEyebrow } from "@/components/ds";
-import { getReports, getSiteSettings, getTopics } from "@/lib/content";
+import { getHomeContent, getReports, getSiteSettings, getTopics } from "@/lib/content";
 import { siteStats } from "@/lib/counts";
 
 export default async function HomePage() {
-  const [reports, topics, settings] = await Promise.all([
+  const [reports, topics, settings, home] = await Promise.all([
     getReports(),
     getTopics(),
     getSiteSettings(),
+    getHomeContent(),
   ]);
   const stats = siteStats(reports, topics, settings);
   const latest = reports.slice(0, 6);
 
   return (
     <Page current="/" navInverse>
-      <Hero />
+      <Hero lead={home.heroLead} />
       <KpiStrip items={stats} />
 
       <section className="band band--canvas">
@@ -64,10 +65,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <HowWeWork />
+      <HowWeWork
+        whatHeading={home.howWeDoItHeading}
+        whatBody={home.howWeDoItBody}
+        whyHeading={home.whyWeDoItHeading}
+        whyBody={home.whyWeDoItBody}
+      />
       <EvidenceBoxes />
       <div className="hatch" aria-hidden="true" />
-      <ConvictionCloser />
+      <ConvictionCloser headline={home.closerHeadline} body={home.closerBody} />
     </Page>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
+import { RichBody } from "@/components/PortableBody";
 import { SectionEyebrow } from "@/components/ds";
+import { getPageContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -12,8 +14,11 @@ export const metadata: Metadata = pageMetadata({
 
 // The full privacy policy text is client-supplied (brief §9). The analytics disclosure
 // below is accurate for the locked Matomo cookieless + anonymised configuration (§9.9).
-export default function PrivacyPage() {
-  const matomoUrl = process.env.NEXT_PUBLIC_MATOMO_URL;
+export default async function PrivacyPage() {
+  const [privacyBody, matomoUrl] = await Promise.all([
+    getPageContent("privacyContent"),
+    Promise.resolve(process.env.NEXT_PUBLIC_MATOMO_URL),
+  ]);
   const optOutSrc = matomoUrl
     ? `${matomoUrl.replace(/\/$/, "")}/index.php?module=CoreAdminHome&action=optOut&language=en`
     : null;
@@ -31,9 +36,11 @@ export default function PrivacyPage() {
         </div>
       </div>
       <section className="wrap legal">
-        <span className="placeholder-note">
-          Placeholder · canonical privacy-policy text pending from client
-        </span>
+        {privacyBody?.length ? (
+          <RichBody value={privacyBody} />
+        ) : (
+          <span className="placeholder-note">Placeholder · canonical privacy-policy text pending from client — edit in Studio → Privacy copy</span>
+        )}
         <div className="legal__grid">
           <div className="legal__item">
             <h2>Analytics (Matomo)</h2>

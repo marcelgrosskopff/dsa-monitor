@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Kpi } from "@/lib/types";
 import { Button, HighlightMarker, SectionEyebrow, KpiGrid } from "@/components/ds";
+import { RichBody } from "@/components/PortableBody";
 import { ConcentricField } from "./ConcentricField";
 
 /** Hero — dark navy, concentric field, highlight marker on one word.
@@ -115,7 +116,17 @@ export function EvidenceBoxes() {
 }
 
 /** "How we work" — What we do + Why we do it, merged into one hairline panel. */
-export function HowWeWork() {
+export function HowWeWork({
+  whatHeading,
+  whatBody,
+  whyHeading,
+  whyBody,
+}: {
+  whatHeading?: string;
+  whatBody?: unknown[];
+  whyHeading?: string;
+  whyBody?: unknown[];
+}) {
   return (
     <section className="band band--sky band--toppad">
       <div className="wrap">
@@ -124,45 +135,36 @@ export function HowWeWork() {
           <div className="howwork__cell">
             <span className="howwork__label dsa-label hl-sky">What we do</span>
             <h2>
-              Empirical research on platform{" "}
-              <span className="hl-sky">compliance</span>.
+              {whatHeading ?? (
+                <>Empirical research on platform <span className="hl-sky">compliance</span>.</>
+              )}
             </h2>
-            <span className="placeholder-note">
-              Placeholder · copy pending from client
-            </span>
-            <p>
-              DSA-Monitor designs and runs reproducible studies of how very
-              large online platforms operate in practice — from ad-library
-              scrapes and recommender audits to removal-latency and youth-safety
-              tests.
-            </p>
-            <p>
-              Each study targets a specific obligation under the Digital
-              Services Act, states its method up front, and publishes its
-              dataset so the finding can be checked and built on.
-            </p>
+            {whatBody?.length ? (
+              <RichBody value={whatBody} />
+            ) : (
+              <>
+                <span className="placeholder-note">Placeholder · copy pending from client</span>
+                <p>DSA-Monitor designs and runs reproducible studies of how very large online platforms operate in practice — from ad-library scrapes and recommender audits to removal-latency and youth-safety tests.</p>
+                <p>Each study targets a specific obligation under the Digital Services Act, states its method up front, and publishes its dataset so the finding can be checked and built on.</p>
+              </>
+            )}
           </div>
           <div className="howwork__cell">
-            <span className="howwork__label dsa-label hl-sky">
-              Why we do it
-            </span>
+            <span className="howwork__label dsa-label hl-sky">Why we do it</span>
             <h2>
-              Enforcement needs independent{" "}
-              <span className="hl-sky">evidence</span>.
+              {whyHeading ?? (
+                <>Enforcement needs independent <span className="hl-sky">evidence</span>.</>
+              )}
             </h2>
-            <span className="placeholder-note">
-              Placeholder · copy pending from client
-            </span>
-            <p>
-              The DSA gives regulators real powers, but those powers depend on a
-              clear, public record of what platforms are actually doing.
-              Self-reported transparency is not enough.
-            </p>
-            <p>
-              As an independent, non-commercial institute and certified Trusted
-              Flagger, ÖIAT supplies that record — methodology-first, citable,
-              and free of platform framing.
-            </p>
+            {whyBody?.length ? (
+              <RichBody value={whyBody} />
+            ) : (
+              <>
+                <span className="placeholder-note">Placeholder · copy pending from client</span>
+                <p>The DSA gives regulators real powers, but those powers depend on a clear, public record of what platforms are actually doing. Self-reported transparency is not enough.</p>
+                <p>As an independent, non-commercial institute and certified Trusted Flagger, ÖIAT supplies that record — methodology-first, citable, and free of platform framing.</p>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -171,26 +173,31 @@ export function HowWeWork() {
 }
 
 /** Closer — statement + CTA on dark navy. */
-export function ConvictionCloser() {
+export function ConvictionCloser({
+  headline,
+  body,
+}: {
+  headline?: string;
+  body?: unknown[];
+}) {
   return (
     <section className="band band--inverse cta">
       <ConcentricField className="hero__field" />
       <div className="wrap cta__grid">
         <h2>
-          The DSA only works if <HighlightMarker>someone is</HighlightMarker>{" "}
-          watching.
+          {headline ?? (
+            <>The DSA only works if <HighlightMarker>someone is</HighlightMarker> watching.</>
+          )}
         </h2>
         <div className="cta__body">
-          <p>
-            The Digital Services Act obliges very large platforms to assess and
-            mitigate systemic risks — but enforcement depends on independent
-            evidence.
-          </p>
-          <p>
-            ÖIAT has tracked online consumer harm in Austria since 1997.
-            DSA-Monitor channels that work into a public, structured record the
-            European Commission and national authorities can act on.
-          </p>
+          {body?.length ? (
+            <RichBody value={body} />
+          ) : (
+            <>
+              <p>The Digital Services Act obliges very large platforms to assess and mitigate systemic risks — but enforcement depends on independent evidence.</p>
+              <p>ÖIAT has tracked online consumer harm in Austria since 1997. DSA-Monitor channels that work into a public, structured record the European Commission and national authorities can act on.</p>
+            </>
+          )}
           <div className="cta__actions">
             <Button variant="primary" as="a" href="/publications">
               Browse publications

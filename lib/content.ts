@@ -2,6 +2,7 @@ import { draftMode } from "next/headers";
 import { client, previewClient } from "@/sanity/lib/client";
 import { sanityConfigured } from "@/sanity/env";
 import {
+  homeContentQuery,
   pageContentQuery,
   relatedReportsQuery,
   reportBySlugQuery,
@@ -198,6 +199,23 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(siteSettingsQuery, {}, opts);
   return data ?? SEED_SETTINGS;
+}
+
+export interface HomeContent {
+  heroLead?: string;
+  howWeDoItHeading?: string;
+  howWeDoItBody?: unknown[];
+  whyWeDoItHeading?: string;
+  whyWeDoItBody?: unknown[];
+  closerHeadline?: string;
+  closerBody?: unknown[];
+}
+
+export async function getHomeContent(): Promise<HomeContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(homeContentQuery, {}, opts);
+  return data ?? {};
 }
 
 export async function getPageContent(type: string): Promise<unknown[] | null> {

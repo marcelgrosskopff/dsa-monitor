@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { SectionEyebrow } from "@/components/ds";
-import { getSiteSettings } from "@/lib/content";
+import { getPageContent, getSiteSettings } from "@/lib/content";
+import { RichBody } from "@/components/PortableBody";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -12,7 +13,10 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function AboutPage() {
-  const settings = await getSiteSettings();
+  const [settings, aboutBody] = await Promise.all([
+    getSiteSettings(),
+    getPageContent("aboutContent"),
+  ]);
   const email = settings.contactEmail || "research@oiat.at";
 
   return (
@@ -30,28 +34,18 @@ export default async function AboutPage() {
         </p>
         <div className="about__cols">
           <div>
-            <h2>About ÖIAT</h2>
-            <p>
-              DSA-Monitor is published by the Österreichisches Institut für
-              angewandte Telekommunikation (ÖIAT), an independent, non-commercial
-              institute that has tracked online consumer harm in Austria since
-              1997. ÖIAT operates the Internet Ombudsstelle and Watchlist
-              Internet, and is a certified Trusted Flagger under the Digital
-              Services Act.
-            </p>
-            <h2>About the monitoring project</h2>
-            <p>
-              DSA-Monitor publishes empirical research on how very large online
-              platforms moderate content, run advertising, and protect users —
-              and maps each finding to the relevant DSA articles so the European
-              Commission and national authorities can act on the evidence.
-            </p>
-            <p>
-              Every report is methodology-first: it states how the study was run,
-              describes its dataset, and names its limitations before any
-              framing. Datasets and replication code are published wherever
-              possible. No black-box findings.
-            </p>
+            {aboutBody?.length ? (
+              <RichBody value={aboutBody} />
+            ) : (
+              <>
+                <span className="placeholder-note">About copy pending from client — edit in Studio → About copy</span>
+                <h2>About ÖIAT</h2>
+                <p>DSA-Monitor is published by the Österreichisches Institut für angewandte Telekommunikation (ÖIAT), an independent, non-commercial institute that has tracked online consumer harm in Austria since 1997. ÖIAT operates the Internet Ombudsstelle and Watchlist Internet, and is a certified Trusted Flagger under the Digital Services Act.</p>
+                <h2>About the monitoring project</h2>
+                <p>DSA-Monitor publishes empirical research on how very large online platforms moderate content, run advertising, and protect users — and maps each finding to the relevant DSA articles so the European Commission and national authorities can act on the evidence.</p>
+                <p>Every report is methodology-first: it states how the study was run, describes its dataset, and names its limitations before any framing. Datasets and replication code are published wherever possible. No black-box findings.</p>
+              </>
+            )}
           </div>
           <div>
             <div className="about__facts">
