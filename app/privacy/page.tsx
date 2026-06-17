@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { RichBody } from "@/components/PortableBody";
 import { SectionEyebrow } from "@/components/ds";
-import { getPageContent } from "@/lib/content";
+import { getPrivacyContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -12,11 +12,9 @@ export const metadata: Metadata = pageMetadata({
   path: "/privacy",
 });
 
-// The full privacy policy text is client-supplied (brief §9). The analytics disclosure
-// below is accurate for the locked Matomo cookieless + anonymised configuration (§9.9).
 export default async function PrivacyPage() {
-  const [privacyBody, matomoUrl] = await Promise.all([
-    getPageContent("privacyContent"),
+  const [content, matomoUrl] = await Promise.all([
+    getPrivacyContent(),
     Promise.resolve(process.env.NEXT_PUBLIC_MATOMO_URL),
   ]);
   const optOutSrc = matomoUrl
@@ -30,26 +28,22 @@ export default async function PrivacyPage() {
           <SectionEyebrow index="01" label="Privacy" />
           <h1>Privacy.</h1>
           <p>
-            How DSA-Monitor handles data, and how to opt out of anonymised usage
-            statistics.
+            {content.intro || "How DSA-Monitor handles data, and how to opt out of anonymised usage statistics."}
           </p>
         </div>
       </div>
       <section className="wrap legal">
-        {privacyBody?.length ? (
-          <RichBody value={privacyBody} />
-        ) : (
-          <span className="placeholder-note">Placeholder · canonical privacy-policy text pending from client — edit in Studio → Privacy copy</span>
-        )}
+        {content.body?.length && <RichBody value={content.body} />}
         <div className="legal__grid">
           <div className="legal__item">
             <h2>Analytics (Matomo)</h2>
             <p>
               We use Matomo, a self-hosted analytics tool operated by ÖIAT, to
-              understand how the site is used. Matomo runs <strong>without
-              cookies</strong> and with <strong>IP anonymisation</strong>, so no
-              personal data is stored and no consent banner is required. We do
-              not share analytics data with third parties.
+              understand how the site is used. Matomo runs{" "}
+              <strong>without cookies</strong> and with{" "}
+              <strong>IP anonymisation</strong>, so no personal data is stored
+              and no consent banner is required. We do not share analytics data
+              with third parties.
             </p>
           </div>
           <div className="legal__item">

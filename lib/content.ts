@@ -4,7 +4,9 @@ import { sanityConfigured } from "@/sanity/env";
 import {
   aboutContentQuery,
   homeContentQuery,
+  impressumContentQuery,
   pageContentQuery,
+  privacyContentQuery,
   publicationsContentQuery,
   relatedReportsQuery,
   reportBySlugQuery,
@@ -216,6 +218,8 @@ export interface HomeContent {
   heroHighlightWord?: string;
   heroHeadlineAfter?: string;
   heroLead?: string;
+  latestEyebrow?: string;
+  latestHeading?: string;
   howWeDoItHeading?: string;
   howWeDoItBody?: unknown[];
   whyWeDoItHeading?: string;
@@ -228,6 +232,17 @@ export interface HomeContent {
 
 export interface AboutContent {
   lead?: string;
+  body?: unknown[];
+  pressNote?: string;
+}
+
+export interface ImpressumContent {
+  intro?: string;
+  body?: unknown[];
+}
+
+export interface PrivacyContent {
+  intro?: string;
   body?: unknown[];
 }
 
@@ -252,6 +267,20 @@ export async function getAboutContent(): Promise<AboutContent> {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(aboutContentQuery, {}, opts);
+  return data ?? {};
+}
+
+export async function getImpressumContent(): Promise<ImpressumContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(impressumContentQuery, {}, opts);
+  return data ?? {};
+}
+
+export async function getPrivacyContent(): Promise<PrivacyContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(privacyContentQuery, {}, opts);
   return data ?? {};
 }
 

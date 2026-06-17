@@ -19,6 +19,14 @@ export default async function AboutPage() {
   ]);
   const email = settings.contactEmail || "research@oiat.at";
 
+  const facts = [
+    ["Publisher", settings.publisherName || "ÖIAT"],
+    ["Active since", settings.activeSince || "1997"],
+    ["Status", settings.orgStatus || "DSA Trusted Flagger"],
+    ["Licence", settings.licence || "CC BY-SA 4.0"],
+    ["Location", settings.locationLabel || "Wien, AT"],
+  ];
+
   return (
     <Page current="/about">
       <div className="band--canvas">
@@ -49,26 +57,12 @@ export default async function AboutPage() {
           <div>
             <div className="about__facts">
               <dl>
-                <div className="row">
-                  <dt>Publisher</dt>
-                  <dd>ÖIAT</dd>
-                </div>
-                <div className="row">
-                  <dt>Active since</dt>
-                  <dd>1997</dd>
-                </div>
-                <div className="row">
-                  <dt>Status</dt>
-                  <dd>DSA Trusted Flagger</dd>
-                </div>
-                <div className="row">
-                  <dt>Licence</dt>
-                  <dd>CC BY-SA 4.0</dd>
-                </div>
-                <div className="row">
-                  <dt>Location</dt>
-                  <dd>Wien, AT</dd>
-                </div>
+                {facts.map(([dt, dd]) => (
+                  <div className="row" key={dt}>
+                    <dt>{dt}</dt>
+                    <dd>{dd}</dd>
+                  </div>
+                ))}
               </dl>
             </div>
             <div className="about__contact">
@@ -88,8 +82,7 @@ export default async function AboutPage() {
                   margin: "var(--space-stack-sm) 0 0",
                 }}
               >
-                For press enquiries, mention your outlet and deadline. We respond
-                in English or German.
+                {aboutContent.pressNote || "For press enquiries, mention your outlet and deadline. We respond in English or German."}
               </p>
             </div>
           </div>

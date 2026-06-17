@@ -87,7 +87,12 @@ export const siteSettingsQuery = groq`
     "partners": partners[]{ name, "src": logo.asset->url },
     "funders": funders[]{ name, "src": logo.asset->url },
     footerDescriptor,
-    footerAddress
+    footerAddress,
+    publisherName,
+    activeSince,
+    orgStatus,
+    licence,
+    locationLabel
   }
 `;
 
@@ -102,6 +107,8 @@ export const homeContentQuery = groq`
     heroHighlightWord,
     heroHeadlineAfter,
     heroLead,
+    latestEyebrow,
+    latestHeading,
     howWeDoItHeading,
     howWeDoItBody,
     whyWeDoItHeading,
@@ -114,7 +121,15 @@ export const homeContentQuery = groq`
 `;
 
 export const aboutContentQuery = groq`
-  *[_type == "aboutContent"][0]{ lead, body }
+  *[_type == "aboutContent"][0]{ lead, body, pressNote }
+`;
+
+export const impressumContentQuery = groq`
+  *[_type == "impressumContent"][0]{ intro, body }
+`;
+
+export const privacyContentQuery = groq`
+  *[_type == "privacyContent"][0]{ intro, body }
 `;
 
 export const publicationsContentQuery = groq`

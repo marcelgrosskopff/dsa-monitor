@@ -36,8 +36,8 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="section-head">
             <div>
-              <SectionEyebrow index="02" label="Latest publications" />
-              <h2>Recent reports on platform compliance and risk.</h2>
+              <SectionEyebrow index="02" label={home.latestEyebrow || "Latest publications"} />
+              <h2>{home.latestHeading || "Recent reports on platform compliance and risk."}</h2>
             </div>
             <Button variant="secondary" as="a" href="/publications">
               {`View all ${reports.length}`}

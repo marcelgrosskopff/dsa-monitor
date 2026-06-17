@@ -121,4 +121,9 @@ export interface SiteSettings {
   platformsMonitoredCount?: number;
   footerDescriptor?: string;
   footerAddress?: string;
+  publisherName?: string;
+  activeSince?: string;
+  orgStatus?: string;
+  licence?: string;
+  locationLabel?: string;
 }

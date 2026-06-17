@@ -142,6 +142,11 @@ export const siteSettings = defineType({
     }),
     defineField({ name: "partners", type: "array", of: [defineArrayMember({ type: "logo" })] }),
     defineField({ name: "funders", type: "array", of: [defineArrayMember({ type: "logo" })] }),
+    defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "ÖIAT" }),
+    defineField({ name: "activeSince", type: "string", title: "Active since", initialValue: "1997" }),
+    defineField({ name: "orgStatus", type: "string", title: "Status", initialValue: "DSA Trusted Flagger" }),
+    defineField({ name: "licence", type: "string", title: "Content licence", initialValue: "CC BY-SA 4.0" }),
+    defineField({ name: "locationLabel", type: "string", title: "Location", initialValue: "Wien, AT" }),
     defineField({
       name: "footerDescriptor",
       type: "text",
@@ -191,6 +196,8 @@ export const homeContent = defineType({
       title: "Evidence boxes (cap 3)",
       validation: (r) => r.max(3),
     }),
+    defineField({ name: "latestEyebrow", type: "string", title: "Latest publications — eyebrow label" }),
+    defineField({ name: "latestHeading", type: "string", title: "Latest publications — heading" }),
     defineField({ name: "closerHeadline", type: "string", title: "Closing section headline" }),
     defineField({ name: "closerBody", type: "richBody", title: "Closing section body" }),
   ],
@@ -201,14 +208,32 @@ export const aboutContent = defineType({
   name: "aboutContent",
   type: "document",
   fields: [
-    defineField({ name: "lead", type: "text", rows: 2, title: "Lead paragraph" }),
+    defineField({ name: "lead", type: "text", rows: 2, title: "Lead paragraph (below h1)" }),
     defineField({ name: "body", type: "richBody" }),
+    defineField({ name: "pressNote", type: "text", rows: 2, title: "Press enquiries note" }),
   ],
   preview: { prepare: () => ({ title: "About copy" }) },
 });
 
-export const impressumContent = pageCopy("impressumContent", "Impressum copy");
-export const privacyContent = pageCopy("privacyContent", "Privacy copy");
+export const impressumContent = defineType({
+  name: "impressumContent",
+  type: "document",
+  fields: [
+    defineField({ name: "intro", type: "text", rows: 2, title: "Intro paragraph (below h1)" }),
+    defineField({ name: "body", type: "richBody", title: "Full legal content (Portable Text)" }),
+  ],
+  preview: { prepare: () => ({ title: "Impressum copy" }) },
+});
+
+export const privacyContent = defineType({
+  name: "privacyContent",
+  type: "document",
+  fields: [
+    defineField({ name: "intro", type: "text", rows: 2, title: "Intro paragraph (below h1)" }),
+    defineField({ name: "body", type: "richBody", title: "Additional privacy content" }),
+  ],
+  preview: { prepare: () => ({ title: "Privacy copy" }) },
+});
 
 export const publicationsContent = defineType({
   name: "publicationsContent",
