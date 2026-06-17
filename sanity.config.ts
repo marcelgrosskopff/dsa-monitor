@@ -65,7 +65,10 @@ export default defineConfig({
     presentationTool({
       previewUrl: {
         origin: typeof location === "undefined" ? undefined : location.origin,
-        draftMode: { enable: "/api/draft" },
+        draftMode: {
+          enable: "/api/draft",
+          disable: "/api/disable-draft",
+        },
       },
     }),
     visionTool({ defaultApiVersion: apiVersion }),

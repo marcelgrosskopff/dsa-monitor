@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import "@/styles/index.css";
 import { Matomo } from "@/components/Matomo";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
@@ -13,15 +15,17 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isEnabled } = await draftMode();
   return (
     <html lang="en">
       <body>
         {children}
+        {isEnabled && <VisualEditing />}
         <Matomo />
       </body>
     </html>
