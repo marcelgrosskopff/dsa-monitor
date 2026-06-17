@@ -47,4 +47,12 @@ export const structure: StructureResolver = (S) =>
         .title("Privacy copy")
         .id("privacyContent")
         .child(S.document().schemaType("privacyContent").documentId("privacyContent")),
+      S.listItem()
+        .title("Publications copy")
+        .id("publicationsContent")
+        .child(S.document().schemaType("publicationsContent").documentId("publicationsContent")),
+      S.listItem()
+        .title("Resources copy")
+        .id("resourcesContent")
+        .child(S.document().schemaType("resourcesContent").documentId("resourcesContent")),
     ]);

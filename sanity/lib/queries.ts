@@ -85,7 +85,9 @@ export const siteSettingsQuery = groq`
     linkedinUrl,
     platformsMonitoredCount,
     "partners": partners[]{ name, "src": logo.asset->url },
-    "funders": funders[]{ name, "src": logo.asset->url }
+    "funders": funders[]{ name, "src": logo.asset->url },
+    footerDescriptor,
+    footerAddress
   }
 `;
 
@@ -95,12 +97,30 @@ export const pageContentQuery = groq`
 
 export const homeContentQuery = groq`
   *[_type == "homeContent"][0]{
+    heroEyebrow,
+    heroHeadlineBefore,
+    heroHighlightWord,
+    heroHeadlineAfter,
     heroLead,
     howWeDoItHeading,
     howWeDoItBody,
     whyWeDoItHeading,
     whyWeDoItBody,
+    evidenceHeading,
+    evidenceBoxes[]{ number, heading, description },
     closerHeadline,
     closerBody
   }
+`;
+
+export const aboutContentQuery = groq`
+  *[_type == "aboutContent"][0]{ lead, body }
+`;
+
+export const publicationsContentQuery = groq`
+  *[_type == "publicationsContent"][0]{ heading, description }
+`;
+
+export const resourcesContentQuery = groq`
+  *[_type == "resourcesContent"][0]{ heading, description }
 `;

@@ -142,6 +142,19 @@ export const siteSettings = defineType({
     }),
     defineField({ name: "partners", type: "array", of: [defineArrayMember({ type: "logo" })] }),
     defineField({ name: "funders", type: "array", of: [defineArrayMember({ type: "logo" })] }),
+    defineField({
+      name: "footerDescriptor",
+      type: "text",
+      rows: 2,
+      title: "Footer descriptor",
+      description: "One-line descriptor below the wordmark in the footer.",
+    }),
+    defineField({
+      name: "footerAddress",
+      type: "string",
+      title: "Footer address",
+      description: "e.g. ÖIAT · Margaretenstr. 70 · 1050 Wien",
+    }),
   ],
   preview: { prepare: () => ({ title: "Site settings" }) },
 });
@@ -161,19 +174,61 @@ export const homeContent = defineType({
   name: "homeContent",
   type: "document",
   fields: [
+    defineField({ name: "heroEyebrow", type: "string", title: "Hero eyebrow label" }),
+    defineField({ name: "heroHeadlineBefore", type: "string", title: "Hero headline — before highlighted word" }),
+    defineField({ name: "heroHighlightWord", type: "string", title: "Hero headline — highlighted word" }),
+    defineField({ name: "heroHeadlineAfter", type: "string", title: "Hero headline — after highlighted word" }),
     defineField({ name: "heroLead", type: "text", rows: 3, title: "Hero lead paragraph" }),
     defineField({ name: "howWeDoItHeading", type: "string", title: "What we do — heading" }),
     defineField({ name: "howWeDoItBody", type: "richBody", title: "What we do — body" }),
     defineField({ name: "whyWeDoItHeading", type: "string", title: "Why we do it — heading" }),
     defineField({ name: "whyWeDoItBody", type: "richBody", title: "Why we do it — body" }),
+    defineField({ name: "evidenceHeading", type: "string", title: "Evidence section heading" }),
+    defineField({
+      name: "evidenceBoxes",
+      type: "array",
+      of: [defineArrayMember({ type: "evidenceBox" })],
+      title: "Evidence boxes (cap 3)",
+      validation: (r) => r.max(3),
+    }),
     defineField({ name: "closerHeadline", type: "string", title: "Closing section headline" }),
     defineField({ name: "closerBody", type: "richBody", title: "Closing section body" }),
   ],
   preview: { prepare: () => ({ title: "Home copy" }) },
 });
-export const aboutContent = pageCopy("aboutContent", "About copy");
+
+export const aboutContent = defineType({
+  name: "aboutContent",
+  type: "document",
+  fields: [
+    defineField({ name: "lead", type: "text", rows: 2, title: "Lead paragraph" }),
+    defineField({ name: "body", type: "richBody" }),
+  ],
+  preview: { prepare: () => ({ title: "About copy" }) },
+});
+
 export const impressumContent = pageCopy("impressumContent", "Impressum copy");
 export const privacyContent = pageCopy("privacyContent", "Privacy copy");
+
+export const publicationsContent = defineType({
+  name: "publicationsContent",
+  type: "document",
+  fields: [
+    defineField({ name: "heading", type: "string", title: "Page heading" }),
+    defineField({ name: "description", type: "text", rows: 2, title: "Intro description" }),
+  ],
+  preview: { prepare: () => ({ title: "Publications copy" }) },
+});
+
+export const resourcesContent = defineType({
+  name: "resourcesContent",
+  type: "document",
+  fields: [
+    defineField({ name: "heading", type: "string", title: "Page heading" }),
+    defineField({ name: "description", type: "text", rows: 2, title: "Intro description" }),
+  ],
+  preview: { prepare: () => ({ title: "Resources copy" }) },
+});
 
 export const documentSchemas = [
   topic,
@@ -184,6 +239,8 @@ export const documentSchemas = [
   aboutContent,
   impressumContent,
   privacyContent,
+  publicationsContent,
+  resourcesContent,
 ];
 
 export const SINGLETONS = [
@@ -192,4 +249,6 @@ export const SINGLETONS = [
   "aboutContent",
   "impressumContent",
   "privacyContent",
+  "publicationsContent",
+  "resourcesContent",
 ];

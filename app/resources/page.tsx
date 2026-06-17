@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { DownloadButton, OutboundLink, SectionEyebrow } from "@/components/ds";
-import { getResourceGroups } from "@/lib/content";
+import { getResourceGroups, getResourcesContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 import type { ResourceGroup, ResourceItem } from "@/lib/types";
 
@@ -71,21 +71,19 @@ function Group({ group, index }: { group: ResourceGroup; index: string }) {
 }
 
 export default async function ResourcesPage() {
-  const groups = (await getResourceGroups()).filter(
-    (g) => g.featured || g.items.length > 0
-  );
+  const [groups, resContent] = await Promise.all([
+    getResourceGroups().then((g) => g.filter((x) => x.featured || x.items.length > 0)),
+    getResourcesContent(),
+  ]);
 
   return (
     <Page current="/resources">
       <div className="band--canvas">
         <div className="wrap pagehead">
           <SectionEyebrow index="01" label="Resources" />
-          <h1>Resources for trusted flaggers.</h1>
+          <h1>{resContent.heading || "Resources for trusted flaggers."}</h1>
           <p>
-            If you report illegal content, prepare a Trusted Flagger annual
-            report, or check a platform&apos;s own transparency reporting —
-            start here. Downloads carry a file glyph and size; links to other
-            sites carry a diagonal arrow.
+            {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform’s own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}
           </p>
         </div>
       </div>

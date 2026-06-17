@@ -115,6 +115,8 @@ export function SiteFooter({
   showPartners = true,
   contactEmail = "research@oiat.at",
   linkedinUrl = "https://at.linkedin.com",
+  footerDescriptor,
+  footerAddress,
   year,
 }: {
   partners?: Logo[];
@@ -122,6 +124,8 @@ export function SiteFooter({
   showPartners?: boolean;
   contactEmail?: string;
   linkedinUrl?: string;
+  footerDescriptor?: string;
+  footerAddress?: string;
   year?: number;
 }) {
   const cols = [
@@ -156,11 +160,10 @@ export function SiteFooter({
               DSA-Monitor
             </p>
             <p className="dsa-footer__desc">
-              Independent Digital Services Act compliance research —
-              methodology-first, no black boxes.
+              {footerDescriptor || "Independent Digital Services Act compliance research — methodology-first, no black boxes."}
             </p>
             <p className="dsa-footer__addr dsa-label">
-              ÖIAT · Margaretenstr. 70 · 1050 Wien
+              {footerAddress || "ÖIAT · Margaretenstr. 70 · 1050 Wien"}
             </p>
           </div>
           {cols.map((c) => (

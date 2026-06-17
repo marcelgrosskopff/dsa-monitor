@@ -118,6 +118,14 @@ export default defineConfig({
             select: {},
             resolve: () => ({ locations: [{ title: "Privacy", href: "/privacy" }] }),
           }),
+          publicationsContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Publications", href: "/publications" }] }),
+          }),
+          resourcesContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "Resources", href: "/resources" }] }),
+          }),
         },
       },
     }),

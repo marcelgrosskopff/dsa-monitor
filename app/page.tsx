@@ -23,7 +23,13 @@ export default async function HomePage() {
 
   return (
     <Page current="/" navInverse>
-      <Hero lead={home.heroLead} />
+      <Hero
+        eyebrow={home.heroEyebrow}
+        lead={home.heroLead}
+        headlineBefore={home.heroHeadlineBefore}
+        highlightWord={home.heroHighlightWord}
+        headlineAfter={home.heroHeadlineAfter}
+      />
       <KpiStrip items={stats} />
 
       <section className="band band--canvas">
@@ -71,7 +77,7 @@ export default async function HomePage() {
         whyHeading={home.whyWeDoItHeading}
         whyBody={home.whyWeDoItBody}
       />
-      <EvidenceBoxes />
+      <EvidenceBoxes heading={home.evidenceHeading} boxes={home.evidenceBoxes} />
       <div className="hatch" aria-hidden="true" />
       <ConvictionCloser headline={home.closerHeadline} body={home.closerBody} />
     </Page>

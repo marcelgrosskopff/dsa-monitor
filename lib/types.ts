@@ -119,4 +119,6 @@ export interface SiteSettings {
   partners: Logo[];
   funders: Logo[];
   platformsMonitoredCount?: number;
+  footerDescriptor?: string;
+  footerAddress?: string;
 }

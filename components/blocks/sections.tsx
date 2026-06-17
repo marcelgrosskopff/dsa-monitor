@@ -1,27 +1,39 @@
-import type { ReactNode } from "react";
 import type { Kpi } from "@/lib/types";
 import { Button, HighlightMarker, SectionEyebrow, KpiGrid } from "@/components/ds";
 import { RichBody } from "@/components/PortableBody";
 import { ConcentricField } from "./ConcentricField";
 
 /** Hero — dark navy, concentric field, highlight marker on one word.
- * Copy defaults to the approved canvas text; CMS homeContent can override later. */
+ * Copy defaults to the approved canvas text; CMS homeContent can override via plain-string fields. */
 export function Hero({
-  eyebrow = "— The DSA only works if someone is watching",
-  lead = "DSA-Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.",
-  headline,
+  eyebrow,
+  lead,
+  headlineBefore,
+  highlightWord,
+  headlineAfter,
 }: {
   eyebrow?: string;
   lead?: string;
-  headline?: ReactNode;
+  headlineBefore?: string;
+  highlightWord?: string;
+  headlineAfter?: string;
 }) {
+  const displayEyebrow = eyebrow || "— The DSA only works if someone is watching";
+  const displayLead = lead || "DSA-Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.";
+  const hasCustomHeadline = headlineBefore || highlightWord || headlineAfter;
   return (
     <section className="hero">
       <ConcentricField className="hero__field" />
       <div className="wrap hero__inner">
-        <p className="hero__eyebrow dsa-label">{eyebrow}</p>
+        <p className="hero__eyebrow dsa-label">{displayEyebrow}</p>
         <h1>
-          {headline ?? (
+          {hasCustomHeadline ? (
+            <>
+              {headlineBefore}{headlineBefore ? " " : ""}
+              {highlightWord ? <HighlightMarker>{highlightWord}</HighlightMarker> : null}
+              {headlineAfter ? ` ${headlineAfter}` : ""}
+            </>
+          ) : (
             <>
               Holding very large platforms{" "}
               <HighlightMarker>accountable</HighlightMarker> to the Digital
@@ -29,7 +41,7 @@ export function Hero({
             </>
           )}
         </h1>
-        <p className="hero__lead">{lead}</p>
+        <p className="hero__lead">{displayLead}</p>
         <div className="hero__actions">
           <Button variant="primary" as="a" href="/publications">
             Browse publications
@@ -76,37 +88,46 @@ export function KpiStripLoading() {
   );
 }
 
+const EVIDENCE_FALLBACK = [
+  {
+    number: "01",
+    heading: "Investigate",
+    description: "Systematic studies of advertising, recommender systems, content moderation, and risk on very large online platforms.",
+  },
+  {
+    number: "02",
+    heading: "Document",
+    description: "Every report ships with full methodology, dataset description, and limitations — no black-box findings.",
+  },
+  {
+    number: "03",
+    heading: "Translate",
+    description: "Findings mapped explicitly to DSA articles so regulators and journalists can act on the evidence.",
+  },
+];
+
 /** "Evidence regulators can act on." — three numbered boxes. */
-export function EvidenceBoxes() {
-  const boxes = [
-    {
-      n: "01",
-      h: "Investigate",
-      p: "Systematic studies of advertising, recommender systems, content moderation, and risk on very large online platforms.",
-    },
-    {
-      n: "02",
-      h: "Document",
-      p: "Every report ships with full methodology, dataset description, and limitations — no black-box findings.",
-    },
-    {
-      n: "03",
-      h: "Translate",
-      p: "Findings mapped explicitly to DSA articles so regulators and journalists can act on the evidence.",
-    },
-  ];
+export function EvidenceBoxes({
+  heading,
+  boxes,
+}: {
+  heading?: string;
+  boxes?: Array<{ number: string; heading: string; description: string }>;
+}) {
+  const displayHeading = heading || "Evidence regulators can act on.";
+  const displayBoxes = boxes?.length ? boxes : EVIDENCE_FALLBACK;
   return (
     <section className="band band--canvas band--toppad">
       <div className="wrap">
         <div className="section-head">
-          <h2>Evidence regulators can act on.</h2>
+          <h2>{displayHeading}</h2>
         </div>
         <div className="trio">
-          {boxes.map((b) => (
-            <div className="trio__cell" key={b.n}>
-              <p className="trio__num dsa-label">{b.n}</p>
-              <h3>{b.h}</h3>
-              <p>{b.p}</p>
+          {displayBoxes.map((b) => (
+            <div className="trio__cell" key={b.number}>
+              <p className="trio__num dsa-label">{b.number}</p>
+              <h3>{b.heading}</h3>
+              <p>{b.description}</p>
             </div>
           ))}
         </div>

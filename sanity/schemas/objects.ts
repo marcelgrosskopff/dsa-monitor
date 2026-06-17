@@ -172,6 +172,18 @@ export const logo = defineType({
   preview: { select: { title: "name", media: "logo" } },
 });
 
+/** One evidence box for the home "Investigate / Document / Translate" trio. */
+export const evidenceBox = defineType({
+  name: "evidenceBox",
+  type: "object",
+  fields: [
+    defineField({ name: "number", type: "string", initialValue: "01" }),
+    defineField({ name: "heading", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "description", type: "text", rows: 3, validation: (r) => r.required() }),
+  ],
+  preview: { select: { title: "heading", subtitle: "number" } },
+});
+
 export const objectSchemas = [
   kpi,
   download,
@@ -182,4 +194,5 @@ export const objectSchemas = [
   resourceItem,
   resourceFeatured,
   logo,
+  evidenceBox,
 ];

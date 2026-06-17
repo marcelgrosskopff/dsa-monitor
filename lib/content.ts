@@ -2,13 +2,16 @@ import { draftMode } from "next/headers";
 import { client, previewClient } from "@/sanity/lib/client";
 import { sanityConfigured } from "@/sanity/env";
 import {
+  aboutContentQuery,
   homeContentQuery,
   pageContentQuery,
+  publicationsContentQuery,
   relatedReportsQuery,
   reportBySlugQuery,
   reportSlugsQuery,
   reportsQuery,
   resourceGroupsQuery,
+  resourcesContentQuery,
   siteSettingsQuery,
   topicsQuery,
 } from "@/sanity/lib/queries";
@@ -201,20 +204,68 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   return data ?? SEED_SETTINGS;
 }
 
+export interface EvidenceBox {
+  number: string;
+  heading: string;
+  description: string;
+}
+
 export interface HomeContent {
+  heroEyebrow?: string;
+  heroHeadlineBefore?: string;
+  heroHighlightWord?: string;
+  heroHeadlineAfter?: string;
   heroLead?: string;
   howWeDoItHeading?: string;
   howWeDoItBody?: unknown[];
   whyWeDoItHeading?: string;
   whyWeDoItBody?: unknown[];
+  evidenceHeading?: string;
+  evidenceBoxes?: EvidenceBox[];
   closerHeadline?: string;
   closerBody?: unknown[];
+}
+
+export interface AboutContent {
+  lead?: string;
+  body?: unknown[];
+}
+
+export interface PublicationsContent {
+  heading?: string;
+  description?: string;
+}
+
+export interface ResourcesContent {
+  heading?: string;
+  description?: string;
 }
 
 export async function getHomeContent(): Promise<HomeContent> {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(homeContentQuery, {}, opts);
+  return data ?? {};
+}
+
+export async function getAboutContent(): Promise<AboutContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(aboutContentQuery, {}, opts);
+  return data ?? {};
+}
+
+export async function getPublicationsContent(): Promise<PublicationsContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(publicationsContentQuery, {}, opts);
+  return data ?? {};
+}
+
+export async function getResourcesContent(): Promise<ResourcesContent> {
+  if (!sanityConfigured) return {};
+  const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
+  const data = await qc.fetch(resourcesContentQuery, {}, opts);
   return data ?? {};
 }
 

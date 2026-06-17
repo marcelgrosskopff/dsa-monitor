@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { SectionEyebrow } from "@/components/ds";
-import { getPageContent, getSiteSettings } from "@/lib/content";
+import { getAboutContent, getSiteSettings } from "@/lib/content";
 import { RichBody } from "@/components/PortableBody";
 import { pageMetadata } from "@/lib/seo";
 
@@ -13,9 +13,9 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function AboutPage() {
-  const [settings, aboutBody] = await Promise.all([
+  const [settings, aboutContent] = await Promise.all([
     getSiteSettings(),
-    getPageContent("aboutContent"),
+    getAboutContent(),
   ]);
   const email = settings.contactEmail || "research@oiat.at";
 
@@ -29,13 +29,12 @@ export default async function AboutPage() {
       </div>
       <section className="wrap" style={{ paddingBottom: "var(--space-section)" }}>
         <p className="about__lead">
-          An initiative of ÖIAT to make platform compliance with the Digital
-          Services Act visible — and actionable.
+          {aboutContent.lead || "An initiative of ÖIAT to make platform compliance with the Digital Services Act visible — and actionable."}
         </p>
         <div className="about__cols">
           <div>
-            {aboutBody?.length ? (
-              <RichBody value={aboutBody} />
+            {aboutContent.body?.length ? (
+              <RichBody value={aboutContent.body} />
             ) : (
               <>
                 <span className="placeholder-note">About copy pending from client — edit in Studio → About copy</span>

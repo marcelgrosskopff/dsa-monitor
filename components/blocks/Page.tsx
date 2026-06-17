@@ -26,6 +26,8 @@ export async function Page({
         funders={settings.funders}
         contactEmail={settings.contactEmail}
         linkedinUrl={settings.linkedinUrl}
+        footerDescriptor={settings.footerDescriptor}
+        footerAddress={settings.footerAddress}
       />
     </div>
   );
