@@ -76,9 +76,6 @@ export default async function ImpressumPage() {
                 Unless noted otherwise, content is published under CC BY-SA 4.0.
               </p>
             </div>
-            <span className="placeholder-note">
-              Placeholder · add full legal content in Studio → Impressum copy → body
-            </span>
           </div>
         )}
       </section>

@@ -45,7 +45,6 @@ export default async function AboutPage() {
               <RichBody value={aboutContent.body} />
             ) : (
               <>
-                <span className="placeholder-note">About copy pending from client — edit in Studio → About copy</span>
                 <h2>About ÖIAT</h2>
                 <p>DSA-Monitor is published by the Österreichisches Institut für angewandte Telekommunikation (ÖIAT), an independent, non-commercial institute that has tracked online consumer harm in Austria since 1997. ÖIAT operates the Internet Ombudsstelle and Watchlist Internet, and is a certified Trusted Flagger under the Digital Services Act.</p>
                 <h2>About the monitoring project</h2>

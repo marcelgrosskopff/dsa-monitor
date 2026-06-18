@@ -174,7 +174,6 @@ export function HowWeWork({
               <RichBody value={whatBody} />
             ) : (
               <>
-                <span className="placeholder-note">Placeholder · copy pending from client</span>
                 <p>DSA-Monitor designs and runs reproducible studies of how very large online platforms operate in practice — from ad-library scrapes and recommender audits to removal-latency and youth-safety tests.</p>
                 <p>Each study targets a specific obligation under the Digital Services Act, states its method up front, and publishes its dataset so the finding can be checked and built on.</p>
               </>
@@ -191,7 +190,6 @@ export function HowWeWork({
               <RichBody value={whyBody} />
             ) : (
               <>
-                <span className="placeholder-note">Placeholder · copy pending from client</span>
                 <p>The DSA gives regulators real powers, but those powers depend on a clear, public record of what platforms are actually doing. Self-reported transparency is not enough.</p>
                 <p>As an independent, non-commercial institute and certified Trusted Flagger, ÖIAT supplies that record — methodology-first, citable, and free of platform framing.</p>
               </>
