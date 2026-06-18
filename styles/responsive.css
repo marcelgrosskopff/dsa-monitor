@@ -5,6 +5,10 @@
  * reflows behind a genuine media query. These rules are mobile.css lines 67–133,
  * rescoped from `.m-page X` to a real `@media (max-width: 768px)`. Tokens unchanged. */
 
+/* ---- Kit artboard override: kit.css sets .page { width: 1280px } for the design
+ * canvas artboard. On the real site the page must fill the viewport at every width. */
+.page { width: 100%; }
+
 /* ---- Mobile nav: burger visible, desktop list hidden ---- */
 .dsa-nav__mobile { display: none; position: relative; }
 .dsa-nav__burger {
@@ -65,8 +69,9 @@
   .section-head h2 { font-size: var(--fs-2xl); max-width: none; }
   .section-head .dsa-btn { width: 100%; box-sizing: border-box; justify-content: center; }
 
-  /* Card grid → single column */
+  /* Card grid → single column; shape aspect ratio reduced so cards don't eat the screen */
   .cardgrid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+  .dsa-card__shape { aspect-ratio: 16 / 7; }
 
   /* How-we-work → stacked cells */
   .howwork { grid-template-columns: 1fr; margin-top: var(--space-stack-lg); }
