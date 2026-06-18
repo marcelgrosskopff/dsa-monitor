@@ -38,6 +38,25 @@
   outline: var(--bw-thick, 2px) solid var(--color-focus-ring);
   outline-offset: 2px;
 }
+
+/* ---- Focus-visible ring for all interactive elements (WCAG 2.1 AA). ----
+ * The design system ships hover states but no :focus-visible rules; we add them
+ * here so keyboard and switch-device users always see the brand-blue ring. */
+.dsa-btn:focus-visible,
+.dsa-wordmark:focus-visible,
+.dsa-nav__link:focus-visible,
+.dsa-card__title a:focus-visible,
+.dsa-download:focus-visible,
+.dsa-outbound:focus-visible,
+.dsa-footer__links a:focus-visible,
+.dsa-footer__mail:focus-visible,
+.clearfilter:focus-visible,
+.pager__page:focus-visible,
+.pager__step:focus-visible,
+.dsa-nav__drawer-link:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
 .dsa-table {
   border-collapse: collapse;
   width: 100%;

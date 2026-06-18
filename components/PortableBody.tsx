@@ -47,7 +47,7 @@ const components: PortableTextComponents = {
               <thead>
                 <tr>
                   {(head.cells ?? []).map((c, i) => (
-                    <th key={i}>{c}</th>
+                    <th key={i} scope="col">{c}</th>
                   ))}
                 </tr>
               </thead>

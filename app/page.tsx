@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import {
   ConvictionCloser,
@@ -10,6 +11,9 @@ import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 import { Button, SectionEyebrow } from "@/components/ds";
 import { getHomeContent, getReports, getSiteSettings, getTopics } from "@/lib/content";
 import { siteStats } from "@/lib/counts";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({ path: "/" });
 
 export default async function HomePage() {
   const [reports, topics, settings, home] = await Promise.all([

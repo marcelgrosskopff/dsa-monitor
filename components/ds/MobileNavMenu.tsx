@@ -39,6 +39,7 @@ export function MobileNavMenu({
         type="button"
         className="dsa-nav__burger"
         aria-expanded={open}
+        aria-controls="mobile-nav-drawer"
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((o) => !o)}
       >
@@ -50,7 +51,7 @@ export function MobileNavMenu({
       </button>
 
       {open && (
-        <div className="dsa-nav__drawer" role="dialog" aria-label="Site navigation">
+        <div id="mobile-nav-drawer" className="dsa-nav__drawer" role="dialog" aria-label="Site navigation">
           <ul className="dsa-nav__drawer-list">
             {items.map((it) => (
               <li key={it.href}>

@@ -19,6 +19,7 @@ export function pageMetadata({
   path?: string;
 }): Metadata {
   const url = `${SITE_URL}${path}`;
+  const ogTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME;
   return {
     title,
     description,
@@ -26,11 +27,12 @@ export function pageMetadata({
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
-      title: title ? `${title} · ${SITE_NAME}` : SITE_NAME,
+      title: ogTitle,
       description,
       url,
+      images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: ogTitle }],
     },
-    twitter: { card: "summary", title, description },
+    twitter: { card: "summary_large_image", title: ogTitle, description },
   };
 }
 
