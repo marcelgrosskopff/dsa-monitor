@@ -104,8 +104,6 @@
   filter: grayscale(100%);
   opacity: 0.65;
   transition: filter 0.2s ease, opacity 0.2s ease;
-  max-width: 100%;
-  height: auto;
 }
 .dsa-partners__list li img:hover {
   filter: none;
