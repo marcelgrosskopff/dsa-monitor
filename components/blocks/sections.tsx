@@ -159,7 +159,7 @@ export function HowWeWork({
   whyBody?: unknown[];
 }) {
   return (
-    <section className="band band--canvas band--toppad">
+    <section className="band band--inverse band--toppad">
       <div className="wrap">
         <SectionEyebrow index="03" label={eyebrow || "How we work"} />
         <div className="howwork">

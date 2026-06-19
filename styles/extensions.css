@@ -110,6 +110,25 @@
   opacity: 1;
 }
 
+/* ---- "How we work" on the dark band (CEO feedback #7) ----
+ * The middle section now carries the same dark navy as the header/hero/footer to
+ * pull the dark theme through the page. The inner panel is white-on-light by default,
+ * so adapt its surface, hairlines, and text for the inverse ground. The light-blue
+ * hl-sky highlights stay as-is — they read as accent chips on navy. */
+.band--inverse .howwork {
+  background: transparent;
+  border-color: var(--color-border-inverse);
+}
+.band--inverse .howwork__cell {
+  border-left-color: var(--color-border-inverse);
+}
+.band--inverse .howwork__cell h2 {
+  color: var(--color-text-on-inverse);
+}
+.band--inverse .howwork__cell p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
 /* ---- KPI numbers must never overflow their cell ----
  * Long values like "36,725" / "1,200" are single unbreakable tokens. The grid uses
  * fixed column counts, so in narrow contexts (the article's content column beside the
