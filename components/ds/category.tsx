@@ -11,21 +11,20 @@ import { TopicChip } from "./topic-chip";
 function motifs(accent: string): Record<string, ReactNode> {
   const c = { fill: "none", stroke: accent, strokeWidth: 1.5 };
   return {
-    // Concentric circles + filled centre dot.
+    // Three evenly-spaced horizontal rules — neutral, not a target (annotation #9).
     red: (
       <>
-        <circle cx="60" cy="40" r="10" {...c} />
-        <circle cx="60" cy="40" r="22" {...c} />
-        <circle cx="60" cy="40" r="34" {...c} />
-        <circle cx="60" cy="40" r="7" fill={accent} stroke="none" />
+        <line x1="12" y1="24" x2="108" y2="24" {...c} />
+        <line x1="12" y1="40" x2="108" y2="40" {...c} />
+        <line x1="12" y1="56" x2="108" y2="56" {...c} />
       </>
     ),
-    // Centred square over a diagonal cross.
+    // Concentric squares — neutral geometry, not a crossed-out box (annotation #9).
     blue: (
       <>
-        <line x1="20" y1="12" x2="100" y2="68" {...c} />
-        <line x1="100" y1="12" x2="20" y2="68" {...c} />
-        <rect x="42" y="24" width="36" height="32" {...c} />
+        <rect x="16" y="10" width="88" height="60" {...c} />
+        <rect x="30" y="20" width="60" height="40" {...c} />
+        <rect x="44" y="30" width="32" height="20" {...c} />
       </>
     ),
     // Three evenly spaced contour waves.

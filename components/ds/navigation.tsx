@@ -183,7 +183,7 @@ export function SiteFooter({
               {footerDescriptor || "Independent Digital Services Act compliance research — methodology-first, no black boxes."}
             </p>
             <p className="dsa-footer__addr dsa-label">
-              {footerAddress || "ÖIAT · Margaretenstr. 70 · 1050 Wien"}
+              {footerAddress || "ÖIAT · Ungargasse 64–66/3/404 · 1030 Wien"}
             </p>
           </div>
           {cols.map((c) => (

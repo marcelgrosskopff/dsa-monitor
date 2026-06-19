@@ -76,3 +76,36 @@
   letter-spacing: var(--ls-label);
   background: var(--color-surface-subtle);
 }
+
+/* ---- CTA button — graphical accent mark (annotation #3).
+ * A small white square before the label echoes the DSA-Monitor wordmark mark,
+ * making the primary button instantly recognisable as the brand action element. */
+.dsa-btn--primary::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.75);
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+
+/* ---- Impressum — red left-border accent on legal cards (annotation #6).
+ * Adds the "eye-catching feature" without imagery; hairline-to-3px step mirrors
+ * the DS's existing use of the 3px red rule on the section eyebrow. */
+.legal__item {
+  border-left: 3px solid var(--color-accent-primary);
+  padding-left: var(--space-inset-control, 16px);
+}
+
+/* ---- Partner / funder logos — greyscale by default, colour on hover (annotation #8).
+ * Creates a harmonious, brand-consistent partner wall once real logos are uploaded. */
+.dsa-partners__list li img {
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.dsa-partners__list li img:hover {
+  filter: none;
+  opacity: 1;
+}
