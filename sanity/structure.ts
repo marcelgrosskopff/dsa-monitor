@@ -32,31 +32,31 @@ export const structure: StructureResolver = (S) =>
         .id("siteSettings")
         .child(S.document().schemaType("siteSettings").documentId("siteSettings")),
       S.listItem()
-        .title("Home copy")
+        .title("Home page")
         .id("homeContent")
         .child(S.document().schemaType("homeContent").documentId("homeContent")),
       S.listItem()
-        .title("About copy")
+        .title("About page")
         .id("aboutContent")
         .child(S.document().schemaType("aboutContent").documentId("aboutContent")),
       S.listItem()
-        .title("Impressum copy")
+        .title("Impressum page")
         .id("impressumContent")
         .child(S.document().schemaType("impressumContent").documentId("impressumContent")),
       S.listItem()
-        .title("Privacy copy")
+        .title("Privacy page")
         .id("privacyContent")
         .child(S.document().schemaType("privacyContent").documentId("privacyContent")),
       S.listItem()
-        .title("Publications copy")
+        .title("Publications page")
         .id("publicationsContent")
         .child(S.document().schemaType("publicationsContent").documentId("publicationsContent")),
       S.listItem()
-        .title("Resources copy")
+        .title("Resources page")
         .id("resourcesContent")
         .child(S.document().schemaType("resourcesContent").documentId("resourcesContent")),
       S.listItem()
-        .title("404 copy")
+        .title("404 page")
         .id("notFoundContent")
         .child(S.document().schemaType("notFoundContent").documentId("notFoundContent")),
     ]);

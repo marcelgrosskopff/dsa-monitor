@@ -1,4 +1,5 @@
 import { draftMode } from "next/headers";
+import { stegaClean } from "next-sanity";
 import { client, previewClient } from "@/sanity/lib/client";
 import { sanityConfigured } from "@/sanity/env";
 import {
@@ -93,11 +94,26 @@ function mapDownloads(raw: any[] | undefined) {
   }));
 }
 
+// Stega encodes invisible metadata into every returned string so the visual-editing
+// overlay can target fields. That breaks any string used as a logic key — `swatch`
+// and `accent` feed CSS variable names like `var(--category-{swatch}-accent)`, and a
+// stega-polluted value produces an invalid (empty) variable. Strip stega from those
+// keys only; display text keeps its stega so click-to-edit still works.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function cleanSwatch(t: any) {
+  if (!t) return t;
+  return { ...t, swatch: (stegaClean(t.swatch) as Swatch) ?? "neutral" };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapReport(r: any): Report {
-  const primaryTopic = r.primaryTopic ?? { label: "", swatch: "neutral" as Swatch };
+  const primaryTopic = r.primaryTopic
+    ? cleanSwatch(r.primaryTopic)
+    : { label: "", swatch: "neutral" as Swatch };
   const topics =
-    Array.isArray(r.topics) && r.topics.length ? r.topics : [primaryTopic];
+    Array.isArray(r.topics) && r.topics.length
+      ? r.topics.map(cleanSwatch)
+      : [primaryTopic];
   const downloads = mapDownloads(r.downloads);
   const languages = Array.from(
     new Set(downloads.map((d) => langCode(d.language)).filter(Boolean) as string[])
@@ -119,7 +135,11 @@ function mapReport(r: any): Report {
     summary: r.summary ?? "",
     body: r.body ?? [],
     methodology: r.methodology ?? [],
-    kpis: (r.kpis ?? []).slice(0, 4),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    kpis: (r.kpis ?? []).slice(0, 4).map((k: any) => ({
+      ...k,
+      accent: k.accent ? stegaClean(k.accent) : k.accent,
+    })),
     downloads,
     attribution: r.attribution || undefined,
     source: r.source?.href ? r.source : undefined,
@@ -196,7 +216,8 @@ export async function getTopics(): Promise<Topic[]> {
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.topic])]);
   const data = await qc.fetch(topicsQuery, {}, opts);
   if (!data?.length) return SEED_TOPICS;
-  return data;
+  // Clean stega from `swatch` — it builds CSS variable names (see cleanSwatch).
+  return data.map(cleanSwatch);
 }
 
 export async function getResourceGroups(): Promise<ResourceGroup[]> {
