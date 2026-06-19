@@ -119,6 +119,9 @@
   /* About → single column */
   .about__cols { grid-template-columns: 1fr; }
 
+  /* Impressum legal cards → single column (2-col clipped the right column on mobile) */
+  .legal__grid { grid-template-columns: 1fr; gap: var(--space-stack-lg); }
+
   /* Footer → two-column nav grid; brand/descriptor spans both columns (annotation #2) */
   .dsa-footer__inner { grid-template-columns: 1fr 1fr; }
   .dsa-footer__inner > *:first-child { grid-column: 1 / -1; }

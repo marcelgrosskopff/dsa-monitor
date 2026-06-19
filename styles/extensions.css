@@ -104,8 +104,40 @@
   filter: grayscale(100%);
   opacity: 0.65;
   transition: filter 0.2s ease, opacity 0.2s ease;
+  max-width: 100%;
+  height: auto;
 }
 .dsa-partners__list li img:hover {
   filter: none;
   opacity: 1;
+}
+
+/* ---- KPI numbers must never overflow their cell ----
+ * Long values like "36,725" / "1,200" are single unbreakable tokens. The grid uses
+ * fixed column counts, so in narrow contexts (the article's content column beside the
+ * 320px rail) the cells shrink below the number's rendered width and it spills out.
+ * Two defences: a fluid font-size that scales with viewport, and a hard wrap fallback. */
+.dsa-kpi__num {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.dsa-kpi-grid .dsa-kpi__num {
+  font-size: clamp(28px, 4.5vw, var(--fs-5xl));
+}
+/* In the article the number is the smaller fs-3xl; keep it fluid down to 22px. */
+.article__kpis .dsa-kpi__num {
+  font-size: clamp(22px, 3vw, var(--fs-3xl));
+}
+/* The 4-up KPI grid only has room beside the rail on wide desktops. Step down to
+ * 2 columns through the cramped two-column-layout zone, and 1 on small phones. The
+ * base components.css 640px rule still applies to non-article (home) KPI strips. */
+@media (max-width: 1100px) {
+  .article__kpis .dsa-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .article__kpis .dsa-kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }
