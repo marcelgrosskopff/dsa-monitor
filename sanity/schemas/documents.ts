@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { createCharacterCounter } from "../components/CharacterCounter";
 
 const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"];
 
@@ -91,8 +92,19 @@ export const report = defineType({
     }),
     defineField({ name: "attribution", type: "attribution" }),
     defineField({ name: "source", type: "sourceLink" }),
-    defineField({ name: "metaTitle", type: "string" }),
-    defineField({ name: "metaDescription", type: "text", rows: 2 }),
+    defineField({
+      name: "metaTitle",
+      type: "string",
+      description: "SEO title override. Google shows around 60 characters.",
+      components: { input: createCharacterCounter(60) },
+    }),
+    defineField({
+      name: "metaDescription",
+      type: "text",
+      rows: 2,
+      description: "SEO description override. Google shows around 160 characters.",
+      components: { input: createCharacterCounter(160) },
+    }),
   ],
   orderings: [
     {
