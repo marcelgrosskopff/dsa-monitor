@@ -60,8 +60,9 @@ export const report = defineType({
     defineField({
       name: "articleType",
       type: "string",
+      title: "Report type",
       options: { list: ["Study", "Dossier", "Policy Paper"] },
-      description: "INTERNAL ONLY — never shown on the site.",
+      description: "What kind of publication is this? Not shown on the site directly, but categorises the report for internal tracking.",
     }),
     defineField({ name: "platforms", type: "array", of: [{ type: "string" }] }),
     defineField({
