@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createCharacterCounter } from "../components/CharacterCounter";
+import { TopicSelectInput } from "../components/TopicSelectInput";
 
 const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"];
 
@@ -51,6 +52,7 @@ export const report = defineType({
       to: [{ type: "topic" }],
       description: "Drives the swatch + colour coding.",
       validation: (r) => r.required(),
+      components: { input: TopicSelectInput },
     }),
     defineField({
       name: "topics",
