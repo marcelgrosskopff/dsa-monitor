@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
+import { ConcentricField } from "@/components/blocks/ConcentricField";
 import { DownloadButton, OutboundLink, SectionEyebrow } from "@/components/ds";
 import { getResourceGroups, getResourcesContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
@@ -60,8 +61,8 @@ function Group({
 }) {
   return (
     <div className="resgroup">
+      <div className="hatch resgroup__hatch" aria-hidden="true" />
       <div className="resgroup__head">
-        <SectionEyebrow index={index} label={group.name} />
         <h2>{group.name}</h2>
         {group.description && <p>{group.description}</p>}
       </div>
@@ -96,15 +97,15 @@ export default async function ResourcesPage() {
 
   return (
     <Page current="/resources">
-      <div className="band--canvas">
+      <section className="band band--inverse band--toppad resources__hero">
+        <ConcentricField className="hero__field" />
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label={resContent.eyebrowLabel || "Resources"} />
           <h1>{resContent.heading || "Resources for trusted flaggers."}</h1>
           <p>
             {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform's own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}
           </p>
         </div>
-      </div>
+      </section>
       <section
         className="wrap"
         style={{

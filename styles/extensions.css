@@ -158,3 +158,95 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Brutalist offset shadow on buttons + download tiles ----
+ * A solid, hard-edged offset block behind interactive elements. No blur, no gradient.
+ * Reads as a graphic element in the Direction A system, not a soft drop shadow.
+ * Hover slides the element into its shadow (interactive feedback); active presses fully in.
+ * Reduced-motion users get the offset but no transition. */
+.dsa-btn:not(.dsa-btn--ghost),
+.dsa-download {
+  --btn-shadow-color: var(--color-border-strong);
+  box-shadow: 5px 5px 0 0 var(--btn-shadow-color);
+  transition: box-shadow var(--motion-fast) var(--motion-ease),
+              transform var(--motion-fast) var(--motion-ease),
+              background-color var(--motion-fast) var(--motion-ease),
+              border-color var(--motion-fast) var(--motion-ease),
+              color var(--motion-fast) var(--motion-ease);
+}
+/* On inverse (dark) surfaces the shadow flips to white so it stays visible.
+ * Includes hero (dark navy hero section) and the dark CTA band. */
+.dsa-btn--on-inverse:not(.dsa-btn--ghost),
+.band--inverse .dsa-btn:not(.dsa-btn--ghost),
+.band--inverse .dsa-download,
+.hero .dsa-btn:not(.dsa-btn--ghost),
+.hero .dsa-download {
+  --btn-shadow-color: var(--color-text-on-inverse);
+}
+/* Press-into-shadow interaction */
+.dsa-btn:not(.dsa-btn--ghost):hover,
+.dsa-download:hover {
+  box-shadow: 2px 2px 0 0 var(--btn-shadow-color);
+  transform: translate(3px, 3px);
+}
+.dsa-btn:not(.dsa-btn--ghost):active,
+.dsa-download:active {
+  box-shadow: 0 0 0 0 var(--btn-shadow-color);
+  transform: translate(5px, 5px);
+}
+/* Focus ring already defined earlier — keep it visible above the shadow */
+.dsa-btn:not(.dsa-btn--ghost):focus-visible,
+.dsa-download:focus-visible {
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dsa-btn:not(.dsa-btn--ghost),
+  .dsa-download,
+  .dsa-btn:not(.dsa-btn--ghost):hover,
+  .dsa-download:hover,
+  .dsa-btn:not(.dsa-btn--ghost):active,
+  .dsa-download:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- Align the top nav to the site's content grid ----
+ * The nav is a full-width bar (dark bg on hero pages) but its wordmark + link list
+ * were flush to the screen edges, misaligning with .wrap content below. The padding
+ * below expands on wide screens to push the nav's inner edges onto the same 1280px
+ * column .wrap uses, while never dropping below the base gutter on narrow screens.
+ * `nav.dsa-nav` bumps specificity above components.css's `.dsa-nav` (loads later). */
+nav.dsa-nav {
+  padding-left: max(var(--space-stack-lg), calc((100% - var(--layout-max)) / 2));
+  padding-right: max(var(--space-stack-lg), calc((100% - var(--layout-max)) / 2));
+}
+
+/* ---- Resources page — two treatments ----
+ * A. Big inverse header at top of page: dark navy + ConcentricField (applied via
+ *    .band--inverse in the JSX; only text-colour tweaks needed here).
+ * B. Hatch divider before each group (reuses the .hatch pattern from "How we work"). */
+
+/* A — text colour inside the dark hero */
+.resources__hero .pagehead h1 {
+  color: var(--color-text-on-inverse);
+}
+.resources__hero .pagehead p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* B — hatch divider band before each group (except the first) */
+.resgroup__hatch {
+  height: 48px;
+  margin: var(--space-stack-xl) 0 var(--space-stack-lg);
+}
+.resgroup:first-child .resgroup__hatch {
+  display: none;
+}
+/* Drop the hairline under the group heading — the hatch above already separates.
+ * Higher-specificity selector needed: kit.css sets the border on .resgroup__head and
+ * loads after extensions.css. */
+.resgroup .resgroup__head {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
