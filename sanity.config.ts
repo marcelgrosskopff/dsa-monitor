@@ -4,6 +4,7 @@ import { defineConfig, type Template } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { defineLocations, presentationTool } from "sanity/presentation";
+import { assist } from "@sanity/assist";
 import { apiVersion, dataset, projectId, studioUrl } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
@@ -61,6 +62,7 @@ export default defineConfig({
         : prev,
   },
   plugins: [
+    assist(),
     structureTool({ structure }),
     presentationTool({
       previewUrl: {
