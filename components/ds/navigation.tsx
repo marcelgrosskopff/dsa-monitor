@@ -56,19 +56,26 @@ export function SiteNav({
  * RULE: use the REAL supplied assets — never recreate, recolour, or distort a logo.
  * When an item has no `src`, a text placeholder stands in until the real asset arrives.
  */
-function LogoItem({ name, src }: Logo) {
+function LogoItem({ name, src, url }: Logo) {
+  const inner = src ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={name} />
+  ) : (
+    <span
+      className="dsa-label"
+      style={{ color: "var(--color-text-secondary)" }}
+    >
+      {name}
+    </span>
+  );
   return (
     <li>
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={name} />
+      {url ? (
+        <a href={url} target="_blank" rel="noopener noreferrer" aria-label={name}>
+          {inner}
+        </a>
       ) : (
-        <span
-          className="dsa-label"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          {name}
-        </span>
+        <>{inner}</>
       )}
     </li>
   );

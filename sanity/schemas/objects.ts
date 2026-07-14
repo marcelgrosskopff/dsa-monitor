@@ -53,8 +53,18 @@ export const attribution = defineType({
   options: { collapsible: true, collapsed: true },
   fields: [
     defineField({ name: "projectName", type: "string" }),
-    defineField({ name: "fundedBy", type: "string" }),
-    defineField({ name: "partners", type: "array", of: [{ type: "string" }] }),
+    defineField({
+      name: "fundedBy",
+      type: "reference",
+      to: [{ type: "organization" }],
+      description: "Pick from the Organizations library.",
+    }),
+    defineField({
+      name: "partners",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
+      description: "Pick from the Organizations library.",
+    }),
     defineField({ name: "note", type: "text", rows: 3 }),
   ],
 });

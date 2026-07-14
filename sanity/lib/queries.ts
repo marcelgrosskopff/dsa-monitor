@@ -7,6 +7,12 @@ const topicRefProjection = `{
   "swatch": coalesce(swatch, "neutral")
 }`;
 
+const orgRefProjection = `{
+  "name": name,
+  "logoUrl": logo.asset->url,
+  url
+}`;
+
 const reportProjection = `{
   "slug": slug.current,
   title,
@@ -27,7 +33,12 @@ const reportProjection = `{
     "extension": file.asset->extension,
     "sizeBytes": file.asset->size
   },
-  attribution,
+  "attribution": attribution{
+    projectName,
+    "fundedBy": fundedBy->${orgRefProjection},
+    "partners": partners[]->${orgRefProjection},
+    note
+  },
   source,
   metaTitle,
   metaDescription
@@ -89,8 +100,8 @@ export const siteSettingsQuery = groq`
     contactEmail,
     linkedinUrl,
     platformsMonitoredCount,
-    "partners": partners[]{ name, "src": logo.asset->url },
-    "funders": funders[]{ name, "src": logo.asset->url },
+    "partners": partners[]->{ "name": name, "src": logo.asset->url, url },
+    "funders": funders[]->{ "name": name, "src": logo.asset->url, url },
     publisherName,
     activeSince,
     orgStatus,

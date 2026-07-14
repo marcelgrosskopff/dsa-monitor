@@ -4,6 +4,23 @@ import { TopicSelectInput } from "../components/TopicSelectInput";
 
 const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"];
 
+/** organization — a partner, funder, or both. Referenced by siteSettings (site-wide
+ *  logo wall) and per-report attribution. One entity, edited in one place. */
+export const organization = defineType({
+  name: "organization",
+  type: "document",
+  fields: [
+    defineField({ name: "name", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "logo", type: "image", options: { hotspot: false } }),
+    defineField({
+      name: "url",
+      type: "url",
+      description: "Optional. Enables clickable logos.",
+    }),
+  ],
+  preview: { select: { title: "name", media: "logo" } },
+});
+
 /** topic — one topic → one swatch. Primary topics keep their colour; long-tail go neutral. */
 export const topic = defineType({
   name: "topic",
@@ -148,8 +165,16 @@ export const siteSettings = defineType({
       type: "number",
       description: "The Home stat that isn't a pure CMS count.",
     }),
-    defineField({ name: "partners", type: "array", of: [defineArrayMember({ type: "logo" })] }),
-    defineField({ name: "funders", type: "array", of: [defineArrayMember({ type: "logo" })] }),
+    defineField({
+      name: "partners",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
+    }),
+    defineField({
+      name: "funders",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
+    }),
     // About page facts sidebar
     defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "ÖIAT" }),
     defineField({ name: "activeSince", type: "string", title: "Active since", initialValue: "1997" }),
@@ -308,6 +333,7 @@ export const notFoundContent = defineType({
 });
 
 export const documentSchemas = [
+  organization,
   topic,
   report,
   resourceGroup,

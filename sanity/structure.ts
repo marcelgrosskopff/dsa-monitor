@@ -25,6 +25,7 @@ export const structure: StructureResolver = (S) =>
             )
         ),
       S.documentTypeListItem("topic").title("Topics"),
+      S.documentTypeListItem("organization").title("Organizations"),
       S.documentTypeListItem("resourceGroup").title("Resource groups"),
       S.divider(),
       S.listItem()

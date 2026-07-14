@@ -311,3 +311,34 @@ a.dsa-nav__link[aria-current="page"] {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ---- Attribution logos on the report detail page ----
+ * A small row of partner/funder logos below the funding sentence. Reuses the
+ * same greyscale-on-default, colour-on-hover language as the About-page logo wall.
+ * Falls back to name-only chips if an org has no logo. */
+.attribution__logos {
+  list-style: none;
+  margin: var(--space-stack-sm) 0 var(--space-stack-md);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-stack-md);
+}
+.attribution__logos li {
+  display: inline-flex;
+  align-items: center;
+}
+.attribution__logos img {
+  height: 36px;
+  width: auto;
+  max-width: 160px;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.attribution__logos a:hover img,
+.attribution__logos li:hover img {
+  filter: none;
+  opacity: 1;
+}

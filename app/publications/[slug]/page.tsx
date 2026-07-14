@@ -37,21 +37,45 @@ export async function generateMetadata({
 }
 
 function AttributionBlock({ a, label }: { a: Attribution; label?: string }) {
-  const lines = [
-    a.projectName && a.fundedBy
-      ? `${a.projectName} — funded by ${a.fundedBy}.`
-      : a.projectName || (a.fundedBy ? `Funded by ${a.fundedBy}.` : ""),
-    a.partners?.length ? `In cooperation with ${a.partners.join(", ")}.` : "",
-    a.note || "",
-  ].filter(Boolean);
-  if (!lines.length) return null;
+  const fundedByName = a.fundedBy?.name;
+  const partnerNames = (a.partners ?? []).map((p) => p.name).filter(Boolean);
+  const sentence1 =
+    a.projectName && fundedByName
+      ? `${a.projectName} — funded by ${fundedByName}.`
+      : a.projectName || (fundedByName ? `Funded by ${fundedByName}.` : "");
+  const sentence2 = partnerNames.length
+    ? `In cooperation with ${partnerNames.join(", ")}.`
+    : "";
+  const note = a.note || "";
+  const orgsWithLogos = [
+    ...(a.fundedBy ? [a.fundedBy] : []),
+    ...(a.partners ?? []),
+  ].filter((o) => o?.logoUrl);
+  if (!sentence1 && !sentence2 && !note && !orgsWithLogos.length) return null;
   return (
     <div className="article__section">
       <div className="attribution">
         <span className="dsa-label">{label || "Project & funding"}</span>
-        {lines.map((l, i) => (
-          <p key={i}>{l}</p>
-        ))}
+        {sentence1 && <p>{sentence1}</p>}
+        {sentence2 && <p>{sentence2}</p>}
+        {orgsWithLogos.length > 0 && (
+          <ul className="attribution__logos" aria-label="Funders and partners">
+            {orgsWithLogos.map((o, i) => (
+              <li key={`${o.name}-${i}`}>
+                {o.url ? (
+                  <a href={o.url} target="_blank" rel="noopener noreferrer">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={o.logoUrl} alt={o.name} loading="lazy" />
+                  </a>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={o.logoUrl} alt={o.name} loading="lazy" />
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+        {note && <p>{note}</p>}
       </div>
     </div>
   );

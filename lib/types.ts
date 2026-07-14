@@ -33,10 +33,16 @@ export interface DownloadFile {
   href: string;
 }
 
+export interface Organization {
+  name: string;
+  logoUrl?: string;
+  url?: string;
+}
+
 export interface Attribution {
   projectName?: string;
-  fundedBy?: string;
-  partners?: string[];
+  fundedBy?: Organization;
+  partners?: Organization[];
   note?: string;
 }
 
@@ -110,6 +116,7 @@ export interface ResourceGroup {
 export interface Logo {
   name: string;
   src?: string;
+  url?: string;
 }
 
 export interface SiteSettings {
