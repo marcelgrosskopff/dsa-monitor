@@ -62,11 +62,11 @@ Copy the keys below into `.env.local` (not committed). See each var's role:
 
 ## Content model (Studio)
 
-`report` is the single template for all variants; `articleType` (Study/Dossier/Policy Paper)
-is **internal only and never shown**. Editors start from three initial-value presets
-(Dossier / Short Analysis / Policy Paper) — the offer's "3 templates" survive as Studio
-presets on one schema. Other types: `topic`, `resourceGroup`, `siteSettings` (singleton),
-and page-copy singletons (`homeContent`, `aboutContent`, `impressumContent`, `privacyContent`).
+`report` is a single schema used for every publication — no separate types for Study /
+Dossier / Policy Paper. Reports are categorised by their `primaryTopic` reference, which
+drives colour coding on the site. Other types: `topic`, `resourceGroup`, `siteSettings`
+(singleton), and page-copy singletons (`homeContent`, `aboutContent`, `impressumContent`,
+`privacyContent`).
 **Do not author legal/privacy copy — render client-supplied text only.**
 
 ## Deploy (Netlify)

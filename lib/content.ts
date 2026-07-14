@@ -126,7 +126,6 @@ function mapReport(r: any): Report {
     swatch: (primaryTopic.swatch as Swatch) ?? "neutral",
     primaryTopic,
     topics,
-    articleType: r.articleType,
     platforms: r.platforms ?? [],
     publishedAt: r.publishedAt,
     date,

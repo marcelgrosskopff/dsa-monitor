@@ -10,29 +10,10 @@ import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 import { SINGLETONS } from "./sanity/schemas/documents";
 
-// Initial-value templates — the offer's "3 templates" survive as editor presets on the
-// one report schema, plus a resource-entry preset.
-const templates = (prev: Template[]): Template[] => [
-  ...prev.filter((t) => !SINGLETONS.includes(t.id)),
-  {
-    id: "report-dossier",
-    title: "Report — Dossier / Full Report",
-    schemaType: "report",
-    value: { articleType: "Dossier" },
-  },
-  {
-    id: "report-short",
-    title: "Report — Short Analysis",
-    schemaType: "report",
-    value: { articleType: "Study" },
-  },
-  {
-    id: "report-policy",
-    title: "Report — Policy Paper",
-    schemaType: "report",
-    value: { articleType: "Policy Paper" },
-  },
-];
+// Initial-value templates — filter out singletons so they don't appear as
+// "New" options in the global create menu. Reports use Sanity's default.
+const templates = (prev: Template[]): Template[] =>
+  prev.filter((t) => !SINGLETONS.includes(t.id));
 
 export default defineConfig({
   name: "dsa-monitor",

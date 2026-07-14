@@ -11,7 +11,6 @@ const reportProjection = `{
   "slug": slug.current,
   title,
   subtitle,
-  articleType,
   platforms,
   publishedAt,
   summary,

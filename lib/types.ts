@@ -53,8 +53,6 @@ export interface Report {
   swatch: Swatch;
   primaryTopic: TopicRef;
   topics: TopicRef[];
-  /** Internal only — drives nothing user-facing. Never rendered. */
-  articleType?: string;
   platforms: string[];
   /** ISO date used for ordering. */
   publishedAt: string;
