@@ -280,3 +280,34 @@ a.dsa-nav__link[aria-current="page"] {
   text-decoration-thickness: 1px;
   text-decoration-color: currentColor;
 }
+
+/* ---- Whole report card clickable (stretched-link pattern) ----
+ * The card's title link stays the semantic anchor; a full-bleed ::after on it
+ * turns the entire card surface into the click target. HTML stays valid (no
+ * nested interactive elements), and screen readers still announce a single
+ * "Report title, link". Cmd/Ctrl-click still opens in a new tab. */
+.dsa-card {
+  position: relative;
+}
+.dsa-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+/* Anything else that needs its own click behaviour must sit above the stretched
+ * hit target. Topic chips are decorative today, but future-proofing costs nothing. */
+.dsa-card__topics {
+  position: relative;
+  z-index: 2;
+}
+
+/* Card-wide focus ring + hover polish so the whole surface reads as interactive */
+.dsa-card:has(a:focus-visible) {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+.dsa-card:hover .dsa-card__more {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
