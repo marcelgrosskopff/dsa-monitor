@@ -250,3 +250,33 @@ nav.dsa-nav {
   border-bottom: 0;
   padding-bottom: 0;
 }
+
+/* ---- Firefox-specific layout fixes (client-reported 2026-07-06) ----
+ * The client saw three broken elements in Firefox that don't reproduce in
+ * Chromium/WebKit. Diagnosed as three separate Firefox rendering quirks; each
+ * has a small defensive fix that is a no-op in other browsers. */
+
+/* 1. Wordmark: Firefox is more aggressive about treating a hyphen as a
+ *    line-break point. Under any flex shrink pressure, it wraps "DSA-Monitor"
+ *    into two lines. white-space + flex-shrink kills the wrap for good. */
+.dsa-nav .dsa-wordmark {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 2. HighlightMarker: Firefox mis-positions the <mark>'s background rectangle
+ *    relative to the text glyphs when `box-decoration-break: clone` is applied
+ *    to an inline mark. Reverting to the default `slice` value fixes Firefox
+ *    and is visually identical for single-line highlights (our only use case). */
+mark.dsa-mark {
+  -webkit-box-decoration-break: initial;
+  box-decoration-break: initial;
+}
+
+/* 3. Active nav link: Firefox's `text-decoration-thickness: auto` heuristic
+ *    renders wider/heavier than Chromium's, and can draw beyond the text width
+ *    inside flex-nested anchors. Pin thickness and colour explicitly. */
+a.dsa-nav__link[aria-current="page"] {
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+}
