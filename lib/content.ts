@@ -140,7 +140,22 @@ function mapReport(r: any): Report {
       accent: k.accent ? stegaClean(k.accent) : k.accent,
     })),
     downloads,
-    attribution: r.attribution || undefined,
+    attribution: r.attribution
+      ? {
+          projectName: r.attribution.projectName,
+          fundedBy:
+            r.attribution.fundedBy && typeof r.attribution.fundedBy === "object"
+              ? r.attribution.fundedBy
+              : undefined,
+          partners: Array.isArray(r.attribution.partners)
+            ? r.attribution.partners.filter(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (p: any) => p && typeof p === "object" && typeof p.name === "string",
+              )
+            : [],
+          note: r.attribution.note,
+        }
+      : undefined,
     source: r.source?.href ? r.source : undefined,
     metaTitle: r.metaTitle,
     metaDescription: r.metaDescription,
@@ -231,7 +246,14 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   if (!sanityConfigured) return SEED_SETTINGS;
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(siteSettingsQuery, {}, opts);
-  return data ?? SEED_SETTINGS;
+  if (!data) return SEED_SETTINGS;
+  return {
+    ...data,
+    // Dereferenced organization refs can be null if a ref is dangling — filter them out
+    // before rendering so LogoItem never gets a null spread.
+    partners: (data.partners ?? []).filter(Boolean),
+    funders: (data.funders ?? []).filter(Boolean),
+  };
 }
 
 export interface EvidenceBox {

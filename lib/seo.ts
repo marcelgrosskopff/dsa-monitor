@@ -64,8 +64,8 @@ export function reportJsonLd(report: Report) {
     isPartOf: {
       "@type": "ResearchProject",
       name: report.attribution?.projectName || "DSA-Monitor",
-      funder: report.attribution?.fundedBy
-        ? { "@type": "Organization", name: report.attribution.fundedBy }
+      funder: report.attribution?.fundedBy?.name
+        ? { "@type": "Organization", name: report.attribution.fundedBy.name }
         : undefined,
     },
     mainEntityOfPage: url,
