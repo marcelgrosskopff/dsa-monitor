@@ -141,23 +141,9 @@
 .dsa-kpi-grid .dsa-kpi__num {
   font-size: clamp(28px, 4.5vw, var(--fs-5xl));
 }
-/* In the article the number is the smaller fs-3xl; keep it fluid down to 22px. */
-.article__kpis .dsa-kpi__num {
-  font-size: clamp(22px, 3vw, var(--fs-3xl));
-}
-/* The 4-up KPI grid only has room beside the rail on wide desktops. Step down to
- * 2 columns through the cramped two-column-layout zone, and 1 on small phones. The
- * base components.css 640px rule still applies to non-article (home) KPI strips. */
-@media (max-width: 1100px) {
-  .article__kpis .dsa-kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 480px) {
-  .article__kpis .dsa-kpi-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* KPIs sit full-width above the article__layout grid (client feedback 2026-07-15) —
+ * moved out of the narrow left column. The base .dsa-kpi-grid responsive behaviour
+ * from components.css now applies without article-specific column overrides. */
 
 /* ---- Brutalist offset shadow on buttons + download tiles ----
  * A solid, hard-edged offset block behind interactive elements. No blur, no gradient.
@@ -341,4 +327,16 @@ a.dsa-nav__link[aria-current="page"] {
 .attribution__logos li:hover img {
   filter: none;
   opacity: 1;
+}
+
+/* ---- Report body: reduce lateral whitespace between text and Downloads box ----
+ * Two scoped tweaks (client feedback 2026-07-15). Widen reading paragraphs modestly
+ * (68ch → 76ch, still within the 65–75+ comfortable-reading range) so text ends
+ * closer to the sidebar, and tighten the two-column grid gap. Higher specificity
+ * needed because kit.css loads after extensions.css. */
+.article__body .article__section p {
+  max-width: 76ch;
+}
+.article .article__layout {
+  gap: var(--space-stack-lg);
 }

@@ -128,16 +128,16 @@ export default async function ReportPage({
             </div>
           </header>
 
+          {kpis.length > 0 && (
+            <div className="article__section article__kpis-full">
+              <div className="article__kpis">
+                <KpiGrid items={kpis} />
+              </div>
+            </div>
+          )}
+
           <div className="article__layout">
             <div className="article__main article__body">
-              {kpis.length > 0 && (
-                <div className="article__section">
-                  <div className="article__kpis">
-                    <KpiGrid items={kpis} />
-                  </div>
-                </div>
-              )}
-
               <div className="article__section">
                 <h2>{pubContent.reportSummaryLabel || "Summary"}</h2>
                 <RichBody value={report.body} lead />
