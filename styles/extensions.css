@@ -337,6 +337,9 @@ a.dsa-nav__link[aria-current="page"] {
 .article__body .article__section p {
   max-width: none;
 }
+.article .methodology {
+  max-width: none;
+}
 .article .article__layout {
   grid-template-columns: 1fr 400px;
   gap: var(--space-stack-lg);
