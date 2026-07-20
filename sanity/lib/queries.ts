@@ -35,7 +35,7 @@ const reportProjection = `{
   },
   "attribution": attribution{
     projectName,
-    "fundedBy": fundedBy->${orgRefProjection},
+    "fundedBy": fundedBy[]->${orgRefProjection},
     "partners": partners[]->${orgRefProjection},
     note
   },

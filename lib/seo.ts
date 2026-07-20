@@ -64,9 +64,12 @@ export function reportJsonLd(report: Report) {
     isPartOf: {
       "@type": "ResearchProject",
       name: report.attribution?.projectName || "DSA-Monitor",
-      funder: report.attribution?.fundedBy?.name
-        ? { "@type": "Organization", name: report.attribution.fundedBy.name }
-        : undefined,
+      funder: (() => {
+        const funders = (report.attribution?.fundedBy ?? [])
+          .filter((f) => f?.name)
+          .map((f) => ({ "@type": "Organization", name: f.name }));
+        return funders.length ? funders : undefined;
+      })(),
     },
     mainEntityOfPage: url,
   };

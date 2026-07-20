@@ -143,10 +143,12 @@ function mapReport(r: any): Report {
     attribution: r.attribution
       ? {
           projectName: r.attribution.projectName,
-          fundedBy:
-            r.attribution.fundedBy && typeof r.attribution.fundedBy === "object"
-              ? r.attribution.fundedBy
-              : undefined,
+          fundedBy: Array.isArray(r.attribution.fundedBy)
+            ? r.attribution.fundedBy.filter(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (o: any) => o && typeof o === "object" && typeof o.name === "string",
+              )
+            : [],
           partners: Array.isArray(r.attribution.partners)
             ? r.attribution.partners.filter(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

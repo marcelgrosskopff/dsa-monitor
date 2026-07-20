@@ -41,7 +41,7 @@ export interface Organization {
 
 export interface Attribution {
   projectName?: string;
-  fundedBy?: Organization;
+  fundedBy?: Organization[];
   partners?: Organization[];
   note?: string;
 }

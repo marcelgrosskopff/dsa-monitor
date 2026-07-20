@@ -36,19 +36,27 @@ export async function generateMetadata({
   return reportMetadata(report);
 }
 
+function joinNames(names: string[]): string {
+  if (names.length === 0) return "";
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+}
+
 function AttributionBlock({ a, label }: { a: Attribution; label?: string }) {
-  const fundedByName = a.fundedBy?.name;
+  const fundedByNames = (a.fundedBy ?? []).map((f) => f.name).filter(Boolean);
+  const fundedByPhrase = joinNames(fundedByNames);
   const partnerNames = (a.partners ?? []).map((p) => p.name).filter(Boolean);
   const sentence1 =
-    a.projectName && fundedByName
-      ? `${a.projectName} — funded by ${fundedByName}.`
-      : a.projectName || (fundedByName ? `Funded by ${fundedByName}.` : "");
+    a.projectName && fundedByPhrase
+      ? `${a.projectName} — funded by ${fundedByPhrase}.`
+      : a.projectName || (fundedByPhrase ? `Funded by ${fundedByPhrase}.` : "");
   const sentence2 = partnerNames.length
-    ? `In cooperation with ${partnerNames.join(", ")}.`
+    ? `In cooperation with ${joinNames(partnerNames)}.`
     : "";
   const note = a.note || "";
   const orgsWithLogos = [
-    ...(a.fundedBy ? [a.fundedBy] : []),
+    ...(a.fundedBy ?? []),
     ...(a.partners ?? []),
   ].filter((o) => o?.logoUrl);
   if (!sentence1 && !sentence2 && !note && !orgsWithLogos.length) return null;

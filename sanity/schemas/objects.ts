@@ -55,8 +55,8 @@ export const attribution = defineType({
     defineField({ name: "projectName", type: "string" }),
     defineField({
       name: "fundedBy",
-      type: "reference",
-      to: [{ type: "organization" }],
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
       description: "Pick from the Organizations library.",
     }),
     defineField({
