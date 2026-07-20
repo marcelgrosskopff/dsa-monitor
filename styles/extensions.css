@@ -329,14 +329,15 @@ a.dsa-nav__link[aria-current="page"] {
   opacity: 1;
 }
 
-/* ---- Report body: reduce lateral whitespace between text and Downloads box ----
- * Two scoped tweaks (client feedback 2026-07-15). Widen reading paragraphs modestly
- * (68ch → 76ch, still within the 65–75+ comfortable-reading range) so text ends
- * closer to the sidebar, and tighten the two-column grid gap. Higher specificity
- * needed because kit.css loads after extensions.css. */
+/* ---- Report body layout: remove paragraph line-length cap + widen Downloads ----
+ * Client override (2026-07-15). Paragraphs fill their column (no max-width) — the
+ * grid naturally caps them at the main-column width now. Downloads sidebar widened
+ * from 320 → 400px for a stronger presence. Higher specificity needed because
+ * kit.css loads after extensions.css. */
 .article__body .article__section p {
-  max-width: 76ch;
+  max-width: none;
 }
 .article .article__layout {
+  grid-template-columns: 1fr 400px;
   gap: var(--space-stack-lg);
 }
