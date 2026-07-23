@@ -35,9 +35,13 @@ export async function POST(req: NextRequest) {
     if (!tag) {
       return Response.json({ revalidated: false, reason: "no matching tag", type });
     }
-    // Next 16: revalidateTag requires a cacheLife profile argument.
-    revalidateTag(tag, "max");
-    console.log(`[revalidate] revalidateTag(${tag}) called for type=${type}`);
+    // Next 16: the second argument sets how long STALE content may still be
+    // served while fresh content regenerates in the background. "max" gave a
+    // ~5-minute stale window — editors thought publishing was broken because
+    // the old page kept being served. { expire: 0 } = zero stale window: the
+    // next request blocks briefly and returns fresh content immediately.
+    revalidateTag(tag, { expire: 0 });
+    console.log(`[revalidate] revalidateTag(${tag}, {expire: 0}) called for type=${type}`);
     // Also purge Netlify's edge cache — revalidateTag only touches Next's
     // internal cache, so without this the edge keeps serving stale HTML.
     let edgePurged = false;
