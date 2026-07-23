@@ -124,7 +124,6 @@ export interface SiteSettings {
   linkedinUrl?: string;
   partners: Logo[];
   funders: Logo[];
-  platformsMonitoredCount?: number;
   publisherName?: string;
   activeSince?: string;
   orgStatus?: string;

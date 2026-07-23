@@ -24,6 +24,9 @@ const TAGS_FOR_TYPE: Record<string, string[]> = {
   // Organizations render in report attributions (tag "report") AND the
   // site-wide logo wall fetched with siteSettings (tag "settings").
   organization: ["report", "settings"],
+  // Platform names are embedded in report projections + feed the homepage
+  // count (computed from reports). Editing one must refresh report-tagged data.
+  platform: ["report"],
 };
 
 export async function POST(req: NextRequest) {

@@ -9,20 +9,19 @@ import {
 } from "@/components/blocks/sections";
 import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 import { Button, SectionEyebrow } from "@/components/ds";
-import { getHomeContent, getReports, getSiteSettings, getTopics } from "@/lib/content";
+import { getHomeContent, getReports, getTopics } from "@/lib/content";
 import { siteStats } from "@/lib/counts";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({ path: "/" });
 
 export default async function HomePage() {
-  const [reports, topics, settings, home] = await Promise.all([
+  const [reports, topics, home] = await Promise.all([
     getReports(),
     getTopics(),
-    getSiteSettings(),
     getHomeContent(),
   ]);
-  const stats = siteStats(reports, topics, settings);
+  const stats = siteStats(reports, topics);
   const latest = reports.slice(0, 6);
 
   return (

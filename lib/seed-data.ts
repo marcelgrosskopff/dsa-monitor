@@ -340,7 +340,6 @@ export const SEED_RESOURCE_GROUPS: ResourceGroup[] = [
 export const SEED_SETTINGS: SiteSettings = {
   contactEmail: "research@oiat.at",
   linkedinUrl: "https://at.linkedin.com",
-  platformsMonitoredCount: 4,
   partners: [
     { name: "ÖIAT", src: "/logos/oiat.png" },
     { name: "ÖIAT Research", src: "/logos/oiat-research.png" },

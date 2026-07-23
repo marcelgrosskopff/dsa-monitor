@@ -17,7 +17,7 @@ const reportProjection = `{
   "slug": slug.current,
   title,
   subtitle,
-  platforms,
+  "platforms": platforms[]->name,
   publishedAt,
   summary,
   body,
@@ -99,7 +99,6 @@ export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0]{
     contactEmail,
     linkedinUrl,
-    platformsMonitoredCount,
     "partners": partners[]->{ "name": name, "src": logo.asset->url, url },
     "funders": funders[]->{ "name": name, "src": logo.asset->url, url },
     publisherName,

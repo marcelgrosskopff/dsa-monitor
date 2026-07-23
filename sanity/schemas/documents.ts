@@ -21,6 +21,18 @@ export const organization = defineType({
   preview: { select: { title: "name", media: "logo" } },
 });
 
+/** platform — a monitored platform (Meta, TikTok, …). A shared, ever-growing list:
+ *  editors pick from existing entries or create a new one inline from the report's
+ *  Platforms field. The homepage "platforms monitored" stat counts these. */
+export const platform = defineType({
+  name: "platform",
+  type: "document",
+  fields: [
+    defineField({ name: "name", type: "string", validation: (r) => r.required() }),
+  ],
+  preview: { select: { title: "name" } },
+});
+
 /** topic — one topic → one swatch. Primary topics keep their colour; long-tail go neutral. */
 export const topic = defineType({
   name: "topic",
@@ -81,7 +93,13 @@ export const report = defineType({
         "Optional additional tags — shown on the site after the primary topic.",
       of: [defineArrayMember({ type: "reference", to: [{ type: "topic" }] })],
     }),
-    defineField({ name: "platforms", type: "array", of: [{ type: "string" }] }),
+    defineField({
+      name: "platforms",
+      type: "array",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "platform" }] })],
+      description:
+        "Platforms this report covers. Pick from the list, or type a new name and choose “Create” to add it. Drives the homepage “platforms monitored” count.",
+    }),
     defineField({
       name: "publishedAt",
       type: "date",
@@ -171,11 +189,6 @@ export const siteSettings = defineType({
   fields: [
     defineField({ name: "contactEmail", type: "string", initialValue: "research@oiat.at" }),
     defineField({ name: "linkedinUrl", type: "url" }),
-    defineField({
-      name: "platformsMonitoredCount",
-      type: "number",
-      description: "The Home stat that isn't a pure CMS count.",
-    }),
     defineField({
       name: "partners",
       type: "array",
@@ -345,6 +358,7 @@ export const notFoundContent = defineType({
 
 export const documentSchemas = [
   organization,
+  platform,
   topic,
   report,
   resourceGroup,

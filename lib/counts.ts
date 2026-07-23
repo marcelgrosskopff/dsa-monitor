@@ -1,4 +1,4 @@
-import type { Kpi, Report, SiteSettings, Topic } from "./types";
+import type { Kpi, Report, Topic } from "./types";
 
 // Automated counts (brief §8). Every visible count reads from one source so the Home
 // stat strip, hub subhead, and chip counts can never disagree.
@@ -12,14 +12,11 @@ export function topicCategories(topics: Topic[]): number {
   return topics.filter((t) => t.isPrimary).length;
 }
 
-/** Platforms monitored = settings value if set, else distinct platforms across reports. */
-export function platformsMonitored(
-  reports: Report[],
-  settings?: SiteSettings
-): number {
-  if (settings?.platformsMonitoredCount && settings.platformsMonitoredCount > 0) {
-    return settings.platformsMonitoredCount;
-  }
+/** Platforms monitored = distinct platforms referenced across all reports.
+ *  Self-updating: adding a platform to a report raises the count; there is no
+ *  manual override any more (it was a drift trap — it once pinned the number to
+ *  "4" long after the real count had grown). */
+export function platformsMonitored(reports: Report[]): number {
   const set = new Set<string>();
   for (const r of reports) for (const p of r.platforms ?? []) set.add(p);
   return set.size;
@@ -35,11 +32,7 @@ export function topicReportCount(reports: Report[], label: string): number {
 }
 
 /** The three Home KPI stats — derived, never hand-typed. */
-export function siteStats(
-  reports: Report[],
-  topics: Topic[],
-  settings?: SiteSettings
-): Kpi[] {
+export function siteStats(reports: Report[], topics: Topic[]): Kpi[] {
   const pad = (n: number) => (n < 10 ? String(n).padStart(2, "0") : String(n));
   return [
     {
@@ -48,7 +41,7 @@ export function siteStats(
       accent: "coral",
     },
     {
-      number: pad(platformsMonitored(reports, settings)),
+      number: pad(platformsMonitored(reports)),
       label: "Platforms monitored",
       accent: "blue",
     },
