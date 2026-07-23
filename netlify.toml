@@ -10,3 +10,43 @@
 # draft mode, and the Sanity webhook route.
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Netlify-Cache-Tag headers so /api/revalidate's purgeCache({ tags: [...] }) call
+# actually finds edge-cache entries to purge. Next.js's own headers() config in
+# next.config.ts doesn't reliably propagate to statically-prerendered pages served
+# by Netlify's edge — so we set them here instead. Comma-separated values per
+# Netlify's cache-tag convention.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Netlify-Cache-Tag = "settings,report,topic"
+
+[[headers]]
+  for = "/about"
+  [headers.values]
+    Netlify-Cache-Tag = "settings"
+
+[[headers]]
+  for = "/impressum"
+  [headers.values]
+    Netlify-Cache-Tag = "settings"
+
+[[headers]]
+  for = "/privacy"
+  [headers.values]
+    Netlify-Cache-Tag = "settings"
+
+[[headers]]
+  for = "/resources"
+  [headers.values]
+    Netlify-Cache-Tag = "resource,settings"
+
+[[headers]]
+  for = "/publications"
+  [headers.values]
+    Netlify-Cache-Tag = "settings,report,topic"
+
+[[headers]]
+  for = "/publications/*"
+  [headers.values]
+    Netlify-Cache-Tag = "report,settings,topic"
