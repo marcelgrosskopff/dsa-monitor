@@ -9,7 +9,6 @@ import { apiVersion, dataset, projectId, studioUrl } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 import { SINGLETONS } from "./sanity/schemas/documents";
-import { withValidationFeedback } from "./sanity/components/PublishWithValidation";
 
 // Initial-value templates — filter out singletons so they don't appear as
 // "New" options in the global create menu. Reports use Sanity's default.
@@ -36,18 +35,12 @@ export default defineConfig({
       }
       return prev;
     },
-    actions: (prev, { schemaType }) => {
-      // Publish button explains WHICH fields block publishing instead of
-      // silently greying out (client-reported UX pain).
-      const withFeedback = prev.map((a) =>
-        a.action === "publish" ? withValidationFeedback(a) : a
-      );
-      return SINGLETONS.includes(schemaType)
-        ? withFeedback.filter(({ action }) =>
+    actions: (prev, { schemaType }) =>
+      SINGLETONS.includes(schemaType)
+        ? prev.filter(({ action }) =>
             ["publish", "discardChanges", "restore"].includes(action as string)
           )
-        : withFeedback;
-    },
+        : prev,
   },
   plugins: [
     assist(),
