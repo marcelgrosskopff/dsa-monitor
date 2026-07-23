@@ -110,10 +110,16 @@ function mapReport(r: any): Report {
   const primaryTopic = r.primaryTopic
     ? cleanSwatch(r.primaryTopic)
     : { label: "", swatch: "neutral" as Swatch };
-  const topics =
-    Array.isArray(r.topics) && r.topics.length
-      ? r.topics.map(cleanSwatch)
-      : [primaryTopic];
+  // Visible tags = primary topic FIRST (it also sets the colour), then the
+  // secondary topics, deduped by label. Merged at render time — no migration
+  // needed for reports whose secondary list doesn't include the primary.
+  const secondaryTopics: Report["topics"] = Array.isArray(r.topics)
+    ? r.topics.map(cleanSwatch)
+    : [];
+  const topics = [
+    primaryTopic,
+    ...secondaryTopics.filter((t) => t.label && t.label !== primaryTopic.label),
+  ].filter((t) => t.label);
   const downloads = mapDownloads(r.downloads);
   const languages = Array.from(
     new Set(downloads.map((d) => langCode(d.language)).filter(Boolean) as string[])

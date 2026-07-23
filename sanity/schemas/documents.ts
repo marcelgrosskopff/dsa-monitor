@@ -67,13 +67,18 @@ export const report = defineType({
       name: "primaryTopic",
       type: "reference",
       to: [{ type: "topic" }],
-      description: "Drives the swatch + colour coding.",
+      title: "Primary topic",
+      description:
+        "Mandatory. Sets the report's colour coding and appears as the first topic tag on the site.",
       validation: (r) => r.required(),
       components: { input: TopicSelectInput },
     }),
     defineField({
       name: "topics",
       type: "array",
+      title: "Secondary topics",
+      description:
+        "Optional additional tags — shown on the site after the primary topic.",
       of: [defineArrayMember({ type: "reference", to: [{ type: "topic" }] })],
     }),
     defineField({ name: "platforms", type: "array", of: [{ type: "string" }] }),
