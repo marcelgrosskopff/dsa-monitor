@@ -8,6 +8,10 @@ const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"
 export const organization = defineType({
   name: "organization",
   type: "document",
+  // Taxonomy docs edit LIVE — no draft state. Prevents the confusing situation
+  // where a report's Draft/Published tabs disagree because a linked label has
+  // an unpublished rename (bit the editors during client testing).
+  liveEdit: true,
   fields: [
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
     defineField({ name: "logo", type: "image", options: { hotspot: false } }),
@@ -26,6 +30,8 @@ export const organization = defineType({
 export const platform = defineType({
   name: "platform",
   type: "document",
+  // Live edit — see note on `organization`.
+  liveEdit: true,
   fields: [
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
   ],
@@ -36,6 +42,8 @@ export const platform = defineType({
 export const topic = defineType({
   name: "topic",
   type: "document",
+  // Live edit — see note on `organization`.
+  liveEdit: true,
   fields: [
     defineField({ name: "label", type: "string", validation: (r) => r.required() }),
     defineField({
