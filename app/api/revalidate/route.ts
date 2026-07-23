@@ -37,14 +37,20 @@ export async function POST(req: NextRequest) {
     }
     // Next 16: revalidateTag requires a cacheLife profile argument.
     revalidateTag(tag, "max");
+    console.log(`[revalidate] revalidateTag(${tag}) called for type=${type}`);
     // Also purge Netlify's edge cache — revalidateTag only touches Next's
     // internal cache, so without this the edge keeps serving stale HTML.
+    let edgePurged = false;
+    let edgePurgeError: string | undefined;
     try {
       await purgeCache({ tags: [tag] });
+      edgePurged = true;
+      console.log(`[revalidate] Netlify purgeCache({ tags: [${tag}] }) succeeded`);
     } catch (purgeErr) {
-      console.error("[revalidate] Netlify purgeCache failed:", purgeErr);
+      edgePurgeError = purgeErr instanceof Error ? purgeErr.message : String(purgeErr);
+      console.error(`[revalidate] Netlify purgeCache failed for tag=${tag}:`, edgePurgeError);
     }
-    return Response.json({ revalidated: true, tag, type });
+    return Response.json({ revalidated: true, tag, type, edgePurged, edgePurgeError });
   } catch (err) {
     return new Response(
       err instanceof Error ? err.message : "Revalidation error",
