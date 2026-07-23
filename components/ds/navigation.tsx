@@ -46,7 +46,7 @@ export function SiteNav({
           </li>
         ))}
       </ul>
-      <MobileNavMenu items={items} current={current} inverse={inverse} />
+      <MobileNavMenu items={items} current={current} />
     </nav>
   );
 }

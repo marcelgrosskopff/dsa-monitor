@@ -48,17 +48,15 @@ Copy the keys below into `.env.local` (not committed). See each var's role:
 1. `npx sanity login` then create a project + `production` dataset (public read).
 2. Create two API tokens: **Viewer** (`SANITY_API_READ_TOKEN`) and **Editor** (`SANITY_API_WRITE_TOKEN`).
 3. Put project id + dataset + tokens in `.env.local` (and in Netlify env).
-4. Seed the dataset:
-   ```bash
-   npm run seed
-   ```
-   This creates 8 topics (6 primary + 2 long-tail), 9 reports, 3 resource groups (incl. the
-   ACE featured entry), site settings with the real partner/funder logos, and clearly-marked
-   placeholder page-copy singletons. Report download files are **placeholders** — replace with
-   real PDFs in the Studio. Re-running is safe (deterministic ids + `createOrReplace`).
-5. In Sanity manage, add a **webhook** → `https://<site>/api/revalidate` with secret
+4. In Sanity manage, add a **webhook** → `https://<site>/api/revalidate` with secret
    `SANITY_REVALIDATE_SECRET` (trigger on create/update/delete). Publishing then goes live
-   without a rebuild.
+   without a rebuild. The secret must match the `SANITY_REVALIDATE_SECRET` env var on
+   Netlify exactly.
+
+> **Note:** the one-time `npm run seed` script was removed after the production dataset went
+> live — it predated the `organization` reference model and re-running it would have
+> corrupted live content. Content is now managed entirely in the Studio. Without
+> `.env.local`, the app still runs on the typed fallback in `lib/seed-data.ts`.
 
 ## Content model (Studio)
 

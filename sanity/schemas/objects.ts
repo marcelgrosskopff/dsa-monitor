@@ -172,17 +172,6 @@ export const resourceFeatured = defineType({
   ],
 });
 
-/** A partner/funder logo. */
-export const logo = defineType({
-  name: "logo",
-  type: "object",
-  fields: [
-    defineField({ name: "name", type: "string", validation: (r) => r.required() }),
-    defineField({ name: "logo", type: "image", options: { hotspot: false } }),
-  ],
-  preview: { select: { title: "name", media: "logo" } },
-});
-
 /** One evidence box for the home "Investigate / Document / Translate" trio. */
 export const evidenceBox = defineType({
   name: "evidenceBox",
@@ -204,6 +193,5 @@ export const objectSchemas = [
   richBody,
   resourceItem,
   resourceFeatured,
-  logo,
   evidenceBox,
 ];

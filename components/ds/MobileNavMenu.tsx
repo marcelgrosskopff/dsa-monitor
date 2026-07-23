@@ -6,11 +6,9 @@ import Link from "next/link";
 export function MobileNavMenu({
   items,
   current,
-  inverse,
 }: {
   items: { href: string; label: string }[];
   current: string;
-  inverse: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

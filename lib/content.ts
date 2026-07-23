@@ -47,7 +47,7 @@ const TAGS = { report: "report", topic: "topic", resource: "resource", settings:
 
 const PAGE_SIZE_CONST = PAGE_SIZE;
 
-// Returns previewClient (stega + previewDrafts) when Next.js draft mode is on,
+// Returns previewClient (stega + drafts perspective) when Next.js draft mode is on,
 // otherwise returns the regular CDN-backed published client.
 // Falls back to regular client during static generation (where draftMode() throws).
 async function getQueryClient() {

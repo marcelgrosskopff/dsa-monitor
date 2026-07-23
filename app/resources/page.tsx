@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { ConcentricField } from "@/components/blocks/ConcentricField";
-import { DownloadButton, OutboundLink, SectionEyebrow } from "@/components/ds";
+import { DownloadButton, OutboundLink } from "@/components/ds";
 import { getResourceGroups, getResourcesContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 import type { ResourceGroup, ResourceItem } from "@/lib/types";
@@ -50,12 +50,10 @@ function ResEntry({
 
 function Group({
   group,
-  index,
   dlTypeLabel,
   linkTypeLabel,
 }: {
   group: ResourceGroup;
-  index: string;
   dlTypeLabel?: string;
   linkTypeLabel?: string;
 }) {
@@ -113,11 +111,10 @@ export default async function ResourcesPage() {
           paddingBottom: "var(--space-section)",
         }}
       >
-        {groups.map((g, i) => (
+        {groups.map((g) => (
           <Group
             key={g.name}
             group={g}
-            index={String(i + 1).padStart(2, "0")}
             dlTypeLabel={resContent.dlTypeLabel}
             linkTypeLabel={resContent.linkTypeLabel}
           />

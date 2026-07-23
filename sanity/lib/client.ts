@@ -18,7 +18,8 @@ export const previewClient = createClient({
   dataset,
   apiVersion,
   useCdn: false,
-  perspective: "previewDrafts",
+  // "previewDrafts" was renamed to "drafts" — the old name is deprecated.
+  perspective: "drafts",
   token: process.env.SANITY_API_READ_TOKEN,
   stega: {
     enabled: true,
