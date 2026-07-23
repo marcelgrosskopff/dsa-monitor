@@ -20,7 +20,7 @@ export const structure: StructureResolver = (S) =>
             .child((topicId) =>
               S.documentList()
                 .title("Reports")
-                .filter("_type == 'report' && $topicId in topics[]._ref || primaryTopic._ref == $topicId")
+                .filter("_type == 'report' && $topicId in topics[]._ref")
                 .params({ topicId })
             )
         ),

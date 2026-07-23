@@ -1,6 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { createCharacterCounter } from "../components/CharacterCounter";
-import { TopicSelectInput } from "../components/TopicSelectInput";
 
 const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"];
 
@@ -76,22 +75,13 @@ export const report = defineType({
     }),
     defineField({ name: "subtitle", type: "string", description: "Optional — renders only when present." }),
     defineField({
-      name: "primaryTopic",
-      type: "reference",
-      to: [{ type: "topic" }],
-      title: "Primary topic",
-      description:
-        "Mandatory. Sets the report's colour coding and appears as the first topic tag on the site.",
-      validation: (r) => r.required(),
-      components: { input: TopicSelectInput },
-    }),
-    defineField({
       name: "topics",
       type: "array",
-      title: "Secondary topics",
+      title: "Topics",
       description:
-        "Optional additional tags — shown on the site after the primary topic.",
+        "Drag to reorder — the FIRST topic is the primary one: it sets the report's colour and shows first on the site.",
       of: [defineArrayMember({ type: "reference", to: [{ type: "topic" }] })],
+      validation: (r) => r.required().min(1).unique(),
     }),
     defineField({
       name: "platforms",

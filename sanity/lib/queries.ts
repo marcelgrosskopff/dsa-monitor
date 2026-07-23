@@ -23,7 +23,6 @@ const reportProjection = `{
   body,
   methodology,
   kpis[]{ number, label, accent },
-  "primaryTopic": primaryTopic->${topicRefProjection},
   "topics": topics[]->${topicRefProjection},
   "downloads": downloads[]{
     label,
@@ -57,7 +56,7 @@ export const reportSlugsQuery = groq`
 `;
 
 export const relatedReportsQuery = groq`
-  *[_type == "report" && slug.current != $slug && primaryTopic->label == $topicLabel]
+  *[_type == "report" && slug.current != $slug && topics[0]->label == $topicLabel]
     | order(publishedAt desc)[0...3] ${reportProjection}
 `;
 
@@ -218,14 +217,13 @@ const reportCardProjection = `{
   "slug": slug.current,
   title,
   publishedAt,
-  "primaryTopic": primaryTopic->${topicRefProjection},
   "topics": topics[]->${topicRefProjection},
   "downloads": downloads[]{ language }
 }`;
 
 export const PAGE_SIZE = 6;
 
-const reportFilter = `_type == "report" && defined(slug.current) && ($topic == null || primaryTopic->label == $topic || $topic in topics[]->label)`;
+const reportFilter = `_type == "report" && defined(slug.current) && ($topic == null || $topic in topics[]->label)`;
 
 export const reportsPagedNewestQuery = groq`
   *[${reportFilter}] | order(publishedAt desc) [$start...$end] ${reportCardProjection}

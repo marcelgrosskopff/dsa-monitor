@@ -107,19 +107,13 @@ function cleanSwatch(t: any) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapReport(r: any): Report {
-  const primaryTopic = r.primaryTopic
-    ? cleanSwatch(r.primaryTopic)
-    : { label: "", swatch: "neutral" as Swatch };
-  // Visible tags = primary topic FIRST (it also sets the colour), then the
-  // secondary topics, deduped by label. Merged at render time — no migration
-  // needed for reports whose secondary list doesn't include the primary.
-  const secondaryTopics: Report["topics"] = Array.isArray(r.topics)
-    ? r.topics.map(cleanSwatch)
+  // One ordered topics list: the FIRST topic is the primary — it sets the
+  // report's colour and is derived here (the schema no longer has a separate
+  // primaryTopic field; editors reorder the list to choose the primary).
+  const topics: Report["topics"] = Array.isArray(r.topics)
+    ? r.topics.map(cleanSwatch).filter((t: { label?: string }) => t.label)
     : [];
-  const topics = [
-    primaryTopic,
-    ...secondaryTopics.filter((t) => t.label && t.label !== primaryTopic.label),
-  ].filter((t) => t.label);
+  const primaryTopic = topics[0] ?? { label: "", swatch: "neutral" as Swatch };
   const downloads = mapDownloads(r.downloads);
   const languages = Array.from(
     new Set(downloads.map((d) => langCode(d.language)).filter(Boolean) as string[])
