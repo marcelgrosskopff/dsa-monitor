@@ -83,7 +83,13 @@ export const report = defineType({
       options: { dateFormat: "MM/YYYY" },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "summary", type: "text", rows: 3, validation: (r) => r.required() }),
+    defineField({
+      name: "summary",
+      type: "text",
+      rows: 3,
+      description:
+        "Optional. Used as the SEO/search-result description when Meta Description is empty — not shown on the page itself. Tip: use the AI assist on Meta Description instead.",
+    }),
     defineField({ name: "body", type: "richBody" }),
     defineField({
       name: "methodology",

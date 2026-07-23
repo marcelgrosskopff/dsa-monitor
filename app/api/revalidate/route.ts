@@ -9,7 +9,10 @@ import type { NextRequest } from "next/server";
 
 const TAGS_FOR_TYPE: Record<string, string[]> = {
   report: ["report"],
-  topic: ["topic"],
+  // Topic labels/swatches are embedded in report projections (cards, report
+  // pages), which are fetched under the "report" tag — a topic edit must
+  // invalidate those too, not just the topic filter list.
+  topic: ["topic", "report"],
   resourceGroup: ["resource"],
   siteSettings: ["settings"],
   homeContent: ["settings"],
