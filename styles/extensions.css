@@ -98,6 +98,27 @@
   padding-left: var(--space-inset-control, 16px);
 }
 
+/* ---- Legal pages (Impressum / Privacy): follow the site's content column ----
+ * kit.css sets .legal { max-width: none; margin: 0 } for the original
+ * full-width card grid, which breaks the centred column now that the pages
+ * carry CMS long-form body text — sections started at the viewport edge,
+ * misaligned with the page header above. Restore .wrap's centring; higher
+ * specificity needed because kit.css loads after extensions.css. */
+section.wrap.legal {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+}
+/* Robustness: legal/privacy body is URL- and long-compound-word-heavy. Without
+ * this, a pasted long URL or unbroken German legal term could overflow the
+ * column horizontally on narrow viewports. Break long strings instead. Tables
+ * are already handled by PortableBody's overflow-x wrapper. */
+.legal p,
+.legal address,
+.legal li,
+.legal h2 {
+  overflow-wrap: anywhere;
+}
+
 /* ---- Partner / funder logos — greyscale by default, colour on hover (annotation #8).
  * Creates a harmonious, brand-consistent partner wall once real logos are uploaded. */
 .dsa-partners__list li img {
