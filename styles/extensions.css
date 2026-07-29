@@ -433,6 +433,15 @@ section.dsa-partners {
   color: var(--color-text-on-inverse);
 }
 
+/* ---- Report headline: step down to 2xl on mobile ----
+ * The article title stays --fs-4xl at every width by default — too large on
+ * phones. Higher specificity than components.css's single-class rule. */
+@media (max-width: 768px) {
+  .dsa-articlehead .dsa-articlehead__title {
+    font-size: var(--fs-2xl);
+  }
+}
+
 /* ---- Resource item boxes: optional description text (client feedback r3) ---- */
 .resitem__desc {
   color: var(--color-text-secondary);
