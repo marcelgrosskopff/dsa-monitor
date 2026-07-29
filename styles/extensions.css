@@ -395,8 +395,8 @@ a.dsa-nav__link[aria-current="page"] {
 
 /* ---- Logo bar: breathing room + single-group layout (client feedback r3) ---- */
 section.dsa-partners {
-  padding-top: var(--space-stack-xl);
-  padding-bottom: var(--space-stack-xl);
+  padding-top: var(--space-stack-md);
+  padding-bottom: var(--space-stack-md);
 }
 /* Launch config shows a single group (just ÖIAT Research) — drop the 3fr/1fr
  * two-group grid, centre the group + caption, and let the lone logo sit a bit
@@ -408,8 +408,11 @@ section.dsa-partners {
 .dsa-partners .dsa-partners__group:only-child .dsa-partners__list {
   grid-template-columns: 1fr;
 }
+.dsa-partners .dsa-partners__group:only-child .dsa-partners__caption {
+  margin-bottom: var(--space-stack-lg);
+}
 .dsa-partners .dsa-partners__group:only-child .dsa-partners__list img {
-  height: 56px;
+  height: 76px;
 }
 
 /* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
@@ -439,6 +442,21 @@ section.dsa-partners {
 }
 .dsa-nav .dsa-nav__drawer-arrow {
   color: var(--color-text-on-inverse);
+}
+
+/* ---- Publication cards: smaller illustration, fixed 24px vertical padding ----
+ * The motif renders at 75% of the card width; the band adds a fixed 24px above
+ * and below (visually approved value). Desktop only; mobile keeps its 16:7 rule. */
+@media (min-width: 769px) {
+  .dsa-card .dsa-card__shape {
+    aspect-ratio: auto;
+    padding: 24px 0;
+  }
+  .dsa-card .dsa-card__shape svg {
+    width: 75%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
 }
 
 /* ---- Report headline: step down to 2xl on mobile ----
