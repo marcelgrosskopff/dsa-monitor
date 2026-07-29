@@ -3,7 +3,7 @@ import type { StructureResolver } from "sanity/structure";
 // Desk: page-copy + settings as singletons, reports grouped by topic, topics, resources.
 export const structure: StructureResolver = (S) =>
   S.list()
-    .title("DSA-Monitor")
+    .title("DSA Monitor")
     .items([
       S.listItem()
         .title("Reports")

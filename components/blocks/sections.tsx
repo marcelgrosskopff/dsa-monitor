@@ -23,7 +23,7 @@ export function Hero({
   secondaryLabel?: string;
 }) {
   const displayEyebrow = eyebrow || "— The DSA only works if someone is watching";
-  const displayLead = lead || "DSA-Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.";
+  const displayLead = lead || "DSA Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.";
   const hasCustomHeadline = headlineBefore || highlightWord || headlineAfter;
   return (
     <section className="hero">
@@ -51,7 +51,7 @@ export function Hero({
             {ctaLabel || "Browse publications"}
           </Button>
           <Button variant="secondary" onInverse as="a" href="/about">
-            {secondaryLabel || "About DSA-Monitor"}
+            {secondaryLabel || "About DSA Monitor"}
           </Button>
         </div>
       </div>
@@ -174,7 +174,7 @@ export function HowWeWork({
               <RichBody value={whatBody} />
             ) : (
               <>
-                <p>DSA-Monitor designs and runs reproducible studies of how very large online platforms operate in practice — from ad-library scrapes and recommender audits to removal-latency and youth-safety tests.</p>
+                <p>DSA Monitor designs and runs reproducible studies of how very large online platforms operate in practice — from ad-library scrapes and recommender audits to removal-latency and youth-safety tests.</p>
                 <p>Each study targets a specific obligation under the Digital Services Act, states its method up front, and publishes its dataset so the finding can be checked and built on.</p>
               </>
             )}
@@ -224,7 +224,7 @@ export function ConvictionCloser({
           ) : (
             <>
               <p>The Digital Services Act obliges very large platforms to assess and mitigate systemic risks — but enforcement depends on independent evidence.</p>
-              <p>ÖIAT has tracked online consumer harm in Austria since 1997. DSA-Monitor channels that work into a public, structured record the European Commission and national authorities can act on.</p>
+              <p>ÖIAT has tracked online consumer harm in Austria since 1997. DSA Monitor channels that work into a public, structured record the European Commission and national authorities can act on.</p>
             </>
           )}
           <div className="cta__actions">

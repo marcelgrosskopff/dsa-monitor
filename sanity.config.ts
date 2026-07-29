@@ -17,7 +17,7 @@ const templates = (prev: Template[]): Template[] =>
 
 export default defineConfig({
   name: "dsa-monitor",
-  title: "DSA-Monitor",
+  title: "DSA Monitor",
   basePath: studioUrl,
   projectId: projectId || "placeholder",
   dataset,

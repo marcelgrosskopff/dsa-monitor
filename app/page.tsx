@@ -67,7 +67,7 @@ export default async function HomePage() {
           ) : (
             <div className="statebox">
               <h3>{home.emptyStateHeading || "Publications are on their way."}</h3>
-              <p>{home.emptyStateBody || "The first reports are being prepared for release. Check back shortly, or read about how DSA-Monitor works."}</p>
+              <p>{home.emptyStateBody || "The first reports are being prepared for release. Check back shortly, or read about how DSA Monitor works."}</p>
             </div>
           )}
         </div>

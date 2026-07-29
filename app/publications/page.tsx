@@ -16,18 +16,15 @@ export const metadata: Metadata = pageMetadata({
 export default async function PublicationsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ topic?: string; page?: string; sort?: string }>;
+  searchParams: Promise<{ topic?: string; page?: string }>;
 }) {
-  const { topic, page: pageParam, sort: sortParam } = await searchParams;
+  const { topic, page: pageParam } = await searchParams;
   const page = Math.max(1, Number(pageParam ?? 1));
   const activeTopic = topic ?? null;
-  const sort = (
-    sortParam === "oldest" || sortParam === "az" ? sortParam : "newest"
-  ) as "newest" | "oldest" | "az";
 
   const [{ reports, totalCount, pageCount }, topics, pubContent] =
     await Promise.all([
-      getReportsPaged({ topic: activeTopic, page, sort }),
+      getReportsPaged({ topic: activeTopic, page }),
       getTopics(),
       getPublicationsContent(),
     ]);
@@ -42,7 +39,6 @@ export default async function PublicationsPage({
             {pubContent.description ||
               "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence."}
           </p>
-          <p className="count">{`${totalCount} reports`}</p>
         </div>
       </div>
 
@@ -56,7 +52,6 @@ export default async function PublicationsPage({
               currentPage={page}
               pageCount={pageCount}
               activeTopic={activeTopic}
-              activeSort={sort}
               filterAllLabel={pubContent.filterAllLabel}
               filterEmptyHeading={pubContent.filterEmptyHeading}
               filterEmptyBody={pubContent.filterEmptyBody}

@@ -137,6 +137,12 @@ export const resourceItem = defineType({
     }),
     defineField({ name: "label", type: "string", validation: (r) => r.required() }),
     defineField({
+      name: "description",
+      type: "text",
+      rows: 2,
+      description: "Optional short text shown inside the box.",
+    }),
+    defineField({
       name: "href",
       type: "url",
       hidden: ({ parent }) => parent?.type !== "link",

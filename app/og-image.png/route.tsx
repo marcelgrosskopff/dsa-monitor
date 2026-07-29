@@ -29,7 +29,7 @@ export function GET() {
               textTransform: "uppercase",
             }}
           >
-            DSA-Monitor
+            DSA Monitor
           </span>
         </div>
 

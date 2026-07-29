@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
-    "DSA-Monitor is published by ÖIAT — an independent, non-commercial institute and certified DSA Trusted Flagger making platform compliance visible and actionable.",
+    "DSA Monitor is published by ÖIAT — an independent, non-commercial institute and certified DSA Trusted Flagger making platform compliance visible and actionable.",
   path: "/about",
 });
 
@@ -32,7 +32,7 @@ export default async function AboutPage() {
       <div className="band--canvas">
         <div className="wrap pagehead">
           <SectionEyebrow index="01" label={aboutContent.eyebrowLabel || "About"} />
-          <h1>{aboutContent.pageHeading || "About DSA-Monitor."}</h1>
+          <h1>{aboutContent.pageHeading || "About DSA Monitor."}</h1>
         </div>
       </div>
       <section className="wrap" style={{ paddingBottom: "var(--space-section)" }}>
@@ -46,9 +46,9 @@ export default async function AboutPage() {
             ) : (
               <>
                 <h2>About ÖIAT</h2>
-                <p>DSA-Monitor is published by the Österreichisches Institut für angewandte Telekommunikation (ÖIAT), an independent, non-commercial institute that has tracked online consumer harm in Austria since 1997. ÖIAT operates the Internet Ombudsstelle and Watchlist Internet, and is a certified Trusted Flagger under the Digital Services Act.</p>
+                <p>DSA Monitor is published by the Österreichisches Institut für angewandte Telekommunikation (ÖIAT), an independent, non-commercial institute that has tracked online consumer harm in Austria since 1997. ÖIAT operates the Internet Ombudsstelle and Watchlist Internet, and is a certified Trusted Flagger under the Digital Services Act.</p>
                 <h2>About the monitoring project</h2>
-                <p>DSA-Monitor publishes empirical research on how very large online platforms moderate content, run advertising, and protect users — and maps each finding to the relevant DSA articles so the European Commission and national authorities can act on the evidence.</p>
+                <p>DSA Monitor publishes empirical research on how very large online platforms moderate content, run advertising, and protect users — and maps each finding to the relevant DSA articles so the European Commission and national authorities can act on the evidence.</p>
                 <p>Every report is methodology-first: it states how the study was run, describes its dataset, and names its limitations before any framing. Datasets and replication code are published wherever possible. No black-box findings.</p>
               </>
             )}

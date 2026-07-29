@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { Report } from "./types";
 import { toISODate } from "./format";
 
-export const SITE_NAME = "DSA-Monitor";
+export const SITE_NAME = "DSA Monitor";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://dsa-monitor.at";
 export const SITE_DESCRIPTION =
@@ -63,7 +63,7 @@ export function reportJsonLd(report: Report) {
     about: report.topics.map((t) => ({ "@type": "Thing", name: t.label })),
     isPartOf: {
       "@type": "ResearchProject",
-      name: report.attribution?.projectName || "DSA-Monitor",
+      name: report.attribution?.projectName || "DSA Monitor",
       funder: (() => {
         const funders = (report.attribution?.fundedBy ?? [])
           .filter((f) => f?.name)

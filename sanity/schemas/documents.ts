@@ -170,7 +170,9 @@ export const resourceGroup = defineType({
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
     defineField({ name: "description", type: "text", rows: 2 }),
     defineField({ name: "order", type: "number" }),
-    defineField({ name: "featured", type: "resourceFeatured" }),
+    // Featured box removed from the site (client feedback r3). Field hidden but
+    // data preserved — restore by removing `hidden` and re-adding the render.
+    defineField({ name: "featured", type: "resourceFeatured", hidden: true }),
     defineField({
       name: "items",
       type: "array",
@@ -257,7 +259,7 @@ export const homeContent = defineType({
     defineField({ name: "closerBody", type: "richBody", title: "Closing section body" }),
     // Hero CTA buttons
     defineField({ name: "heroCtaLabel", type: "string", title: "Hero CTA label (primary button)", initialValue: "Browse publications" }),
-    defineField({ name: "heroSecondaryLabel", type: "string", title: "Hero secondary button label", initialValue: "About DSA-Monitor" }),
+    defineField({ name: "heroSecondaryLabel", type: "string", title: "Hero secondary button label", initialValue: "About DSA Monitor" }),
     defineField({ name: "viewAllLabel", type: "string", title: "Latest publications — 'View all' button prefix", initialValue: "View all" }),
   ],
   preview: { prepare: () => ({ title: "Home copy" }) },

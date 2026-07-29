@@ -9,7 +9,8 @@ import { TopicChip } from "./topic-chip";
  * carried by the chip + title, so colour/shape is never the only signal.
  */
 function motifs(accent: string): Record<string, ReactNode> {
-  const c = { fill: "none", stroke: accent, strokeWidth: 1.5 };
+  // strokeWidth 1.5 → 1: client feedback — the shape lines were "too present".
+  const c = { fill: "none", stroke: accent, strokeWidth: 1 };
   return {
     // Three evenly-spaced horizontal rules — neutral, not a target (annotation #9).
     red: (
@@ -44,7 +45,7 @@ function motifs(accent: string): Record<string, ReactNode> {
               key={`${r}-${col}`}
               cx={15 + col * 18}
               cy={16 + r * 16}
-              r="2.4"
+              r="2"
               fill={accent}
               stroke="none"
             />

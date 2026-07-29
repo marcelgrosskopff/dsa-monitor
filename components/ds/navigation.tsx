@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Logo } from "@/lib/types";
 import { MobileNavMenu } from "./MobileNavMenu";
+import { FooterLink } from "./FooterLink";
 
 const DEFAULT_NAV = [
   { href: "/", label: "Home" },
@@ -31,7 +32,7 @@ export function SiteNav({
     >
       <Link href="/" className="dsa-wordmark">
         <span aria-hidden="true" className="dsa-wordmark__mark" />
-        DSA-Monitor
+        DSA Monitor
       </Link>
       <ul className="dsa-nav__list">
         {items.map((it) => (
@@ -88,27 +89,34 @@ export function PartnerLogoWall({
   partners?: Logo[];
   funders?: Logo[];
 }) {
+  // Empty groups render nothing — the client's launch setup shows only the
+  // ÖIAT Research logo (funders are credited per-report in the attribution box).
+  if (!partners.length && !funders.length) return null;
   return (
     <section aria-label="Partners and funders" className="dsa-partners">
       <div className="dsa-partners__inner">
-        <div className="dsa-partners__group">
-          <p className="dsa-partners__caption dsa-label">
-            ÖIAT Research — an initiative of ÖIAT
-          </p>
-          <ul className="dsa-partners__list">
-            {partners.map((p) => (
-              <LogoItem key={p.name} {...p} />
-            ))}
-          </ul>
-        </div>
-        <div className="dsa-partners__group dsa-partners__group--funders">
-          <p className="dsa-partners__caption dsa-label">Funded by</p>
-          <ul className="dsa-partners__list">
-            {funders.map((f) => (
-              <LogoItem key={f.name} {...f} />
-            ))}
-          </ul>
-        </div>
+        {partners.length > 0 && (
+          <div className="dsa-partners__group">
+            <p className="dsa-partners__caption dsa-label">
+              ÖIAT Research — an initiative of ÖIAT
+            </p>
+            <ul className="dsa-partners__list">
+              {partners.map((p) => (
+                <LogoItem key={p.name} {...p} />
+              ))}
+            </ul>
+          </div>
+        )}
+        {funders.length > 0 && (
+          <div className="dsa-partners__group dsa-partners__group--funders">
+            <p className="dsa-partners__caption dsa-label">Funded by</p>
+            <ul className="dsa-partners__list">
+              {funders.map((f) => (
+                <LogoItem key={f.name} {...f} />
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -184,7 +192,7 @@ export function SiteFooter({
           <div>
             <p className="dsa-footer__brand">
               <span aria-hidden="true" className="dsa-wordmark__mark" />{" "}
-              DSA-Monitor
+              DSA Monitor
             </p>
             <p className="dsa-footer__desc">
               {footerDescriptor || "Independent Digital Services Act compliance research — methodology-first, no black boxes."}
@@ -199,7 +207,7 @@ export function SiteFooter({
               <ul className="dsa-footer__links">
                 {c.links.map(([l, h]) => (
                   <li key={h}>
-                    <Link href={h}>{l}</Link>
+                    <FooterLink href={h}>{l}</FooterLink>
                   </li>
                 ))}
               </ul>

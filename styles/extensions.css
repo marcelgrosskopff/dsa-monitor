@@ -278,6 +278,16 @@ nav.dsa-nav {
 mark.dsa-mark {
   -webkit-box-decoration-break: initial;
   box-decoration-break: initial;
+  /* Client feedback: highlight "a tiny bit thinner". Render the red as a band
+   * at ~88% of the line box instead of a full-height background. */
+  background-color: transparent;
+  background-image: linear-gradient(
+    var(--color-accent-primary),
+    var(--color-accent-primary)
+  );
+  background-size: 100% 88%;
+  background-position: 0 55%;
+  background-repeat: no-repeat;
 }
 
 /* 3. Active nav link: Firefox's `text-decoration-thickness: auto` heuristic
@@ -361,9 +371,15 @@ a.dsa-nav__link[aria-current="page"] {
 .article .methodology {
   max-width: none;
 }
-.article .article__layout {
-  grid-template-columns: 1fr 400px;
-  gap: var(--space-stack-lg);
+/* Desktop only — this selector outweighs responsive.css's mobile collapse
+ * (.article__layout { 1fr } at ≤768px), so it MUST stay inside a min-width
+ * media query. Without it, report pages force two columns on phones
+ * (client-reported: "layout of the report falls apart" on mobile). */
+@media (min-width: 769px) {
+  .article .article__layout {
+    grid-template-columns: 1fr 400px;
+    gap: var(--space-stack-lg);
+  }
 }
 
 /* ---- Language tag: match topic-chip height in the article header ----
@@ -375,4 +391,52 @@ a.dsa-nav__link[aria-current="page"] {
   align-items: center;
   padding: 6px var(--space-stack-sm);
   min-height: 28px;
+}
+
+/* ---- Logo bar: breathing room + single-group layout (client feedback r3) ---- */
+section.dsa-partners {
+  padding-top: var(--space-stack-xl);
+  padding-bottom: var(--space-stack-xl);
+}
+/* Launch config shows a single group (just ÖIAT Research) — drop the 3fr/1fr
+ * two-group grid so the lone group isn't squeezed into a partial column. */
+.dsa-partners__inner:has(> .dsa-partners__group:only-child) {
+  grid-template-columns: 1fr;
+}
+
+/* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
+ * red #CA0013 on navy #212537 = 2.5:1, blue link #25378D on navy = 1.4:1;
+ * AA requires 4.5:1). Text switches to white (15.2:1). The short red rule
+ * marks stay red — they are decorative, not text. */
+.hero .hero__eyebrow,
+.band--inverse .dsa-eyebrow {
+  color: var(--color-text-on-inverse);
+}
+.hero p a,
+.band--inverse p a {
+  color: var(--color-text-on-inverse);
+  text-decoration: underline;
+}
+.dsa-footer .dsa-footer__links a:hover,
+.dsa-footer a.dsa-footer__mail:hover {
+  color: var(--color-text-on-inverse);
+  text-decoration: underline;
+}
+/* Mobile drawer (navy background): active/hover red states → white + underline */
+.dsa-nav .dsa-nav__drawer-link[aria-current="page"],
+.dsa-nav .dsa-nav__drawer-link:hover {
+  color: var(--color-text-on-inverse);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dsa-nav .dsa-nav__drawer-arrow {
+  color: var(--color-text-on-inverse);
+}
+
+/* ---- Resource item boxes: optional description text (client feedback r3) ---- */
+.resitem__desc {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  margin: 0;
 }

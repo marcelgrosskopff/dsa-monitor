@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Impressum",
-  description: "Legal notice and disclosure for DSA-Monitor, published by ÖIAT.",
+  description: "Legal notice and disclosure for DSA Monitor, published by ÖIAT.",
   path: "/impressum",
 });
 
@@ -58,7 +58,7 @@ export default async function ImpressumPage() {
             <div className="legal__item">
               <h2>Purpose &amp; orientation</h2>
               <p>
-                DSA-Monitor is a non-commercial public-interest research portal
+                DSA Monitor is a non-commercial public-interest research portal
                 publishing independent compliance research on very large online
                 platforms under the EU Digital Services Act.
               </p>

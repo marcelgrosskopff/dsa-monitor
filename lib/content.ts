@@ -13,9 +13,7 @@ import {
   relatedReportsQuery,
   reportBySlugQuery,
   reportCountQuery,
-  reportsPagedAZQuery,
   reportsPagedNewestQuery,
-  reportsPagedOldestQuery,
   reportSlugsQuery,
   reportsQuery,
   resourceGroupsQuery,
@@ -173,12 +171,13 @@ function mapResourceGroup(g: any): ResourceGroup {
         ? {
             type: "dl",
             label: it.label,
+            description: it.description,
             language: it.language,
             format: formatFromAsset(it.extension),
             size: formatFileSize(it.sizeBytes),
             href: it.url ?? "#",
           }
-        : { type: "link", label: it.label, href: it.href ?? "#" }
+        : { type: "link", label: it.label, description: it.description, href: it.href ?? "#" }
   );
   return {
     name: g.name,
@@ -398,31 +397,15 @@ export async function getPageContent(type: string): Promise<unknown[] | null> {
   return data?.body ?? null;
 }
 
-function sortSeedReports(
-  reports: Report[],
-  sort: "newest" | "oldest" | "az"
-): Report[] {
-  const a = [...reports];
-  if (sort === "oldest")
-    a.sort((x, y) => x.date.localeCompare(y.date));
-  else if (sort === "az")
-    a.sort((x, y) => x.title.localeCompare(y.title));
-  else
-    a.sort((x, y) => y.date.localeCompare(x.date));
-  return a;
-}
-
 export async function getReportsPaged({
   topic,
   page,
-  sort = "newest",
 }: {
   topic: string | null;
   page: number;
-  sort?: "newest" | "oldest" | "az";
 }): Promise<{ reports: Report[]; totalCount: number; pageCount: number }> {
   if (!sanityConfigured) {
-    // Seed fallback: filter + sort + paginate in memory
+    // Seed fallback: filter + newest-first + paginate in memory
     const filtered = topic
       ? SEED_REPORTS.filter(
           (r) =>
@@ -430,7 +413,7 @@ export async function getReportsPaged({
             r.topics.some((t) => t.label === topic)
         )
       : SEED_REPORTS;
-    const sorted = sortSeedReports(filtered, sort);
+    const sorted = [...filtered].sort((x, y) => y.date.localeCompare(x.date));
     const start = (page - 1) * PAGE_SIZE_CONST;
     return {
       reports: sorted.slice(start, start + PAGE_SIZE_CONST),
@@ -439,12 +422,7 @@ export async function getReportsPaged({
     };
   }
 
-  const sortedQuery =
-    sort === "oldest"
-      ? reportsPagedOldestQuery
-      : sort === "az"
-        ? reportsPagedAZQuery
-        : reportsPagedNewestQuery;
+  const sortedQuery = reportsPagedNewestQuery;
 
   const [qc, opts] = await Promise.all([
     getQueryClient(),

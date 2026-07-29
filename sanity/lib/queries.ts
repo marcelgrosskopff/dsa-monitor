@@ -85,6 +85,7 @@ export const resourceGroupsQuery = groq`
     "items": items[]{
       type,
       label,
+      description,
       href,
       language,
       "url": file.asset->url,
@@ -227,12 +228,6 @@ const reportFilter = `_type == "report" && defined(slug.current) && ($topic == n
 
 export const reportsPagedNewestQuery = groq`
   *[${reportFilter}] | order(publishedAt desc) [$start...$end] ${reportCardProjection}
-`;
-export const reportsPagedOldestQuery = groq`
-  *[${reportFilter}] | order(publishedAt asc) [$start...$end] ${reportCardProjection}
-`;
-export const reportsPagedAZQuery = groq`
-  *[${reportFilter}] | order(title asc) [$start...$end] ${reportCardProjection}
 `;
 
 export const reportCountQuery = groq`

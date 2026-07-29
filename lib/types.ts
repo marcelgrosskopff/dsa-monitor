@@ -1,4 +1,4 @@
-// Shared domain types for DSA-Monitor.
+// Shared domain types for DSA Monitor.
 
 /** Category colour-roles. One topic → one swatch, everywhere.
  * The six primaries map to category tokens; `neutral` is the long-tail degrade. */
@@ -91,6 +91,7 @@ export interface Topic {
 export interface ResourceItem {
   type: "link" | "dl";
   label: string;
+  description?: string;
   href?: string;
   language?: string;
   format?: string;

@@ -6,12 +6,6 @@ import type { Report, Topic } from "@/lib/types";
 import { TopicChip } from "@/components/ds";
 import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 
-const SORTS = [
-  { value: "newest", label: "Newest first" },
-  { value: "oldest", label: "Oldest first" },
-  { value: "az", label: "Title A–Z" },
-] as const;
-
 export function PublicationsClient({
   reports,
   topics,
@@ -19,7 +13,6 @@ export function PublicationsClient({
   currentPage,
   pageCount,
   activeTopic,
-  activeSort = "newest",
   filterAllLabel = "All topics",
   filterEmptyHeading = "No publications under",
   filterEmptyBody = "Reports are added as studies are completed. In the meantime, browse everything we've published.",
@@ -30,7 +23,6 @@ export function PublicationsClient({
   currentPage: number;
   pageCount: number;
   activeTopic: string | null;
-  activeSort?: "newest" | "oldest" | "az";
   filterAllLabel?: string;
   filterEmptyHeading?: string;
   filterEmptyBody?: string;
@@ -40,11 +32,7 @@ export function PublicationsClient({
   const params = useSearchParams();
 
   const setQuery = useCallback(
-    (next: {
-      topic?: string | null;
-      page?: number | null;
-      sort?: string | null;
-    }) => {
+    (next: { topic?: string | null; page?: number | null }) => {
       const sp = new URLSearchParams(params.toString());
       if ("topic" in next) {
         if (next.topic) sp.set("topic", next.topic);
@@ -54,11 +42,6 @@ export function PublicationsClient({
       if ("page" in next) {
         if (next.page && next.page > 1) sp.set("page", String(next.page));
         else sp.delete("page");
-      }
-      if ("sort" in next) {
-        if (next.sort && next.sort !== "newest") sp.set("sort", next.sort);
-        else sp.delete("sort");
-        sp.delete("page");
       }
       const qs = sp.toString();
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
@@ -95,25 +78,6 @@ export function PublicationsClient({
         <p className="filtercount dsa-label" role="status" aria-live="polite">
           {totalCount} reports
         </p>
-        <label className="sortctl">
-          <span className="sortctl__label dsa-label">Sort by</span>
-          <span className="sortctl__field">
-            <select
-              className="sortctl__select"
-              value={activeSort}
-              onChange={(e) => setQuery({ sort: e.target.value })}
-            >
-              {SORTS.map((s) => (
-                <option key={s.value} value={s.value}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
-            <span aria-hidden="true" className="sortctl__caret">
-              ▾
-            </span>
-          </span>
-        </label>
       </div>
 
       {activeTopic && (

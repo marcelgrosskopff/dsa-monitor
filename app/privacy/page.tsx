@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Privacy",
   description:
-    "Privacy notice and analytics disclosure for DSA-Monitor. Matomo runs cookieless and IP-anonymised.",
+    "Privacy notice and analytics disclosure for DSA Monitor. Matomo runs cookieless and IP-anonymised.",
   path: "/privacy",
 });
 
@@ -28,7 +28,7 @@ export default async function PrivacyPage() {
           <SectionEyebrow index="01" label={content.eyebrowLabel || "Privacy"} />
           <h1>{content.pageHeading || "Privacy."}</h1>
           <p>
-            {content.intro || "How DSA-Monitor handles data, and how to opt out of anonymised usage statistics."}
+            {content.intro || "How DSA Monitor handles data, and how to opt out of anonymised usage statistics."}
           </p>
         </div>
       </div>

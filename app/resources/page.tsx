@@ -29,6 +29,7 @@ function ResEntry({
           ↓ {dlTypeLabel || "Download"} · {item.format}
         </p>
         <p className="resitem__title">{item.label}</p>
+        {item.description && <p className="resitem__desc">{item.description}</p>}
         <DownloadButton
           label={item.label}
           language={item.language}
@@ -43,6 +44,7 @@ function ResEntry({
     <div className="resitem">
       <p className="resitem__type resitem__type--link">↗ {linkTypeLabel || "External site"}</p>
       <p className="resitem__title">{item.label}</p>
+      {item.description && <p className="resitem__desc">{item.description}</p>}
       <OutboundLink href={item.href || "#"}>{item.label}</OutboundLink>
     </div>
   );
@@ -65,19 +67,8 @@ function Group({
         {group.description && <p>{group.description}</p>}
       </div>
 
-      {group.featured && (
-        <div className="resfeatured">
-          <p className="resfeatured__tag">{group.featured.tag || "Featured · out-of-court redress"}</p>
-          <h3>{group.featured.title}</h3>
-          <p>{group.featured.body}</p>
-          <OutboundLink href={group.featured.linkHref || "#"}>
-            {group.featured.linkLabel}
-          </OutboundLink>
-        </div>
-      )}
-
       {group.items.length > 0 && (
-        <div className={"reslist" + (group.featured ? " reslist--stack" : "")}>
+        <div className="reslist">
           {group.items.map((it, i) => (
             <ResEntry key={i} item={it} dlTypeLabel={dlTypeLabel} linkTypeLabel={linkTypeLabel} />
           ))}
