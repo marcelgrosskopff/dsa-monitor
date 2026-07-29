@@ -399,9 +399,17 @@ section.dsa-partners {
   padding-bottom: var(--space-stack-xl);
 }
 /* Launch config shows a single group (just ÖIAT Research) — drop the 3fr/1fr
- * two-group grid so the lone group isn't squeezed into a partial column. */
+ * two-group grid, centre the group + caption, and let the lone logo sit a bit
+ * larger. Selectors outweigh kit.css's 3-col grid + 46px height rules. */
 .dsa-partners__inner:has(> .dsa-partners__group:only-child) {
   grid-template-columns: 1fr;
+  text-align: center;
+}
+.dsa-partners .dsa-partners__group:only-child .dsa-partners__list {
+  grid-template-columns: 1fr;
+}
+.dsa-partners .dsa-partners__group:only-child .dsa-partners__list img {
+  height: 56px;
 }
 
 /* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
