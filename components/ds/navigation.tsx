@@ -138,8 +138,8 @@ export function SiteFooter({
   partnersCaption,
   fundersCaption,
   showPartners = true,
-  contactEmail = "research@oiat.at",
-  linkedinUrl = "https://at.linkedin.com",
+  contactEmail,
+  linkedinUrl,
   footerDescriptor,
   footerAddress,
   footerColSite,
@@ -197,6 +197,13 @@ export function SiteFooter({
     },
   ];
   const displayYear = year ?? new Date().getFullYear();
+  // Resolve with `||`, not default parameters: an emptied Studio field arrives
+  // as null, which a default parameter ignores — the footer would print the
+  // literal "null" and link to mailto:null.
+  const email = contactEmail || "research@oiat.at";
+  // No URL means no link at all. Falling back to a generic linkedin.com host
+  // would give visitors a link that isn't the client's profile.
+  const linkedin = linkedinUrl || null;
   return (
     <>
       {showPartners && (
@@ -237,8 +244,8 @@ export function SiteFooter({
             <p className="dsa-footer__coltitle dsa-label">{footerColContact || "Contact"}</p>
             <ul className="dsa-footer__links">
               <li>
-                <a className="dsa-footer__mail" href={`mailto:${contactEmail}`}>
-                  {contactEmail}
+                <a className="dsa-footer__mail" href={`mailto:${email}`}>
+                  {email}
                 </a>
               </li>
             </ul>
@@ -246,13 +253,15 @@ export function SiteFooter({
         </div>
         <div className="dsa-footer__legal dsa-label">
           <span>© {displayYear} {copyrightSuffix || "OIAT · CC BY-SA 4.0"}</span>
-          <a
-            href={linkedinUrl}
-            className="dsa-footer__mail"
-            style={{ color: "inherit" } as CSSProperties}
-          >
-            {linkedinLabel || "LinkedIn"}
-          </a>
+          {linkedin ? (
+            <a
+              href={linkedin}
+              className="dsa-footer__mail"
+              style={{ color: "inherit" } as CSSProperties}
+            >
+              {linkedinLabel || "LinkedIn"}
+            </a>
+          ) : null}
         </div>
       </footer>
     </>

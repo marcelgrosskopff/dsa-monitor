@@ -68,6 +68,19 @@ const components: PortableTextComponents = {
   },
 };
 
+/** Editors routinely leave a trailing empty paragraph behind after pressing
+ *  Enter at the end of a field. Rendered, that becomes a stray vertical gap the
+ *  client reads as a layout bug, and it can't be seen in Studio. Drop blocks
+ *  whose text is only whitespace — non-block content (tables, images) is kept
+ *  regardless, since it has no text of its own. */
+function dropBlankBlocks(value: unknown[]): unknown[] {
+  return value.filter((node) => {
+    const b = node as { _type?: string; children?: { text?: string }[] };
+    if (b?._type !== "block") return true;
+    return (b.children ?? []).some((c) => (c?.text ?? "").trim().length > 0);
+  });
+}
+
 /** Renders a rich body that may be Portable Text blocks (from Sanity) OR a plain
  *  string[] of paragraphs (from the typed seed). The first paragraph gets `.lead`. */
 export function RichBody({
@@ -91,6 +104,8 @@ export function RichBody({
     );
   }
   // Sanity path: Portable Text blocks.
+  const blocks = dropBlankBlocks(value);
+  if (!blocks.length) return null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <PortableText value={value as any[]} components={components} />;
+  return <PortableText value={blocks as any[]} components={components} />;
 }

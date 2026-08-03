@@ -167,11 +167,12 @@ export const report = defineType({
     },
   ],
   preview: {
-    select: { title: "title", subtitle: "primaryTopic.label", date: "publishedAt" },
-    prepare: ({ title, subtitle, date }) => ({
-      title,
-      subtitle: [subtitle, date].filter(Boolean).join(" · "),
-    }),
+    // `primaryTopic` was removed when topics became one ordered list, so the old
+    // select silently resolved to nothing. Topic labels are references and
+    // preview select cannot dereference (paths must match /^[a-zA-Z_]\w*$/), so
+    // the date is what we can honestly show here.
+    select: { title: "title", date: "publishedAt" },
+    prepare: ({ title, date }) => ({ title, subtitle: date }),
   },
 });
 
