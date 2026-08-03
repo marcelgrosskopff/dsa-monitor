@@ -296,12 +296,34 @@ mark.dsa-mark {
   background-color: transparent;
   background-image: linear-gradient(
     to bottom,
-    transparent 6.6%,
-    var(--color-accent-primary) 6.6%,
-    var(--color-accent-primary) 94.6%,
-    transparent 94.6%
+    transparent 11.4%,
+    var(--color-accent-primary) 11.4%,
+    var(--color-accent-primary) 90.6%,
+    transparent 90.6%
   );
   background-repeat: no-repeat;
+}
+
+/* 2b. Hero headline leading (client feedback 2026-08-03: the band "cuts into the
+ *     line above").
+ *
+ *     Why it overlapped: an inline background is painted over the element's FONT
+ *     box (ascent + descent), not the line box. Be Vietnam Pro's font box is
+ *     ~1.26em, so at --lh-tight (1.05) the painted box was taller than the line
+ *     box and necessarily bled into the neighbouring line.
+ *
+ *     Leading goes to 1.1 and the band above is trimmed to 79.2% (was 88%) —
+ *     together those put the band fully inside its own line box at both type
+ *     sizes: 75.8px band in an 83.6px line at 76px, 33.9px in 37.4px at 34px.
+ *     The font box still exceeds the line box, but only the band is visible.
+ *
+ *     Tokens stay locked and --lh-tight is shared with .cta h2 / .pagehead h1,
+ *     so this is scoped to the hero. extensions.css is imported BEFORE kit.css
+ *     and responsive.css, so the selector must out-specify their `.hero h1`
+ *     (0,1,1) — hence `.hero .hero__inner h1` (0,2,1). One value covers all
+ *     widths: it supersedes both kit.css's 1.05 and responsive.css's 1.08. */
+.hero .hero__inner h1 {
+  line-height: 1.1; /* supersedes --lh-tight 1.05 (desktop) and 1.08 (mobile) */
 }
 
 /* 3. Active nav link: Firefox's `text-decoration-thickness: auto` heuristic
