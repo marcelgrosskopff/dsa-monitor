@@ -271,22 +271,36 @@ nav.dsa-nav {
   flex-shrink: 0;
 }
 
-/* 2. HighlightMarker: Firefox mis-positions the <mark>'s background rectangle
- *    relative to the text glyphs when `box-decoration-break: clone` is applied
- *    to an inline mark. Reverting to the default `slice` value fixes Firefox
- *    and is visually identical for single-line highlights (our only use case). */
+/* 2. HighlightMarker: the red band must be ~88% of the line box (client asked for
+ *    "a tiny bit thinner"), and must sit correctly on EVERY line when the
+ *    highlighted phrase wraps.
+ *
+ *    Two earlier attempts each broke one half of that:
+ *      - `clone` + a plain background-color mis-positioned the rectangle in
+ *        Firefox (client-reported, fixed 2026-07-06 by reverting to `slice`).
+ *      - `slice` + `background-size: 100% 88%` then broke on wrap: under `slice`
+ *        a background IMAGE is sized against the union of all line fragments, so
+ *        a phrase spanning two 96px lines got an 88%-of-176px = 155px band on
+ *        each line instead of 84px — a 71px overflow that bled into the
+ *        neighbouring line. Client-reported 2026-08-03.
+ *
+ *    `slice` cannot express a per-line band at all: every background-image
+ *    geometry it computes is anchored to that union box. So this needs `clone`,
+ *    with the band height carried by gradient COLOR STOPS instead of
+ *    background-size/background-position. Stops resolve against each fragment's
+ *    own box, which removes the percentage size/position math that Firefox got
+ *    wrong in the first place. 88% tall, biased 55% down = 6.6%..94.6%. */
 mark.dsa-mark {
-  -webkit-box-decoration-break: initial;
-  box-decoration-break: initial;
-  /* Client feedback: highlight "a tiny bit thinner". Render the red as a band
-   * at ~88% of the line box instead of a full-height background. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   background-color: transparent;
   background-image: linear-gradient(
-    var(--color-accent-primary),
-    var(--color-accent-primary)
+    to bottom,
+    transparent 6.6%,
+    var(--color-accent-primary) 6.6%,
+    var(--color-accent-primary) 94.6%,
+    transparent 94.6%
   );
-  background-size: 100% 88%;
-  background-position: 0 55%;
   background-repeat: no-repeat;
 }
 

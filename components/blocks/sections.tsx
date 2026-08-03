@@ -24,7 +24,13 @@ export function Hero({
 }) {
   const displayEyebrow = eyebrow || "— The DSA only works if someone is watching";
   const displayLead = lead || "DSA Monitor publishes independent compliance research on Meta, TikTok, YouTube, and X — analysing how Europe's largest platforms moderate content, run advertising, and protect users in practice.";
-  const hasCustomHeadline = headlineBefore || highlightWord || headlineAfter;
+  // Trim the three headline parts: editors leave trailing spaces in Studio (the
+  // live value is "Investigating "), and the joins below add their own spacing —
+  // untrimmed they produce a double space in the middle of the H1.
+  const before = headlineBefore?.trim();
+  const highlight = highlightWord?.trim();
+  const after = headlineAfter?.trim();
+  const hasCustomHeadline = before || highlight || after;
   return (
     <section className="hero">
       <ConcentricField className="hero__field" />
@@ -33,9 +39,9 @@ export function Hero({
         <h1>
           {hasCustomHeadline ? (
             <>
-              {headlineBefore}{headlineBefore ? " " : ""}
-              {highlightWord ? <HighlightMarker>{highlightWord}</HighlightMarker> : null}
-              {headlineAfter ? ` ${headlineAfter}` : ""}
+              {before}{before ? " " : ""}
+              {highlight ? <HighlightMarker>{highlight}</HighlightMarker> : null}
+              {after ? ` ${after}` : ""}
             </>
           ) : (
             <>
