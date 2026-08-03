@@ -12,6 +12,7 @@ const seoFields = () => [
     name: "metaTitle",
     type: "string",
     title: "SEO title",
+    group: "seo",
     description: "SEO title override. Google shows around 60 characters.",
     components: { input: createCharacterCounter(60) },
   }),
@@ -20,6 +21,7 @@ const seoFields = () => [
     type: "text",
     rows: 2,
     title: "SEO description",
+    group: "seo",
     description: "SEO description override. Google shows around 160 characters.",
     components: { input: createCharacterCounter(160) },
   }),
@@ -95,6 +97,7 @@ export const topic = defineType({
 export const report = defineType({
   name: "report",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "title", type: "string", validation: (r) => r.required() }),
     defineField({
@@ -196,30 +199,37 @@ export const resourceGroup = defineType({
 export const siteSettings = defineType({
   name: "siteSettings",
   type: "document",
+  groups: [
+    { name: "logos", title: "Logo band" },
+    { name: "footer", title: "Footer" },
+    { name: "nav", title: "Navigation" },
+  ],
   fields: [
     defineField({ name: "contactEmail", type: "string", initialValue: "research@oiat.at" }),
     defineField({ name: "linkedinUrl", type: "url" }),
     defineField({
       name: "partners",
       type: "array",
+      group: "logos",
       of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
     }),
     defineField({
       name: "funders",
       type: "array",
+      group: "logos",
       of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
     }),
     // Logo band captions — the small line above each logo group.
     // Displayed in CAPITALS by the design system; type them in normal case.
     defineField({
-      name: "partnersCaption",
+      name: "partnersCaption", group: "logos",
       type: "string",
       title: "Logo band — partners caption",
       description: "Line above the partner logos. Shown in capitals — type it in normal case.",
       initialValue: "OIAT Research – an initiative of OIAT",
     }),
     defineField({
-      name: "fundersCaption",
+      name: "fundersCaption", group: "logos",
       type: "string",
       title: "Logo band — funders caption",
       description: "Line above the funder logos. Shown in capitals — type it in normal case.",
@@ -232,32 +242,32 @@ export const siteSettings = defineType({
     defineField({ name: "licence", type: "string", title: "Content licence", initialValue: "CC BY-SA 4.0" }),
     defineField({ name: "locationLabel", type: "string", title: "Location", initialValue: "Wien, AT" }),
     // Footer text
-    defineField({ name: "footerDescriptor", type: "text", rows: 2, title: "Footer descriptor" }),
-    defineField({ name: "footerAddress", type: "string", title: "Footer address" }),
-    defineField({ name: "footerColSite", type: "string", title: "Footer column — Site", initialValue: "Site" }),
-    defineField({ name: "footerColLegal", type: "string", title: "Footer column — Legal", initialValue: "Legal" }),
+    defineField({ name: "footerDescriptor", group: "footer", type: "text", rows: 2, title: "Footer descriptor" }),
+    defineField({ name: "footerAddress", group: "footer", type: "string", title: "Footer address" }),
+    defineField({ name: "footerColSite", group: "footer", type: "string", title: "Footer column — Site", initialValue: "Site" }),
+    defineField({ name: "footerColLegal", group: "footer", type: "string", title: "Footer column — Legal", initialValue: "Legal" }),
     defineField({
-      name: "footerLegalImprintLabel",
+      name: "footerLegalImprintLabel", group: "footer",
       type: "string",
       title: "Footer legal link — Imprint",
       description: "Link text only. The page address stays /impressum.",
       initialValue: "Imprint",
     }),
     defineField({
-      name: "footerLegalPrivacyLabel",
+      name: "footerLegalPrivacyLabel", group: "footer",
       type: "string",
       title: "Footer legal link — Privacy",
       initialValue: "Privacy",
     }),
-    defineField({ name: "footerColContact", type: "string", title: "Footer column — Contact", initialValue: "Contact" }),
-    defineField({ name: "copyrightSuffix", type: "string", title: "Footer copyright suffix", initialValue: "OIAT · CC BY-SA 4.0" }),
-    defineField({ name: "linkedinLabel", type: "string", title: "LinkedIn link label", initialValue: "LinkedIn" }),
-    defineField({ name: "navHomeLabel", type: "string", title: "Nav — Home label", initialValue: "Home" }),
-    defineField({ name: "navPublicationsLabel", type: "string", title: "Nav — Publications label", initialValue: "Publications" }),
-    defineField({ name: "navResourcesLabel", type: "string", title: "Nav — Resources label", initialValue: "Resources" }),
-    defineField({ name: "navAboutLabel", type: "string", title: "Nav — About label", initialValue: "About" }),
+    defineField({ name: "footerColContact", group: "footer", type: "string", title: "Footer column — Contact", initialValue: "Contact" }),
+    defineField({ name: "copyrightSuffix", group: "footer", type: "string", title: "Footer copyright suffix", initialValue: "OIAT · CC BY-SA 4.0" }),
+    defineField({ name: "linkedinLabel", group: "footer", type: "string", title: "LinkedIn link label", initialValue: "LinkedIn" }),
+    defineField({ name: "navHomeLabel", group: "nav", type: "string", title: "Nav — Home label", initialValue: "Home" }),
+    defineField({ name: "navPublicationsLabel", group: "nav", type: "string", title: "Nav — Publications label", initialValue: "Publications" }),
+    defineField({ name: "navResourcesLabel", group: "nav", type: "string", title: "Nav — Resources label", initialValue: "Resources" }),
+    defineField({ name: "navAboutLabel", group: "nav", type: "string", title: "Nav — About label", initialValue: "About" }),
     defineField({
-      name: "skipToContentLabel",
+      name: "skipToContentLabel", group: "nav",
       type: "string",
       title: "Skip-to-content link label",
       description: "Accessibility link, visible only when reached by keyboard.",
@@ -270,6 +280,7 @@ export const siteSettings = defineType({
 export const homeContent = defineType({
   name: "homeContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     // Hero
     defineField({ name: "heroEyebrow", type: "string", title: "Hero eyebrow label" }),
@@ -321,6 +332,7 @@ export const homeContent = defineType({
 export const aboutContent = defineType({
   name: "aboutContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "pageHeading", type: "string", title: "Page heading (h1)" }),
@@ -343,6 +355,7 @@ export const aboutContent = defineType({
 export const impressumContent = defineType({
   name: "impressumContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "pageHeading", type: "string", title: "Page heading (h1)" }),
@@ -350,12 +363,13 @@ export const impressumContent = defineType({
     defineField({ name: "body", type: "richBody", title: "Full legal content (Portable Text)" }),
     ...seoFields(),
   ],
-  preview: { prepare: () => ({ title: "Impressum copy" }) },
+  preview: { prepare: () => ({ title: "Imprint copy" }) },
 });
 
 export const privacyContent = defineType({
   name: "privacyContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "pageHeading", type: "string", title: "Page heading (h1)" }),
@@ -381,6 +395,7 @@ export const privacyContent = defineType({
 export const publicationsContent = defineType({
   name: "publicationsContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     // Hub page
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
@@ -419,6 +434,7 @@ export const publicationsContent = defineType({
 export const resourcesContent = defineType({
   name: "resourcesContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "heading", type: "string", title: "Page heading" }),
@@ -433,6 +449,7 @@ export const resourcesContent = defineType({
 export const notFoundContent = defineType({
   name: "notFoundContent",
   type: "document",
+  groups: [{ name: "seo", title: "SEO" }],
   fields: [
     defineField({ name: "errorCode", type: "string", title: "Error code line", initialValue: "Error 404 · Page not found" }),
     defineField({ name: "heading", type: "string", title: "Heading (h1)", initialValue: "We couldn't find that page." }),

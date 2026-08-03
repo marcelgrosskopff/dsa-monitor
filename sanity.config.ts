@@ -95,7 +95,8 @@ export default defineConfig({
           }),
           impressumContent: defineLocations({
             select: {},
-            resolve: () => ({ locations: [{ title: "Impressum", href: "/impressum" }] }),
+            // "Imprint" on the English site; the route is still /impressum.
+            resolve: () => ({ locations: [{ title: "Imprint", href: "/impressum" }] }),
           }),
           privacyContent: defineLocations({
             select: {},
@@ -108,6 +109,11 @@ export default defineConfig({
           resourcesContent: defineLocations({
             select: {},
             resolve: () => ({ locations: [{ title: "Resources", href: "/resources" }] }),
+          }),
+          // Any unknown path renders the 404, so point the preview at one.
+          notFoundContent: defineLocations({
+            select: {},
+            resolve: () => ({ locations: [{ title: "404 page", href: "/404-preview" }] }),
           }),
         },
       },

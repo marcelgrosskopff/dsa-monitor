@@ -21,6 +21,9 @@ const TAGS_FOR_TYPE: Record<string, string[]> = {
   privacyContent: ["settings"],
   publicationsContent: ["settings"],
   resourcesContent: ["settings"],
+  // Was missing: publishing 404 copy returned "no matching tag" and never
+  // reached the site. Every other page-copy singleton was already here.
+  notFoundContent: ["settings"],
   // Organizations render in report attributions (tag "report") AND the
   // site-wide logo wall fetched with siteSettings (tag "settings").
   organization: ["report", "settings"],

@@ -42,7 +42,7 @@ export const structure: StructureResolver = (S) =>
         .id("aboutContent")
         .child(S.document().schemaType("aboutContent").documentId("aboutContent")),
       S.listItem()
-        .title("Impressum page")
+        .title("Imprint page")
         .id("impressumContent")
         .child(S.document().schemaType("impressumContent").documentId("impressumContent")),
       S.listItem()
