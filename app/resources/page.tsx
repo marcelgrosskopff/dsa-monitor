@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { ConcentricField } from "@/components/blocks/ConcentricField";
-import { DownloadButton, OutboundLink } from "@/components/ds";
+import { DownloadButton, OutboundLink, SectionEyebrow } from "@/components/ds";
 import { getResourceGroups, getResourcesContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 import type { ResourceGroup, ResourceItem } from "@/lib/types";
@@ -89,6 +89,7 @@ export default async function ResourcesPage() {
       <section className="band band--inverse band--toppad resources__hero">
         <ConcentricField className="hero__field" />
         <div className="wrap pagehead">
+          <SectionEyebrow index="01" label={resContent.eyebrowLabel || "Resources"} />
           <h1>{resContent.heading || "Resources for trusted flaggers."}</h1>
           <p>
             {resContent.description || "If you report illegal content, prepare a Trusted Flagger annual report, or check a platform's own transparency reporting — start here. Downloads carry a file glyph and size; links to other sites carry a diagonal arrow."}

@@ -13,9 +13,14 @@ export function PublicationsClient({
   currentPage,
   pageCount,
   activeTopic,
-  filterAllLabel = "All topics",
-  filterEmptyHeading = "No publications under",
-  filterEmptyBody = "Reports are added as studies are completed. In the meantime, browse everything we've published.",
+  filterAllLabel,
+  filterEmptyHeading,
+  filterEmptyBody,
+  countLabel,
+  clearFilterLabel,
+  paginationPrevLabel,
+  paginationNextLabel,
+  cardReadLabel,
 }: {
   reports: Report[];
   topics: Topic[];
@@ -24,8 +29,14 @@ export function PublicationsClient({
   pageCount: number;
   activeTopic: string | null;
   filterAllLabel?: string;
+  /** Whole sentence; `{topic}` is replaced with the active topic name. */
   filterEmptyHeading?: string;
   filterEmptyBody?: string;
+  countLabel?: string;
+  clearFilterLabel?: string;
+  paginationPrevLabel?: string;
+  paginationNextLabel?: string;
+  cardReadLabel?: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -52,12 +63,33 @@ export function PublicationsClient({
   const toggle = (label: string | null) =>
     setQuery({ topic: label === activeTopic ? null : label });
 
+  // GROQ returns null — not undefined — for a field the document doesn't have
+  // yet, and a JS default parameter only fires on undefined. So resolve the
+  // fallbacks here with `||`, matching how every other CMS label in this
+  // codebase is handled. Using default params here renders empty labels.
+  const allLabel = filterAllLabel || "All topics";
+  const emptyBody =
+    filterEmptyBody ||
+    "Reports are added as studies are completed. In the meantime, browse everything we've published.";
+  const countWord = countLabel || "reports";
+  const clearLabel = clearFilterLabel || "Clear filter — show all";
+  const prevLabel = paginationPrevLabel || "← Prev";
+  const nextLabel = paginationNextLabel || "Next →";
+
+  // Editors write the whole sentence with a {topic} token. Values saved before
+  // that change are a bare prefix ("No publications under"), so keep completing
+  // those the way the old hardcoded markup did.
+  const headingTemplate = filterEmptyHeading || "No publications under “{topic}” yet.";
+  const emptyHeading = headingTemplate.includes("{topic}")
+    ? headingTemplate.replace("{topic}", activeTopic ?? "")
+    : `${headingTemplate} “${activeTopic ?? ""}” yet.`;
+
   return (
     <>
       <div className="filterbar">
         <TopicChip
           swatch="blue"
-          label={filterAllLabel}
+          label={allLabel}
           asFilter
           selected={activeTopic === null}
           onToggle={() => setQuery({ topic: null })}
@@ -76,7 +108,7 @@ export function PublicationsClient({
 
       <div className="listingbar">
         <p className="filtercount dsa-label" role="status" aria-live="polite">
-          {totalCount} reports
+          {totalCount} {countWord}
         </p>
       </div>
 
@@ -87,7 +119,7 @@ export function PublicationsClient({
             type="button"
             onClick={() => setQuery({ topic: null })}
           >
-            {`Clear filter — show all`}
+            {clearLabel}
           </button>
         </p>
       )}
@@ -105,6 +137,7 @@ export function PublicationsClient({
                 topics={r.topics}
                 languages={r.languages}
                 href={`/publications/${r.slug}`}
+                readLabel={cardReadLabel}
               />
             ))}
           </div>
@@ -117,7 +150,7 @@ export function PublicationsClient({
                 disabled={currentPage === 1}
                 onClick={() => setQuery({ page: currentPage - 1 })}
               >
-                ← Prev
+                {prevLabel}
               </button>
               <ul className="pager__pages">
                 {Array.from({ length: pageCount }, (_, i) => i + 1).map((p) => (
@@ -139,23 +172,21 @@ export function PublicationsClient({
                 disabled={currentPage === pageCount}
                 onClick={() => setQuery({ page: currentPage + 1 })}
               >
-                Next →
+                {nextLabel}
               </button>
             </nav>
           )}
         </>
       ) : (
         <div className="statebox">
-          <h3>
-            {filterEmptyHeading} &ldquo;{activeTopic}&rdquo; yet.
-          </h3>
-          <p>{filterEmptyBody}</p>
+          <h3>{emptyHeading}</h3>
+          <p>{emptyBody}</p>
           <button
             className="clearfilter"
             type="button"
             onClick={() => setQuery({ topic: null })}
           >
-            Clear filter
+            {clearLabel}
           </button>
         </div>
       )}

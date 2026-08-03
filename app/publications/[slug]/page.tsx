@@ -189,6 +189,7 @@ export default async function ReportPage({
                         topics={r.topics}
                         languages={r.languages}
                         href={`/publications/${r.slug}`}
+                        readLabel={pubContent.cardReadLabel}
                       />
                     ))}
                   </div>

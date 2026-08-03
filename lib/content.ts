@@ -287,6 +287,10 @@ export interface HomeContent {
   heroCtaLabel?: string;
   heroSecondaryLabel?: string;
   viewAllLabel?: string;
+  closerCtaLabel?: string;
+  kpiReportsLabel?: string;
+  kpiPlatformsLabel?: string;
+  kpiTopicsLabel?: string;
 }
 
 export interface AboutContent {
@@ -295,6 +299,12 @@ export interface AboutContent {
   lead?: string;
   body?: unknown[];
   pressNote?: string;
+  factPublisherLabel?: string;
+  factActiveSinceLabel?: string;
+  factStatusLabel?: string;
+  factLicenceLabel?: string;
+  factLocationLabel?: string;
+  contactHeading?: string;
 }
 
 export interface ImpressumContent {
@@ -313,16 +323,22 @@ export interface PrivacyContent {
   analyticsBody?: string;
   optOutHeading?: string;
   optOutNote?: string;
+  optOutUnavailableNote?: string;
 }
 
 export interface PublicationsContent {
   eyebrowLabel?: string;
   heading?: string;
   description?: string;
-  countSuffix?: string;
+  countLabel?: string;
   filterAllLabel?: string;
   filterEmptyHeading?: string;
   filterEmptyBody?: string;
+  clearFilterLabel?: string;
+  paginationPrevLabel?: string;
+  paginationNextLabel?: string;
+  loadingLabel?: string;
+  cardReadLabel?: string;
   reportBackLabel?: string;
   reportSummaryLabel?: string;
   reportMethodologyLabel?: string;

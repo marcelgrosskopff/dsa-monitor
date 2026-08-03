@@ -9,19 +9,27 @@ import {
 } from "@/components/blocks/sections";
 import { ResearchCardX } from "@/components/blocks/ResearchCardX";
 import { Button, SectionEyebrow } from "@/components/ds";
-import { getHomeContent, getReports, getTopics } from "@/lib/content";
+import {
+  getHomeContent,
+  getPublicationsContent,
+  getReports,
+  getTopics,
+} from "@/lib/content";
 import { siteStats } from "@/lib/counts";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({ path: "/" });
 
 export default async function HomePage() {
-  const [reports, topics, home] = await Promise.all([
+  const [reports, topics, home, pubContent] = await Promise.all([
     getReports(),
     getTopics(),
     getHomeContent(),
+    // Only for the shared report-card label, which lives with the other
+    // publications copy so one edit covers every card on the site.
+    getPublicationsContent(),
   ]);
-  const stats = siteStats(reports, topics);
+  const stats = siteStats(reports, topics, home);
   const latest = reports.slice(0, 6);
 
   return (
@@ -61,6 +69,7 @@ export default async function HomePage() {
                   topics={r.topics}
                   languages={r.languages}
                   href={`/publications/${r.slug}`}
+                  readLabel={pubContent.cardReadLabel}
                 />
               ))}
             </div>
@@ -84,7 +93,11 @@ export default async function HomePage() {
       />
       <EvidenceBoxes heading={home.evidenceHeading} boxes={home.evidenceBoxes} />
       <div className="hatch" aria-hidden="true" />
-      <ConvictionCloser headline={home.closerHeadline} body={home.closerBody} />
+      <ConvictionCloser
+        headline={home.closerHeadline}
+        body={home.closerBody}
+        ctaLabel={home.closerCtaLabel}
+      />
     </Page>
   );
 }

@@ -31,23 +31,35 @@ export function topicReportCount(reports: Report[], label: string): number {
   ).length;
 }
 
+/** Wording for the three stat labels. The numbers stay derived — only the
+ *  labels are editable, so a rename can never desync from what is counted. */
+export interface SiteStatLabels {
+  kpiReportsLabel?: string;
+  kpiPlatformsLabel?: string;
+  kpiTopicsLabel?: string;
+}
+
 /** The three Home KPI stats — derived, never hand-typed. */
-export function siteStats(reports: Report[], topics: Topic[]): Kpi[] {
+export function siteStats(
+  reports: Report[],
+  topics: Topic[],
+  labels: SiteStatLabels = {}
+): Kpi[] {
   const pad = (n: number) => (n < 10 ? String(n).padStart(2, "0") : String(n));
   return [
     {
       number: pad(reportsPublished(reports)),
-      label: "Reports published",
+      label: labels.kpiReportsLabel || "Reports published",
       accent: "coral",
     },
     {
       number: pad(platformsMonitored(reports)),
-      label: "Platforms monitored",
+      label: labels.kpiPlatformsLabel || "Platforms monitored",
       accent: "blue",
     },
     {
       number: pad(topicCategories(topics)),
-      label: "Topic categories",
+      label: labels.kpiTopicsLabel || "Topic categories",
       accent: "orange",
     },
   ];

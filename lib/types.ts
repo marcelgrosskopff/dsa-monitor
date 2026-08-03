@@ -145,4 +145,5 @@ export interface SiteSettings {
   navPublicationsLabel?: string;
   navResourcesLabel?: string;
   navAboutLabel?: string;
+  skipToContentLabel?: string;
 }

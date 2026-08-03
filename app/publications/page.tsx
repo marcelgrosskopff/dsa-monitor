@@ -44,7 +44,13 @@ export default async function PublicationsPage({
 
       <section className="band band--canvas band--tight">
         <div className="wrap">
-          <Suspense fallback={<p className="filtercount dsa-label">Loading…</p>}>
+          <Suspense
+            fallback={
+              <p className="filtercount dsa-label">
+                {pubContent.loadingLabel || "Loading…"}
+              </p>
+            }
+          >
             <PublicationsClient
               reports={reports}
               topics={topics}
@@ -55,6 +61,11 @@ export default async function PublicationsPage({
               filterAllLabel={pubContent.filterAllLabel}
               filterEmptyHeading={pubContent.filterEmptyHeading}
               filterEmptyBody={pubContent.filterEmptyBody}
+              countLabel={pubContent.countLabel}
+              clearFilterLabel={pubContent.clearFilterLabel}
+              paginationPrevLabel={pubContent.paginationPrevLabel}
+              paginationNextLabel={pubContent.paginationNextLabel}
+              cardReadLabel={pubContent.cardReadLabel}
             />
           </Suspense>
         </div>

@@ -15,6 +15,7 @@ export function ResearchCardX({
   topics,
   languages = [],
   href = "#",
+  readLabel,
 }: {
   swatch?: Swatch;
   meta: string;
@@ -23,6 +24,7 @@ export function ResearchCardX({
   topics?: TopicRef[];
   languages?: string[];
   href?: string;
+  readLabel?: string;
 }) {
   const list: TopicRef[] =
     topics && topics.length
@@ -57,7 +59,7 @@ export function ResearchCardX({
         </div>
         <div className="dsa-card__foot dsa-card__foot--end">
           <span className="dsa-card__more dsa-label" aria-hidden="true">
-            Read report →
+            {readLabel || "Read report →"}
           </span>
         </div>
       </div>

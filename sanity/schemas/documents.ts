@@ -246,6 +246,13 @@ export const siteSettings = defineType({
     defineField({ name: "navPublicationsLabel", type: "string", title: "Nav — Publications label", initialValue: "Publications" }),
     defineField({ name: "navResourcesLabel", type: "string", title: "Nav — Resources label", initialValue: "Resources" }),
     defineField({ name: "navAboutLabel", type: "string", title: "Nav — About label", initialValue: "About" }),
+    defineField({
+      name: "skipToContentLabel",
+      type: "string",
+      title: "Skip-to-content link label",
+      description: "Accessibility link, visible only when reached by keyboard.",
+      initialValue: "Skip to content",
+    }),
   ],
   preview: { prepare: () => ({ title: "Site settings" }) },
 });
@@ -290,6 +297,12 @@ export const homeContent = defineType({
     defineField({ name: "heroCtaLabel", type: "string", title: "Hero CTA label (primary button)", initialValue: "Browse publications" }),
     defineField({ name: "heroSecondaryLabel", type: "string", title: "Hero secondary button label", initialValue: "About DSA Monitor" }),
     defineField({ name: "viewAllLabel", type: "string", title: "Latest publications — 'View all' button prefix", initialValue: "View all" }),
+    defineField({ name: "closerCtaLabel", type: "string", title: "Closing section — button label", initialValue: "Browse publications" }),
+    // Stat strip labels. The NUMBERS are counted automatically from published
+    // content and are deliberately not editable — only their wording is.
+    defineField({ name: "kpiReportsLabel", type: "string", title: "Stat strip — reports label", initialValue: "Reports published" }),
+    defineField({ name: "kpiPlatformsLabel", type: "string", title: "Stat strip — platforms label", initialValue: "Platforms monitored" }),
+    defineField({ name: "kpiTopicsLabel", type: "string", title: "Stat strip — topics label", initialValue: "Topic categories" }),
   ],
   preview: { prepare: () => ({ title: "Home copy" }) },
 });
@@ -303,6 +316,14 @@ export const aboutContent = defineType({
     defineField({ name: "lead", type: "text", rows: 2, title: "Lead paragraph" }),
     defineField({ name: "body", type: "richBody" }),
     defineField({ name: "pressNote", type: "text", rows: 2, title: "Press enquiries note" }),
+    // Facts sidebar. The VALUES live on Site settings (publisher, active since,
+    // status, licence, location) — these are just the row labels beside them.
+    defineField({ name: "factPublisherLabel", type: "string", title: "Facts — Publisher row label", initialValue: "Publisher" }),
+    defineField({ name: "factActiveSinceLabel", type: "string", title: "Facts — Active since row label", initialValue: "Active since" }),
+    defineField({ name: "factStatusLabel", type: "string", title: "Facts — Status row label", initialValue: "Status" }),
+    defineField({ name: "factLicenceLabel", type: "string", title: "Facts — Licence row label", initialValue: "Licence" }),
+    defineField({ name: "factLocationLabel", type: "string", title: "Facts — Location row label", initialValue: "Location" }),
+    defineField({ name: "contactHeading", type: "string", title: "Contact box heading", initialValue: "Contact" }),
   ],
   preview: { prepare: () => ({ title: "About copy" }) },
 });
@@ -331,6 +352,14 @@ export const privacyContent = defineType({
     defineField({ name: "analyticsBody", type: "text", rows: 4, title: "Analytics section body" }),
     defineField({ name: "optOutHeading", type: "string", title: "Opt-out section heading" }),
     defineField({ name: "optOutNote", type: "text", rows: 2, title: "Opt-out section note" }),
+    defineField({
+      name: "optOutUnavailableNote",
+      type: "text",
+      rows: 2,
+      title: "Opt-out unavailable note",
+      description: "Shown in place of the opt-out control when no Matomo URL is configured.",
+      initialValue: "Opt-out control activates once the Matomo instance URL is configured.",
+    }),
   ],
   preview: { prepare: () => ({ title: "Privacy copy" }) },
 });
@@ -343,10 +372,23 @@ export const publicationsContent = defineType({
     defineField({ name: "eyebrowLabel", type: "string", title: "Page eyebrow label" }),
     defineField({ name: "heading", type: "string", title: "Page heading" }),
     defineField({ name: "description", type: "text", rows: 2, title: "Intro description" }),
-    defineField({ name: "countSuffix", type: "string", title: "Count suffix (after report count)", initialValue: "newest first" }),
+    // Replaced the old `countSuffix` field, which was never rendered anywhere and
+    // still held "newest first" from before the sort control was removed.
+    defineField({ name: "countLabel", type: "string", title: "Word after the report count", description: 'Renders as e.g. "12 reports".', initialValue: "reports" }),
     defineField({ name: "filterAllLabel", type: "string", title: "Filter chip — 'All topics' label", initialValue: "All topics" }),
-    defineField({ name: "filterEmptyHeading", type: "string", title: "Filter empty state — heading prefix", initialValue: "No publications under" }),
+    defineField({
+      name: "filterEmptyHeading",
+      type: "string",
+      title: "Filter empty state — heading",
+      description: 'Write the whole sentence. Use {topic} where the topic name should appear.',
+      initialValue: "No publications under “{topic}” yet.",
+    }),
     defineField({ name: "filterEmptyBody", type: "text", rows: 2, title: "Filter empty state — body" }),
+    defineField({ name: "clearFilterLabel", type: "string", title: "Clear filter button label", initialValue: "Clear filter — show all" }),
+    defineField({ name: "paginationPrevLabel", type: "string", title: "Pagination — previous label", initialValue: "← Prev" }),
+    defineField({ name: "paginationNextLabel", type: "string", title: "Pagination — next label", initialValue: "Next →" }),
+    defineField({ name: "loadingLabel", type: "string", title: "Loading placeholder text", initialValue: "Loading…" }),
+    defineField({ name: "cardReadLabel", type: "string", title: "Report card — read link label", description: "Appears on every report card, site-wide.", initialValue: "Read report →" }),
     // Report detail labels
     defineField({ name: "reportBackLabel", type: "string", title: "Report — back link label", initialValue: "← All publications" }),
     defineField({ name: "reportSummaryLabel", type: "string", title: "Report — Summary section label", initialValue: "Summary" }),

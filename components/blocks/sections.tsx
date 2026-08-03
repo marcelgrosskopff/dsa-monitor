@@ -205,9 +205,11 @@ export function HowWeWork({
 export function ConvictionCloser({
   headline,
   body,
+  ctaLabel,
 }: {
   headline?: string;
   body?: unknown[];
+  ctaLabel?: string;
 }) {
   return (
     <section className="band band--inverse cta">
@@ -229,7 +231,7 @@ export function ConvictionCloser({
           )}
           <div className="cta__actions">
             <Button variant="primary" as="a" href="/publications">
-              Browse publications
+              {ctaLabel || "Browse publications"}
             </Button>
           </div>
         </div>

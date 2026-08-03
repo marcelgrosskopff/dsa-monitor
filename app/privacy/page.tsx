@@ -58,8 +58,8 @@ export default async function PrivacyPage() {
               />
             ) : (
               <span className="placeholder-note">
-                Opt-out control activates once the Matomo instance URL is
-                configured.
+                {content.optOutUnavailableNote ||
+                  "Opt-out control activates once the Matomo instance URL is configured."}
               </span>
             )}
           </div>

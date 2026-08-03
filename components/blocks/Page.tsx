@@ -25,7 +25,7 @@ export async function Page({
   return (
     <div className="page">
       <a className="skip-link" href="#main-content">
-        Skip to content
+        {settings.skipToContentLabel || "Skip to content"}
       </a>
       <SiteNav inverse={navInverse} current={current} items={navItems} />
       <main id="main-content">{children}</main>

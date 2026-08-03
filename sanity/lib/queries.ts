@@ -120,7 +120,8 @@ export const siteSettingsQuery = groq`
     navHomeLabel,
     navPublicationsLabel,
     navResourcesLabel,
-    navAboutLabel
+    navAboutLabel,
+    skipToContentLabel
   }
 `;
 
@@ -152,7 +153,11 @@ export const homeContentQuery = groq`
     closerBody,
     heroCtaLabel,
     heroSecondaryLabel,
-    viewAllLabel
+    viewAllLabel,
+    closerCtaLabel,
+    kpiReportsLabel,
+    kpiPlatformsLabel,
+    kpiTopicsLabel
   }
 `;
 
@@ -162,7 +167,13 @@ export const aboutContentQuery = groq`
     pageHeading,
     lead,
     body,
-    pressNote
+    pressNote,
+    factPublisherLabel,
+    factActiveSinceLabel,
+    factStatusLabel,
+    factLicenceLabel,
+    factLocationLabel,
+    contactHeading
   }
 `;
 
@@ -184,7 +195,8 @@ export const privacyContentQuery = groq`
     analyticsHeading,
     analyticsBody,
     optOutHeading,
-    optOutNote
+    optOutNote,
+    optOutUnavailableNote
   }
 `;
 
@@ -193,10 +205,15 @@ export const publicationsContentQuery = groq`
     eyebrowLabel,
     heading,
     description,
-    countSuffix,
+    countLabel,
     filterAllLabel,
     filterEmptyHeading,
     filterEmptyBody,
+    clearFilterLabel,
+    paginationPrevLabel,
+    paginationNextLabel,
+    loadingLabel,
+    cardReadLabel,
     reportBackLabel,
     reportSummaryLabel,
     reportMethodologyLabel,

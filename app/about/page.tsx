@@ -19,12 +19,13 @@ export default async function AboutPage() {
   ]);
   const email = settings.contactEmail || "research@oiat.at";
 
+  // Row labels come from About copy; the values live on Site settings.
   const facts = [
-    ["Publisher", settings.publisherName || "OIAT"],
-    ["Active since", settings.activeSince || "1997"],
-    ["Status", settings.orgStatus || "DSA Trusted Flagger"],
-    ["Licence", settings.licence || "CC BY-SA 4.0"],
-    ["Location", settings.locationLabel || "Wien, AT"],
+    [aboutContent.factPublisherLabel || "Publisher", settings.publisherName || "OIAT"],
+    [aboutContent.factActiveSinceLabel || "Active since", settings.activeSince || "1997"],
+    [aboutContent.factStatusLabel || "Status", settings.orgStatus || "DSA Trusted Flagger"],
+    [aboutContent.factLicenceLabel || "Licence", settings.licence || "CC BY-SA 4.0"],
+    [aboutContent.factLocationLabel || "Location", settings.locationLabel || "Wien, AT"],
   ];
 
   return (
@@ -69,7 +70,7 @@ export default async function AboutPage() {
                 className="dsa-label"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                Contact
+                {aboutContent.contactHeading || "Contact"}
               </span>
               <p className="mail">
                 <a href={`mailto:${email}`}>{email}</a>
