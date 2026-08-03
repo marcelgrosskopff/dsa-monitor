@@ -398,7 +398,7 @@ section.dsa-partners {
   padding-top: var(--space-stack-md);
   padding-bottom: var(--space-stack-md);
 }
-/* Launch config shows a single group (just ÖIAT Research) — drop the 3fr/1fr
+/* Launch config shows a single group (just OIAT Research) — drop the 3fr/1fr
  * two-group grid, centre the group + caption, and let the lone logo sit a bit
  * larger. Selectors outweigh kit.css's 3-col grid + 46px height rules. */
 .dsa-partners__inner:has(> .dsa-partners__group:only-child) {

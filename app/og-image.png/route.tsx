@@ -56,7 +56,7 @@ export function GET() {
               lineHeight: 1.5,
             }}
           >
-            Methodology-first studies on very large online platforms. Published by ÖIAT.
+            Methodology-first studies on very large online platforms. Published by OIAT.
           </p>
         </div>
 

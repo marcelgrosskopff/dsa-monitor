@@ -6,7 +6,7 @@ export const SITE_NAME = "DSA Monitor";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://dsa-monitor.at";
 export const SITE_DESCRIPTION =
-  "Independent Digital Services Act compliance research on very large online platforms — methodology-first, no black boxes. Published by ÖIAT.";
+  "Independent Digital Services Act compliance research on very large online platforms — methodology-first, no black boxes. Published by OIAT.";
 
 /** Per-route metadata builder. */
 export function pageMetadata({
@@ -54,7 +54,7 @@ export function reportJsonLd(report: Report) {
     description: report.summary,
     datePublished: toISODate(report.publishedAt),
     inLanguage: report.languages.map((l) => l.toLowerCase()),
-    author: { "@type": "Organization", name: "ÖIAT" },
+    author: { "@type": "Organization", name: "OIAT" },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,

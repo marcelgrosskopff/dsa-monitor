@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 /**
- * Matomo — cookieless + IP-anonymised analytics against the existing ÖIAT instance.
+ * Matomo — cookieless + IP-anonymised analytics against the existing OIAT instance.
  * Cookieless mode means no consent banner is legally required; the opt-out + disclosure
  * live on /privacy (brief §9.9). Renders nothing unless both env vars are set.
  *

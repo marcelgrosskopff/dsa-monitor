@@ -218,7 +218,7 @@ export function SiteFooter({
               {footerDescriptor || "Independent Digital Services Act compliance research — methodology-first, no black boxes."}
             </p>
             <p className="dsa-footer__addr dsa-label">
-              {footerAddress || "ÖIAT · Ungargasse 64–66/3/404 · 1030 Wien"}
+              {footerAddress || "OIAT · Ungargasse 64–66/3/404 · 1030 Wien"}
             </p>
           </div>
           {cols.map((c) => (
@@ -245,7 +245,7 @@ export function SiteFooter({
           </div>
         </div>
         <div className="dsa-footer__legal dsa-label">
-          <span>© {displayYear} {copyrightSuffix || "ÖIAT · CC BY-SA 4.0"}</span>
+          <span>© {displayYear} {copyrightSuffix || "OIAT · CC BY-SA 4.0"}</span>
           <a
             href={linkedinUrl}
             className="dsa-footer__mail"

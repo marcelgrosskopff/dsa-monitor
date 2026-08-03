@@ -216,7 +216,7 @@ export const siteSettings = defineType({
       initialValue: "Funded by",
     }),
     // About page facts sidebar
-    defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "ÖIAT" }),
+    defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "OIAT" }),
     defineField({ name: "activeSince", type: "string", title: "Active since", initialValue: "1997" }),
     defineField({ name: "orgStatus", type: "string", title: "Status", initialValue: "DSA Trusted Flagger" }),
     defineField({ name: "licence", type: "string", title: "Content licence", initialValue: "CC BY-SA 4.0" }),
@@ -240,7 +240,7 @@ export const siteSettings = defineType({
       initialValue: "Privacy",
     }),
     defineField({ name: "footerColContact", type: "string", title: "Footer column — Contact", initialValue: "Contact" }),
-    defineField({ name: "copyrightSuffix", type: "string", title: "Footer copyright suffix", initialValue: "ÖIAT · CC BY-SA 4.0" }),
+    defineField({ name: "copyrightSuffix", type: "string", title: "Footer copyright suffix", initialValue: "OIAT · CC BY-SA 4.0" }),
     defineField({ name: "linkedinLabel", type: "string", title: "LinkedIn link label", initialValue: "LinkedIn" }),
     defineField({ name: "navHomeLabel", type: "string", title: "Nav — Home label", initialValue: "Home" }),
     defineField({ name: "navPublicationsLabel", type: "string", title: "Nav — Publications label", initialValue: "Publications" }),

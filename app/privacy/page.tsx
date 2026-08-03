@@ -38,7 +38,7 @@ export default async function PrivacyPage() {
           <div className="legal__item">
             <h2>{content.analyticsHeading || "Analytics (Matomo)"}</h2>
             <p>
-              {content.analyticsBody || "We use Matomo, a self-hosted analytics tool operated by ÖIAT, to understand how the site is used. Matomo runs without cookies and with IP anonymisation, so no personal data is stored and no consent banner is required. We do not share analytics data with third parties."}
+              {content.analyticsBody || "We use Matomo, a self-hosted analytics tool operated by OIAT, to understand how the site is used. Matomo runs without cookies and with IP anonymisation, so no personal data is stored and no consent banner is required. We do not share analytics data with third parties."}
             </p>
           </div>
           <div className="legal__item">

@@ -90,7 +90,7 @@ const RAW_REPORTS: RawReport[] = [
     methodology:
       "We queried the Meta Ad Library API for EU-targeted commerce ads over a four-month window, deduplicated creatives by perceptual hash, and hand-coded a stratified sample of 1,200 ads against a fixed rubric (two annotators, κ = 0.84). Limitations: the Ad Library omits organic posts and does not expose full targeting parameters, so reach figures are lower bounds.",
     attribution:
-      "AdGuardians is a project of ÖIAT Research, funded by the netidee programme of the Internet Foundation Austria, in cooperation with the Austrian Federal Economic Chamber (WKO).",
+      "AdGuardians is a project of OIAT Research, funded by the netidee programme of the Internet Foundation Austria, in cooperation with the Austrian Federal Economic Chamber (WKO).",
     downloads: [
       { label: "Report", language: "English", format: "PDF", size: "2.4 MB" },
       { label: "Bericht", language: "Deutsch", format: "PDF", size: "2.6 MB" },
@@ -201,12 +201,12 @@ const RAW_REPORTS: RawReport[] = [
     meta: "EU-wide · 11/2024",
     languages: ["EN", "DE"],
     title: "A trusted flagger's first 90 days: lessons from the field.",
-    subtitle: "What ÖIAT learned operating as a DSA Trusted Flagger.",
+    subtitle: "What OIAT learned operating as a DSA Trusted Flagger.",
     summary:
-      "What ÖIAT learned operating as a DSA Trusted Flagger — submission tooling, response times, and where the process breaks down for civil-society flaggers.",
+      "What OIAT learned operating as a DSA Trusted Flagger — submission tooling, response times, and where the process breaks down for civil-society flaggers.",
     kpis: [{ number: "90", label: "Days observed", accent: "green" }],
     body: [
-      "Drawing on ÖIAT's own status as a Trusted Flagger under the DSA, this brief documents the first 90 days: how notices are submitted, how platforms respond, and where the process breaks down for civil-society flaggers.",
+      "Drawing on OIAT's own status as a Trusted Flagger under the DSA, this brief documents the first 90 days: how notices are submitted, how platforms respond, and where the process breaks down for civil-society flaggers.",
     ],
     methodology:
       "An operational diary plus structured logs of every notice and response. Limitations: a single organisation's experience; not a cross-flagger survey.",
@@ -304,7 +304,7 @@ export const SEED_RESOURCE_GROUPS: ResourceGroup[] = [
   {
     name: "Tools",
     description:
-      "Working tools ÖIAT builds and maintains for trusted flaggers and researchers.",
+      "Working tools OIAT builds and maintains for trusted flaggers and researchers.",
     order: 1,
     items: [
       { type: "link", label: "AdGuardians — fraudulent-ad scanner (source)", href: "#" },
@@ -341,8 +341,8 @@ export const SEED_SETTINGS: SiteSettings = {
   contactEmail: "research@oiat.at",
   linkedinUrl: "https://at.linkedin.com",
   partners: [
-    { name: "ÖIAT", src: "/logos/oiat.png" },
-    { name: "ÖIAT Research", src: "/logos/oiat-research.png" },
+    { name: "OIAT", src: "/logos/oiat.png" },
+    { name: "OIAT Research", src: "/logos/oiat-research.png" },
     { name: "Internet Ombudsstelle (IO)", src: "/logos/internet-ombudsstelle.png" },
     { name: "Saferinternet.at", src: "/logos/saferinternet.png" },
     { name: "Watchlist Internet", src: "/logos/watchlist-internet.jpg" },

@@ -191,7 +191,7 @@ export function HowWeWork({
             ) : (
               <>
                 <p>The DSA gives regulators real powers, but those powers depend on a clear, public record of what platforms are actually doing. Self-reported transparency is not enough.</p>
-                <p>As an independent, non-commercial institute and certified Trusted Flagger, ÖIAT supplies that record — methodology-first, citable, and free of platform framing.</p>
+                <p>As an independent, non-commercial institute and certified Trusted Flagger, OIAT supplies that record — methodology-first, citable, and free of platform framing.</p>
               </>
             )}
           </div>
@@ -224,7 +224,7 @@ export function ConvictionCloser({
           ) : (
             <>
               <p>The Digital Services Act obliges very large platforms to assess and mitigate systemic risks — but enforcement depends on independent evidence.</p>
-              <p>ÖIAT has tracked online consumer harm in Austria since 1997. DSA Monitor channels that work into a public, structured record the European Commission and national authorities can act on.</p>
+              <p>OIAT has tracked online consumer harm in Austria since 1997. DSA Monitor channels that work into a public, structured record the European Commission and national authorities can act on.</p>
             </>
           )}
           <div className="cta__actions">

@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Impressum",
-  description: "Legal notice and disclosure for DSA Monitor, published by ÖIAT.",
+  description: "Legal notice and disclosure for DSA Monitor, published by OIAT.",
   path: "/impressum",
 });
 
@@ -32,7 +32,7 @@ export default async function ImpressumPage() {
             <div className="legal__item">
               <h2>Media owner &amp; publisher</h2>
               <address>
-                Österreichisches Institut für angewandte Telekommunikation (ÖIAT)
+                Österreichisches Institut für angewandte Telekommunikation (OIAT)
                 <br />
                 Ungargasse 64–66/3/404
                 <br />
@@ -52,7 +52,7 @@ export default async function ImpressumPage() {
               <h2>Registration &amp; representation</h2>
               <p>
                 Legal form, register number (ZVR), supervisory authority and
-                authorised representatives to be supplied by ÖIAT.
+                authorised representatives to be supplied by OIAT.
               </p>
             </div>
             <div className="legal__item">

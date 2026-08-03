@@ -76,7 +76,7 @@ export function ContactForm({
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
 }) {
   return (
-    <form aria-label="Contact ÖIAT" className="dsa-form" onSubmit={onSubmit}>
+    <form aria-label="Contact OIAT" className="dsa-form" onSubmit={onSubmit}>
       <Field id="name" label="Name" required />
       <Field id="email" label="Email" type="email" required />
       <Field id="message" label="Message" multiline required />
