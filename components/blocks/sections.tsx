@@ -161,7 +161,7 @@ export function HowWeWork({
   return (
     <section className="band band--inverse band--toppad">
       <div className="wrap">
-        <SectionEyebrow index="03" label={eyebrow || "How we work"} />
+        <SectionEyebrow index="02" label={eyebrow || "How we work"} />
         <div className="howwork">
           <div className="howwork__cell">
             <span className="howwork__label dsa-label hl-sky">{whatLabel || "What we do"}</span>
