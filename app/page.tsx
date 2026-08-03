@@ -18,7 +18,9 @@ import {
 import { siteStats } from "@/lib/counts";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({ path: "/" });
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({ path: "/", cms: await getHomeContent() });
+}
 
 export default async function HomePage() {
   const [reports, topics, home, pubContent] = await Promise.all([

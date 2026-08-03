@@ -6,12 +6,17 @@ import { PublicationsClient } from "@/components/publications/PublicationsClient
 import { getPublicationsContent, getReportsPaged, getTopics } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Publications",
-  description:
-    "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence.",
-  path: "/publications",
-});
+// No args: this route already awaits searchParams, and reading them here would
+// make the canonical URL vary by query string.
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    title: "Publications",
+    description:
+      "Independent, methods-first compliance research on very large online platforms. Filter by topic; every report ships with its full methodology, limitations, and downloadable evidence.",
+    path: "/publications",
+    cms: await getPublicationsContent(),
+  });
+}
 
 export default async function PublicationsPage({
   searchParams,

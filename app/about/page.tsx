@@ -5,12 +5,15 @@ import { getAboutContent, getSiteSettings } from "@/lib/content";
 import { RichBody } from "@/components/PortableBody";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "About",
-  description:
-    "DSA Monitor is published by OIAT — an independent, non-commercial institute and certified DSA Trusted Flagger making platform compliance visible and actionable.",
-  path: "/about",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    title: "About",
+    description:
+      "DSA Monitor is published by OIAT — an independent, non-commercial institute and certified DSA Trusted Flagger making platform compliance visible and actionable.",
+    path: "/about",
+    cms: await getAboutContent(),
+  });
+}
 
 export default async function AboutPage() {
   const [settings, aboutContent] = await Promise.all([

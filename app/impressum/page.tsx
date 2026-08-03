@@ -5,11 +5,15 @@ import { SectionEyebrow } from "@/components/ds";
 import { getImpressumContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Impressum",
-  description: "Legal notice and disclosure for DSA Monitor, published by OIAT.",
-  path: "/impressum",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    // "Imprint" on the English site — the route stays /impressum.
+    title: "Imprint",
+    description: "Legal notice and disclosure for DSA Monitor, published by OIAT.",
+    path: "/impressum",
+    cms: await getImpressumContent(),
+  });
+}
 
 export default async function ImpressumPage() {
   const content = await getImpressumContent();

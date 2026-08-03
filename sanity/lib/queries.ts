@@ -157,7 +157,9 @@ export const homeContentQuery = groq`
     closerCtaLabel,
     kpiReportsLabel,
     kpiPlatformsLabel,
-    kpiTopicsLabel
+    kpiTopicsLabel,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -173,7 +175,9 @@ export const aboutContentQuery = groq`
     factStatusLabel,
     factLicenceLabel,
     factLocationLabel,
-    contactHeading
+    contactHeading,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -182,7 +186,9 @@ export const impressumContentQuery = groq`
     eyebrowLabel,
     pageHeading,
     intro,
-    body
+    body,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -196,7 +202,9 @@ export const privacyContentQuery = groq`
     analyticsBody,
     optOutHeading,
     optOutNote,
-    optOutUnavailableNote
+    optOutUnavailableNote,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -220,7 +228,9 @@ export const publicationsContentQuery = groq`
     reportRelatedLabel,
     reportDownloadLabel,
     reportSourceLabel,
-    reportFundingLabel
+    reportFundingLabel,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -230,7 +240,9 @@ export const resourcesContentQuery = groq`
     heading,
     description,
     dlTypeLabel,
-    linkTypeLabel
+    linkTypeLabel,
+    metaTitle,
+    metaDescription
   }
 `;
 
@@ -261,6 +273,8 @@ export const notFoundContentQuery = groq`
     heading,
     body,
     homeLabel,
-    publicationsLabel
+    publicationsLabel,
+    metaTitle,
+    metaDescription
   }
 `;

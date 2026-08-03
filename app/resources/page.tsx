@@ -6,12 +6,15 @@ import { getResourceGroups, getResourcesContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 import type { ResourceGroup, ResourceItem } from "@/lib/types";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Resources",
-  description:
-    "Practical tools, reporting templates, and pointers to platforms' own transparency reporting for trusted flaggers.",
-  path: "/resources",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    title: "Resources",
+    description:
+      "Practical tools, reporting templates, and pointers to platforms' own transparency reporting for trusted flaggers.",
+    path: "/resources",
+    cms: await getResourcesContent(),
+  });
+}
 
 function ResEntry({
   item,

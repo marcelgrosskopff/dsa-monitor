@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import { Page } from "@/components/blocks/Page";
 import { Button } from "@/components/ds";
 import { getNotFoundContent } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
+
+// `path: null` so no canonical or og:url is emitted — this URL doesn't exist.
+// Next already adds noindex to 404 responses; don't duplicate it here.
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    title: "Page not found",
+    path: null,
+    cms: await getNotFoundContent(),
+  });
+}
 
 export default async function NotFound() {
   const notFound = await getNotFoundContent();

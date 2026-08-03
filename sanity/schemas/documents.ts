@@ -3,6 +3,28 @@ import { createCharacterCounter } from "../components/CharacterCounter";
 
 const SWATCHES = ["red", "blue", "orange", "purple", "coral", "green", "neutral"];
 
+/** The two SEO override fields, identical on `report` and on every page-copy
+ *  singleton. A function, not a shared array, so each document type gets its
+ *  own field objects. Leave a field empty and the page keeps its normal title
+ *  or intro text as the fallback. */
+const seoFields = () => [
+  defineField({
+    name: "metaTitle",
+    type: "string",
+    title: "SEO title",
+    description: "SEO title override. Google shows around 60 characters.",
+    components: { input: createCharacterCounter(60) },
+  }),
+  defineField({
+    name: "metaDescription",
+    type: "text",
+    rows: 2,
+    title: "SEO description",
+    description: "SEO description override. Google shows around 160 characters.",
+    components: { input: createCharacterCounter(160) },
+  }),
+];
+
 /** organization — a partner, funder, or both. Referenced by siteSettings (site-wide
  *  logo wall) and per-report attribution. One entity, edited in one place. */
 export const organization = defineType({
@@ -132,19 +154,7 @@ export const report = defineType({
     }),
     defineField({ name: "attribution", type: "attribution" }),
     defineField({ name: "source", type: "sourceLink" }),
-    defineField({
-      name: "metaTitle",
-      type: "string",
-      description: "SEO title override. Google shows around 60 characters.",
-      components: { input: createCharacterCounter(60) },
-    }),
-    defineField({
-      name: "metaDescription",
-      type: "text",
-      rows: 2,
-      description: "SEO description override. Google shows around 160 characters.",
-      components: { input: createCharacterCounter(160) },
-    }),
+    ...seoFields(),
   ],
   orderings: [
     {
@@ -303,6 +313,7 @@ export const homeContent = defineType({
     defineField({ name: "kpiReportsLabel", type: "string", title: "Stat strip — reports label", initialValue: "Reports published" }),
     defineField({ name: "kpiPlatformsLabel", type: "string", title: "Stat strip — platforms label", initialValue: "Platforms monitored" }),
     defineField({ name: "kpiTopicsLabel", type: "string", title: "Stat strip — topics label", initialValue: "Topic categories" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "Home copy" }) },
 });
@@ -324,6 +335,7 @@ export const aboutContent = defineType({
     defineField({ name: "factLicenceLabel", type: "string", title: "Facts — Licence row label", initialValue: "Licence" }),
     defineField({ name: "factLocationLabel", type: "string", title: "Facts — Location row label", initialValue: "Location" }),
     defineField({ name: "contactHeading", type: "string", title: "Contact box heading", initialValue: "Contact" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "About copy" }) },
 });
@@ -336,6 +348,7 @@ export const impressumContent = defineType({
     defineField({ name: "pageHeading", type: "string", title: "Page heading (h1)" }),
     defineField({ name: "intro", type: "text", rows: 2, title: "Intro paragraph" }),
     defineField({ name: "body", type: "richBody", title: "Full legal content (Portable Text)" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "Impressum copy" }) },
 });
@@ -360,6 +373,7 @@ export const privacyContent = defineType({
       description: "Shown in place of the opt-out control when no Matomo URL is configured.",
       initialValue: "Opt-out control activates once the Matomo instance URL is configured.",
     }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "Privacy copy" }) },
 });
@@ -397,6 +411,7 @@ export const publicationsContent = defineType({
     defineField({ name: "reportDownloadLabel", type: "string", title: "Report — Download box label", initialValue: "Download" }),
     defineField({ name: "reportSourceLabel", type: "string", title: "Report — Source & replication label", initialValue: "Source & replication" }),
     defineField({ name: "reportFundingLabel", type: "string", title: "Report — Project & funding label", initialValue: "Project & funding" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "Publications copy" }) },
 });
@@ -410,6 +425,7 @@ export const resourcesContent = defineType({
     defineField({ name: "description", type: "text", rows: 2, title: "Intro description" }),
     defineField({ name: "dlTypeLabel", type: "string", title: "Download item type label", initialValue: "Download" }),
     defineField({ name: "linkTypeLabel", type: "string", title: "External link type label", initialValue: "External site" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "Resources copy" }) },
 });
@@ -423,6 +439,7 @@ export const notFoundContent = defineType({
     defineField({ name: "body", type: "text", rows: 3, title: "Body text" }),
     defineField({ name: "homeLabel", type: "string", title: "Home button label", initialValue: "Back to home" }),
     defineField({ name: "publicationsLabel", type: "string", title: "Publications button label", initialValue: "Browse publications" }),
+    ...seoFields(),
   ],
   preview: { prepare: () => ({ title: "404 copy" }) },
 });

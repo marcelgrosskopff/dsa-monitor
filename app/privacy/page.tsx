@@ -5,12 +5,15 @@ import { SectionEyebrow } from "@/components/ds";
 import { getPrivacyContent } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Privacy",
-  description:
-    "Privacy notice and analytics disclosure for DSA Monitor. Matomo runs cookieless and IP-anonymised.",
-  path: "/privacy",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata({
+    title: "Privacy",
+    description:
+      "Privacy notice and analytics disclosure for DSA Monitor. Matomo runs cookieless and IP-anonymised.",
+    path: "/privacy",
+    cms: await getPrivacyContent(),
+  });
+}
 
 export default async function PrivacyPage() {
   const [content, matomoUrl] = await Promise.all([

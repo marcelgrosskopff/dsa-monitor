@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { draftMode } from "next/headers";
 import { stegaClean } from "next-sanity";
 import { client, previewClient } from "@/sanity/lib/client";
@@ -257,13 +258,19 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   };
 }
 
+/** metaTitle/metaDescription, shared by every page-copy singleton. */
+export interface SeoFields {
+  metaTitle?: string;
+  metaDescription?: string;
+}
+
 export interface EvidenceBox {
   number: string;
   heading: string;
   description: string;
 }
 
-export interface HomeContent {
+export interface HomeContent extends SeoFields {
   heroEyebrow?: string;
   heroHeadlineBefore?: string;
   heroHighlightWord?: string;
@@ -293,7 +300,7 @@ export interface HomeContent {
   kpiTopicsLabel?: string;
 }
 
-export interface AboutContent {
+export interface AboutContent extends SeoFields {
   eyebrowLabel?: string;
   pageHeading?: string;
   lead?: string;
@@ -307,14 +314,14 @@ export interface AboutContent {
   contactHeading?: string;
 }
 
-export interface ImpressumContent {
+export interface ImpressumContent extends SeoFields {
   eyebrowLabel?: string;
   pageHeading?: string;
   intro?: string;
   body?: unknown[];
 }
 
-export interface PrivacyContent {
+export interface PrivacyContent extends SeoFields {
   eyebrowLabel?: string;
   pageHeading?: string;
   intro?: string;
@@ -326,7 +333,7 @@ export interface PrivacyContent {
   optOutUnavailableNote?: string;
 }
 
-export interface PublicationsContent {
+export interface PublicationsContent extends SeoFields {
   eyebrowLabel?: string;
   heading?: string;
   description?: string;
@@ -348,7 +355,7 @@ export interface PublicationsContent {
   reportFundingLabel?: string;
 }
 
-export interface ResourcesContent {
+export interface ResourcesContent extends SeoFields {
   eyebrowLabel?: string;
   heading?: string;
   description?: string;
@@ -356,7 +363,7 @@ export interface ResourcesContent {
   linkTypeLabel?: string;
 }
 
-export interface NotFoundContent {
+export interface NotFoundContent extends SeoFields {
   errorCode?: string;
   heading?: string;
   body?: string;
@@ -364,47 +371,47 @@ export interface NotFoundContent {
   publicationsLabel?: string;
 }
 
-export async function getHomeContent(): Promise<HomeContent> {
+export const getHomeContent = cache(async (): Promise<HomeContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(homeContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
-export async function getAboutContent(): Promise<AboutContent> {
+export const getAboutContent = cache(async (): Promise<AboutContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(aboutContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
-export async function getImpressumContent(): Promise<ImpressumContent> {
+export const getImpressumContent = cache(async (): Promise<ImpressumContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(impressumContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
-export async function getPrivacyContent(): Promise<PrivacyContent> {
+export const getPrivacyContent = cache(async (): Promise<PrivacyContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(privacyContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
-export async function getPublicationsContent(): Promise<PublicationsContent> {
+export const getPublicationsContent = cache(async (): Promise<PublicationsContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(publicationsContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
-export async function getResourcesContent(): Promise<ResourcesContent> {
+export const getResourcesContent = cache(async (): Promise<ResourcesContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(resourcesContentQuery, {}, opts);
   return data ?? {};
-}
+});
 
 export async function getPageContent(type: string): Promise<unknown[] | null> {
   if (!sanityConfigured) return null;
@@ -458,9 +465,9 @@ export async function getReportsPaged({
   };
 }
 
-export async function getNotFoundContent(): Promise<NotFoundContent> {
+export const getNotFoundContent = cache(async (): Promise<NotFoundContent> => {
   if (!sanityConfigured) return {};
   const [qc, opts] = await Promise.all([getQueryClient(), fetchOptions([TAGS.settings])]);
   const data = await qc.fetch(notFoundContentQuery, {}, opts);
   return data ?? {};
-}
+});
