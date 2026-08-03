@@ -32,12 +32,16 @@ export async function Page({
       <SiteFooter
         partners={settings.partners}
         funders={settings.funders}
+        partnersCaption={settings.partnersCaption}
+        fundersCaption={settings.fundersCaption}
         contactEmail={settings.contactEmail}
         linkedinUrl={settings.linkedinUrl}
         footerDescriptor={settings.footerDescriptor}
         footerAddress={settings.footerAddress}
         footerColSite={settings.footerColSite}
         footerColLegal={settings.footerColLegal}
+        footerLegalImprintLabel={settings.footerLegalImprintLabel}
+        footerLegalPrivacyLabel={settings.footerLegalPrivacyLabel}
         footerColContact={settings.footerColContact}
         copyrightSuffix={settings.copyrightSuffix}
         linkedinLabel={settings.linkedinLabel}

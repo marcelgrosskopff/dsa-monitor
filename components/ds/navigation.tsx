@@ -85,12 +85,16 @@ function LogoItem({ name, src, url }: Logo) {
 export function PartnerLogoWall({
   partners = [],
   funders = [],
+  partnersCaption,
+  fundersCaption,
 }: {
   partners?: Logo[];
   funders?: Logo[];
+  partnersCaption?: string;
+  fundersCaption?: string;
 }) {
   // Empty groups render nothing — the client's launch setup shows only the
-  // ÖIAT Research logo (funders are credited per-report in the attribution box).
+  // OIAT Research logo (funders are credited per-report in the attribution box).
   if (!partners.length && !funders.length) return null;
   return (
     <section aria-label="Partners and funders" className="dsa-partners">
@@ -98,7 +102,7 @@ export function PartnerLogoWall({
         {partners.length > 0 && (
           <div className="dsa-partners__group">
             <p className="dsa-partners__caption dsa-label">
-              ÖIAT Research — an initiative of ÖIAT
+              {partnersCaption || "OIAT Research – an initiative of OIAT"}
             </p>
             <ul className="dsa-partners__list">
               {partners.map((p) => (
@@ -109,7 +113,9 @@ export function PartnerLogoWall({
         )}
         {funders.length > 0 && (
           <div className="dsa-partners__group dsa-partners__group--funders">
-            <p className="dsa-partners__caption dsa-label">Funded by</p>
+            <p className="dsa-partners__caption dsa-label">
+              {fundersCaption || "Funded by"}
+            </p>
             <ul className="dsa-partners__list">
               {funders.map((f) => (
                 <LogoItem key={f.name} {...f} />
@@ -129,6 +135,8 @@ export function PartnerLogoWall({
 export function SiteFooter({
   partners,
   funders,
+  partnersCaption,
+  fundersCaption,
   showPartners = true,
   contactEmail = "research@oiat.at",
   linkedinUrl = "https://at.linkedin.com",
@@ -136,6 +144,8 @@ export function SiteFooter({
   footerAddress,
   footerColSite,
   footerColLegal,
+  footerLegalImprintLabel,
+  footerLegalPrivacyLabel,
   footerColContact,
   copyrightSuffix,
   linkedinLabel,
@@ -147,6 +157,8 @@ export function SiteFooter({
 }: {
   partners?: Logo[];
   funders?: Logo[];
+  partnersCaption?: string;
+  fundersCaption?: string;
   showPartners?: boolean;
   contactEmail?: string;
   linkedinUrl?: string;
@@ -154,6 +166,8 @@ export function SiteFooter({
   footerAddress?: string;
   footerColSite?: string;
   footerColLegal?: string;
+  footerLegalImprintLabel?: string;
+  footerLegalPrivacyLabel?: string;
   footerColContact?: string;
   copyrightSuffix?: string;
   linkedinLabel?: string;
@@ -176,8 +190,9 @@ export function SiteFooter({
     {
       title: footerColLegal || "Legal",
       links: [
-        ["Impressum", "/impressum"],
-        ["Privacy", "/privacy"],
+        // Link text only — the route stays /impressum.
+        [footerLegalImprintLabel || "Imprint", "/impressum"],
+        [footerLegalPrivacyLabel || "Privacy", "/privacy"],
       ],
     },
   ];
@@ -185,7 +200,12 @@ export function SiteFooter({
   return (
     <>
       {showPartners && (
-        <PartnerLogoWall partners={partners} funders={funders} />
+        <PartnerLogoWall
+          partners={partners}
+          funders={funders}
+          partnersCaption={partnersCaption}
+          fundersCaption={fundersCaption}
+        />
       )}
       <footer className="dsa-footer">
         <div className="dsa-footer__inner">

@@ -125,6 +125,8 @@ export interface SiteSettings {
   linkedinUrl?: string;
   partners: Logo[];
   funders: Logo[];
+  partnersCaption?: string;
+  fundersCaption?: string;
   publisherName?: string;
   activeSince?: string;
   orgStatus?: string;
@@ -134,6 +136,8 @@ export interface SiteSettings {
   footerAddress?: string;
   footerColSite?: string;
   footerColLegal?: string;
+  footerLegalImprintLabel?: string;
+  footerLegalPrivacyLabel?: string;
   footerColContact?: string;
   copyrightSuffix?: string;
   linkedinLabel?: string;

@@ -199,6 +199,22 @@ export const siteSettings = defineType({
       type: "array",
       of: [defineArrayMember({ type: "reference", to: [{ type: "organization" }] })],
     }),
+    // Logo band captions — the small line above each logo group.
+    // Displayed in CAPITALS by the design system; type them in normal case.
+    defineField({
+      name: "partnersCaption",
+      type: "string",
+      title: "Logo band — partners caption",
+      description: "Line above the partner logos. Shown in capitals — type it in normal case.",
+      initialValue: "OIAT Research – an initiative of OIAT",
+    }),
+    defineField({
+      name: "fundersCaption",
+      type: "string",
+      title: "Logo band — funders caption",
+      description: "Line above the funder logos. Shown in capitals — type it in normal case.",
+      initialValue: "Funded by",
+    }),
     // About page facts sidebar
     defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "ÖIAT" }),
     defineField({ name: "activeSince", type: "string", title: "Active since", initialValue: "1997" }),
@@ -210,6 +226,19 @@ export const siteSettings = defineType({
     defineField({ name: "footerAddress", type: "string", title: "Footer address" }),
     defineField({ name: "footerColSite", type: "string", title: "Footer column — Site", initialValue: "Site" }),
     defineField({ name: "footerColLegal", type: "string", title: "Footer column — Legal", initialValue: "Legal" }),
+    defineField({
+      name: "footerLegalImprintLabel",
+      type: "string",
+      title: "Footer legal link — Imprint",
+      description: "Link text only. The page address stays /impressum.",
+      initialValue: "Imprint",
+    }),
+    defineField({
+      name: "footerLegalPrivacyLabel",
+      type: "string",
+      title: "Footer legal link — Privacy",
+      initialValue: "Privacy",
+    }),
     defineField({ name: "footerColContact", type: "string", title: "Footer column — Contact", initialValue: "Contact" }),
     defineField({ name: "copyrightSuffix", type: "string", title: "Footer copyright suffix", initialValue: "ÖIAT · CC BY-SA 4.0" }),
     defineField({ name: "linkedinLabel", type: "string", title: "LinkedIn link label", initialValue: "LinkedIn" }),
