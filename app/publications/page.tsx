@@ -38,7 +38,7 @@ export default async function PublicationsPage({
     <Page current="/publications">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label={pubContent.eyebrowLabel || "Publications"} />
+          <SectionEyebrow label={pubContent.eyebrowLabel || "Publications"} />
           <h1>{pubContent.heading || "Publications."}</h1>
           <p>
             {pubContent.description ||

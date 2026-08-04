@@ -50,9 +50,18 @@ export function HighlightMarker({ children }: { children: ReactNode }) {
 }
 
 /**
- * SectionEyebrow — numbered mono eyebrow with a short red rule ("02 · LATEST RESEARCH").
- * A decorative kicker that orders the page narrative — NOT the section heading; render
- * the real <h2> separately below it.
+ * SectionEyebrow — mono eyebrow with a short red rule ("02 · LATEST RESEARCH").
+ * A decorative kicker above a section — NOT the section heading; render the real
+ * <h1>/<h2> separately below it.
+ *
+ * RULE for `index` (client feedback 2026-08-03): number an eyebrow only where the
+ * page actually has a sequence of them. The homepage has two, so it keeps 01/02.
+ * Publications, Resources, About, Imprint and Privacy each have a single eyebrow
+ * — a lone "01" there advertised sections that don't exist, so they pass no
+ * index. Don't reintroduce one without a matching 02 on the same page.
+ *
+ * The 01/02/03 inside the EvidenceBoxes trio is a separate device — three
+ * genuinely sequential cards — and is unrelated to this prop.
  */
 export function SectionEyebrow({
   index,

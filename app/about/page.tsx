@@ -26,7 +26,7 @@ export default async function AboutPage() {
     <Page current="/about">
       <div className="band--canvas">
         <div className="wrap pagehead">
-          <SectionEyebrow index="01" label={aboutContent.eyebrowLabel || "About"} />
+          <SectionEyebrow label={aboutContent.eyebrowLabel || "About"} />
           <h1>{aboutContent.pageHeading || "About DSA Monitor."}</h1>
         </div>
       </div>
