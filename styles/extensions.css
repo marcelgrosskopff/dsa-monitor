@@ -506,6 +506,30 @@ section.dsa-partners
   }
 }
 
+/* ---- About page spacing (client feedback 2026-08-03) ----
+ * 1. The lead was capped at `max-width: 28ch` (594px), so on desktop it stopped
+ *    well short of the body column beneath it and read as a broken measure.
+ *    Let it use the content column; `.wrap` still caps the page at --layout-max.
+ *    No mobile effect — 28ch already exceeded the mobile column width.
+ * 2. On mobile the columns stack, and the space before the contact box was
+ *    112px: the grid's 64px row gap PLUS a 32px margin-top on the box. That
+ *    margin existed to separate the box from the publisher/status facts table
+ *    that sat above it in the same column — the table is gone, so the margin is
+ *    now double spacing. Drop it and step the row gap down one token.
+ * Selectors carry `section.wrap` to out-specify kit.css, which loads after
+ * extensions.css (its `gap` shorthand would otherwise win over `row-gap`). */
+section.wrap .about__lead {
+  max-width: none;
+}
+@media (max-width: 768px) {
+  section.wrap .about__cols {
+    row-gap: var(--space-stack-lg);
+  }
+  section.wrap .about__cols .about__contact {
+    margin-top: 0;
+  }
+}
+
 /* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
  * red #CA0013 on navy #212537 = 2.5:1, blue link #25378D on navy = 1.4:1;
  * AA requires 4.5:1). Text switches to white (15.2:1). The short red rule
