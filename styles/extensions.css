@@ -490,6 +490,21 @@ section.dsa-partners
   width: auto;
   justify-content: flex-start;
 }
+/* On mobile the two groups stack, and left-packing leaves them looking dropped
+ * into the corner. Centre each caption and its logo instead (client request
+ * 2026-08-03). Desktop stays left-packed — this is mobile only. */
+@media (max-width: 768px) {
+  section.dsa-partners .dsa-partners__inner {
+    flex-direction: column;
+    align-items: center;
+  }
+  section.dsa-partners .dsa-partners__group {
+    text-align: center;
+  }
+  section.dsa-partners .dsa-partners__group .dsa-partners__list {
+    justify-content: center;
+  }
+}
 
 /* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
  * red #CA0013 on navy #212537 = 2.5:1, blue link #25378D on navy = 1.4:1;
