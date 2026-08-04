@@ -450,6 +450,23 @@ section.dsa-partners {
 .dsa-partners .dsa-partners__group:only-child .dsa-partners__list img {
   height: 76px;
 }
+/* Two groups present (a funder is credited alongside the partner), so the
+ * `:only-child` centring above is inert and kit.css's 3-column grid applies —
+ * which centres each logo inside its cell, leaving the lone partner mark
+ * floating a third of the way in while the funder mark sits hard left. Client
+ * asked for both flush left (2026-08-03). Left-align the cells instead of
+ * centring them; this still reads tidily if more partner logos arrive.
+ * Out-specifies kit.css (which loads after extensions.css) via `section`. */
+section.dsa-partners
+  .dsa-partners__group:not(.dsa-partners__group--funders)
+  .dsa-partners__list {
+  justify-items: start;
+}
+section.dsa-partners
+  .dsa-partners__group:not(.dsa-partners__group--funders)
+  .dsa-partners__list li {
+  justify-content: flex-start;
+}
 
 /* ---- WCAG AA contrast on dark bands (client feedback r3 — measured failures:
  * red #CA0013 on navy #212537 = 2.5:1, blue link #25378D on navy = 1.4:1;

@@ -236,12 +236,15 @@ export const siteSettings = defineType({
       description: "Line above the funder logos. Shown in capitals — type it in normal case.",
       initialValue: "Funded by",
     }),
-    // About page facts sidebar
-    defineField({ name: "publisherName", type: "string", title: "Publisher name", initialValue: "OIAT" }),
-    defineField({ name: "activeSince", type: "string", title: "Active since", initialValue: "1997" }),
-    defineField({ name: "orgStatus", type: "string", title: "Status", initialValue: "DSA Trusted Flagger" }),
-    defineField({ name: "licence", type: "string", title: "Content licence", initialValue: "CC BY-SA 4.0" }),
-    defineField({ name: "locationLabel", type: "string", title: "Location", initialValue: "Wien, AT" }),
+    // About page facts sidebar — the table was removed from the site at the
+    // client's request (2026-08-03). Fields hidden but data preserved: restore by
+    // removing `hidden` and re-adding the render (same approach as
+    // resourceGroup.featured). Nothing else reads these.
+    defineField({ name: "publisherName", type: "string", title: "Publisher name", hidden: true }),
+    defineField({ name: "activeSince", type: "string", title: "Active since", hidden: true }),
+    defineField({ name: "orgStatus", type: "string", title: "Status", hidden: true }),
+    defineField({ name: "licence", type: "string", title: "Content licence", hidden: true }),
+    defineField({ name: "locationLabel", type: "string", title: "Location", hidden: true }),
     // Footer text
     defineField({ name: "footerDescriptor", group: "footer", type: "text", rows: 2, title: "Footer descriptor" }),
     defineField({ name: "footerAddress", group: "footer", type: "string", title: "Footer address" }),
@@ -340,13 +343,6 @@ export const aboutContent = defineType({
     defineField({ name: "lead", type: "text", rows: 2, title: "Lead paragraph" }),
     defineField({ name: "body", type: "richBody" }),
     defineField({ name: "pressNote", type: "text", rows: 2, title: "Press enquiries note" }),
-    // Facts sidebar. The VALUES live on Site settings (publisher, active since,
-    // status, licence, location) — these are just the row labels beside them.
-    defineField({ name: "factPublisherLabel", type: "string", title: "Facts — Publisher row label", initialValue: "Publisher" }),
-    defineField({ name: "factActiveSinceLabel", type: "string", title: "Facts — Active since row label", initialValue: "Active since" }),
-    defineField({ name: "factStatusLabel", type: "string", title: "Facts — Status row label", initialValue: "Status" }),
-    defineField({ name: "factLicenceLabel", type: "string", title: "Facts — Licence row label", initialValue: "Licence" }),
-    defineField({ name: "factLocationLabel", type: "string", title: "Facts — Location row label", initialValue: "Location" }),
     defineField({ name: "contactHeading", type: "string", title: "Contact box heading", initialValue: "Contact" }),
     ...seoFields(),
   ],

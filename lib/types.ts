@@ -127,11 +127,6 @@ export interface SiteSettings {
   funders: Logo[];
   partnersCaption?: string;
   fundersCaption?: string;
-  publisherName?: string;
-  activeSince?: string;
-  orgStatus?: string;
-  licence?: string;
-  locationLabel?: string;
   footerDescriptor?: string;
   footerAddress?: string;
   footerColSite?: string;

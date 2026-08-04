@@ -306,11 +306,6 @@ export interface AboutContent extends SeoFields {
   lead?: string;
   body?: unknown[];
   pressNote?: string;
-  factPublisherLabel?: string;
-  factActiveSinceLabel?: string;
-  factStatusLabel?: string;
-  factLicenceLabel?: string;
-  factLocationLabel?: string;
   contactHeading?: string;
 }
 

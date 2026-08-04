@@ -22,15 +22,6 @@ export default async function AboutPage() {
   ]);
   const email = settings.contactEmail || "research@oiat.at";
 
-  // Row labels come from About copy; the values live on Site settings.
-  const facts = [
-    [aboutContent.factPublisherLabel || "Publisher", settings.publisherName || "OIAT"],
-    [aboutContent.factActiveSinceLabel || "Active since", settings.activeSince || "1997"],
-    [aboutContent.factStatusLabel || "Status", settings.orgStatus || "DSA Trusted Flagger"],
-    [aboutContent.factLicenceLabel || "Licence", settings.licence || "CC BY-SA 4.0"],
-    [aboutContent.factLocationLabel || "Location", settings.locationLabel || "Wien, AT"],
-  ];
-
   return (
     <Page current="/about">
       <div className="band--canvas">
@@ -58,16 +49,8 @@ export default async function AboutPage() {
             )}
           </div>
           <div>
-            <div className="about__facts">
-              <dl>
-                {facts.map(([dt, dd]) => (
-                  <div className="row" key={dt}>
-                    <dt>{dt}</dt>
-                    <dd>{dd}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            {/* The publisher / active-since / status / licence / location table
+                was removed at the client's request (2026-08-03). */}
             <div className="about__contact">
               <span
                 className="dsa-label"
