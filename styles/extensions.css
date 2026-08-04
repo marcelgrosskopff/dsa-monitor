@@ -451,20 +451,43 @@ section.dsa-partners {
   height: 76px;
 }
 /* Two groups present (a funder is credited alongside the partner), so the
- * `:only-child` centring above is inert and kit.css's 3-column grid applies —
- * which centres each logo inside its cell, leaving the lone partner mark
- * floating a third of the way in while the funder mark sits hard left. Client
- * asked for both flush left (2026-08-03). Left-align the cells instead of
- * centring them; this still reads tidily if more partner logos arrive.
- * Out-specifies kit.css (which loads after extensions.css) via `section`. */
+ * `:only-child` centring above is inert. Client asked for the funder group to
+ * follow directly after the partner mark instead of sitting far right
+ * (2026-08-03).
+ *
+ * Three things pushed it right, all fixed here:
+ *   1. components.css lays the band out as `grid-template-columns: 3fr 1fr`, so
+ *      the funder group was pinned to a right-hand column regardless of how
+ *      little content it holds. Now a left-packed flex row: each group takes
+ *      only the width it needs and the next one follows immediately.
+ *   2. kit.css gives the partner list a `repeat(3, 1fr)` grid to tidy a wall of
+ *      logos with varying aspect ratios. With one partner mark that reserved
+ *      three columns' worth of width — wider than the caption — padding the gap
+ *      before the divider. Back to the same wrapping flex row the funder list
+ *      already uses; revisit if a real multi-logo partner wall returns.
+ *   3. kit.css's grid cells set `width: 100%` on each item, which as a flex
+ *      child would stretch and stack them.
+ *
+ * `align-items: stretch` keeps the funder group's left border spanning the full
+ * band height as a divider. Selectors carry `section` to out-specify kit.css,
+ * which loads after extensions.css. */
+section.dsa-partners .dsa-partners__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+}
 section.dsa-partners
   .dsa-partners__group:not(.dsa-partners__group--funders)
   .dsa-partners__list {
-  justify-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 section.dsa-partners
   .dsa-partners__group:not(.dsa-partners__group--funders)
   .dsa-partners__list li {
+  width: auto;
   justify-content: flex-start;
 }
 
