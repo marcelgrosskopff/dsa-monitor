@@ -18,7 +18,24 @@ const PATH_TAGS: Array<{ match: (p: string) => boolean; value: string }> = [
   { match: (p) => p.startsWith("/publications/"), value: "report,settings,topic" },
 ];
 
+// Canonical domain move: the site now lives at dsa-monitor.eu. Permanently redirect
+// the legacy .at domain (incl. www) to .eu, preserving path + query. Only .at hosts
+// redirect — .eu and *.netlify.app pass through, so no loop even though both domains
+// are attached to the same Netlify site. Host-based branching can't be expressed in
+// netlify.toml/_redirects, so it lives here on the edge.
+const CANONICAL_HOST = "dsa-monitor.eu";
+const LEGACY_HOSTS = new Set(["dsa-monitor.at", "www.dsa-monitor.at"]);
+
 export function middleware(req: NextRequest) {
+  const host = (req.headers.get("host") ?? "").toLowerCase().split(":")[0];
+  if (LEGACY_HOSTS.has(host)) {
+    const url = req.nextUrl.clone();
+    url.protocol = "https:";
+    url.host = CANONICAL_HOST;
+    url.port = "";
+    return NextResponse.redirect(url, 301);
+  }
+
   const res = NextResponse.next();
   const path = req.nextUrl.pathname;
   const rule = PATH_TAGS.find((r) => r.match(path));
